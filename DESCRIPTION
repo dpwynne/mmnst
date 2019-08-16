@@ -5,7 +5,7 @@ Version: 0.1.0
 Author: Dwight Wynne, Reza Ramezan
 Maintainer: Dwight Wynne (dpwynne@gmail.com)
 Description: Performs multiscale analysis of neural spike trains.
-    For details of the underlying statistical model, see Ramezan, et al. (2014)
+    For details of the underlying model, see Ramezan, et al. (2014).
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
