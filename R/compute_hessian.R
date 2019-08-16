@@ -54,3 +54,5 @@ eigen.ratio<-sum(Observed.eigenvalues[1:k])/sum(Observed.eigenvalues)
 
 return(eigen.ratio)
 }
+
+## This is the end
