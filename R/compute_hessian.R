@@ -55,4 +55,4 @@ eigen.ratio<-sum(Observed.eigenvalues[1:k])/sum(Observed.eigenvalues)
 return(eigen.ratio)
 }
 
-## This is the end
+## Dwight has approved this comment using the Resolve Conflicts editor.
