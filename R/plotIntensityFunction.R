@@ -1,0 +1,144 @@
+plot.intensity.function <- function(model.estimates, model.number, best.models, add.title=F, filename=NULL, neuron.name=NULL, time.resolution = NULL, y.limits = NULL, axis.label.size = 18, IC.type=NULL, title.size = 24,RStudio=FALSE){
+  ##model.estimates is the output from step 9
+  ##model.number is the number of the model in model.estimates you want to plot; can be a vector of numbers, e.g., c(1,2) plots models 1 and 2
+  ##best.models is the output from step 8 - used for labeling plots
+  ##filename is the name of a .ps/.eps, .bmp, .jpg, .png, .tif, or .pdf file
+  ##if you don't specify a file extension or specify a different file extension, R will add a .pdf extension to your file name and print to the pdf file
+  ##if you don't want to print to a file at all, leave as the default NULL and each plot will be generated in a new Graphics Device within R
+  ##if you specify a non-pdf file and include more than 1 number in model.number, then you will get only the last of those models as output
+  ##neuron.name is for purposes of identifying the plotted neuron in the Title of the file
+  ## time.resolution is the interval between time points (ticks) on the x-axis
+  ## y.limits is a numeric vector of length 2 giving the min and max of the y-axis
+  ## IC.type = NULL if you are running all the models before selecting the best model based on AIC/etc. Otherwise, IC.type is a string indicating the selection criterion used.
+  ## axis.label.size and title.size are font sizes for axis labels/titles
+  ## RStudio is a flag for whether you are running this function in RStudio, which does weird things when dev.new() is called
+  
+  #library(ggplot2)
+  
+  
+  selection.criteria<-names(model.estimates[[1]])
+  n.plots<-length(model.number)
+  
+  if (max(model.number)>length(selection.criteria)){
+    stop(paste("Model Number",max(model.number),"Does Not Exist"))
+  }
+  
+  int.plots<-vector("list",length=n.plots)
+  names(int.plots)<-selection.criteria[model.number]
+  
+  for (j in 1:n.plots){
+    plot.number<- model.number[j]
+    model.to.plot<-data.frame(model.estimates[[1]][[plot.number]])
+    
+    if(!is.null(IC.type)){
+      model.fit.type<-selection.criteria[plot.number]
+      model.name<-best.models$model.names[which(names(best.models$model.names)==model.fit.type)]
+    } else {
+      model.name <- selection.criteria[plot.number]
+    }
+    
+    if (is.null(time.resolution)){
+      ##divide x-axis into 5 equal intervals; e.g., for 10 second trial, marks at 0, 2, 4, 6, 8, 10 seconds
+      tick.separator<-(max(model.to.plot$Time)-min(model.to.plot$Time))/5
+    } else {
+      if (is.numeric(time.resolution) & time.resolution[1] > 0){
+        tick.separator <- time.resolution[1]
+      } else {
+        ## if not numeric or otherwise weird, use default
+        tick.separator<-(max(model.to.plot$Time)-min(model.to.plot$Time))/5
+      }
+    }
+    
+    ##the next set of several commands builds a single plot using the ggplot library
+    
+    ##setup plot
+    
+    #plot.basics<-ggplot(model.to.plot,aes(Time,Average))+theme_bw()+theme(panel.grid.major=ggplot2::element_blank(),panel.grid.minor=ggplot2::element_blank(),plot.margin=ggplot2::unit(c(20.828,10.668,25.908,20.828),"mm"),axis.text=ggplot2::element_text(size=axis.label.size))
+    
+    ##margin size: R default is (b,l,t,r) = c(5.1, 4.1, 4.1, 2.1) in lines where 1 line = 0.2 in
+    ##ggplot uses (t,r,b,l) in mm, where 25.4 mm = 1 in, or 1 line = 5.08 mm
+    ##in ggplot pt 72.27 pt = 1 in so 1 line = 14.454 pt
+    ##text size in R: default is 12 pt so cex=1.5 means font size = 18 and cex=2 means font size = 18
+    plot.basics<-ggplot2::ggplot(model.to.plot,ggplot2::aes(x=Time,y=Average))+
+      ggplot2::theme_classic()+
+      ggplot2::theme(panel.grid.major=ggplot2::element_blank(),panel.grid.minor=ggplot2::element_blank(),plot.margin=ggplot2::unit(c(5.08,5.08,5.08,5.08),"mm"),axis.text=ggplot2::element_text(size=axis.label.size),axis.line.x=ggplot2::element_line(size=0.5),axis.line.y=ggplot2::element_line(size=0.5))
+    plot.ticks<-plot.basics + ggplot2::scale_x_continuous(breaks=seq(min(model.to.plot$Time),max(model.to.plot$Time),by=tick.separator))
+    
+    if (!is.null(y.limits)){
+      if (is.numeric(y.limits) & y.limits[2] > y.limits[1]){
+        plot.ticks <- plot.ticks + ggplot2::scale_y_continuous(limits = y.limits[c(1,2)])
+      }
+    }
+    
+    
+    ##add bootstrap CI first to eliminate color issue
+    plot.bootstrap<-plot.ticks+ggplot2::geom_ribbon(ggplot2::aes(ymin=Lower,ymax=Upper),color="gray",alpha=0.25)
+    
+    ##add intensity function estimate
+    plot.average<-plot.bootstrap+ggplot2::geom_step(color="black",direction="hv",size=0.5)
+    ##looks like the default size of the line is 0.5 for lwd=1 
+    
+    ##add axis and graph titles
+    plot.labeled<-plot.average+ggplot2::labs(x="Time",y="Intensity Function")+ggplot2::theme(axis.title=ggplot2::element_text(size=axis.label.size))
+    if (add.title==FALSE){
+      int.plots[[j]]<-plot.labeled ##plot the version without title
+    }else{
+      if (!is.null(IC.type)){
+        intensity.plot.title <- paste0("Best Model by ",IC.type,": ",model.name)
+      } else{
+        intensity.plot.title <- model.name
+      }
+      plot.titled<-plot.labeled+ggplot2::ggtitle(intensity.plot.title)+ggplot2::theme(plot.title=ggplot2::element_text(size=title.size,face="bold", hjust = 0.5))
+      ##title font size is 1.2 times greater than axis label font size = 21.6 points
+      ##changed to 18 bold as per raster plot - ultimately this will not matter in the final plots that do not have titles
+      int.plots[[j]]<-plot.titled ##plot the version with title
+    }
+    
+  }##end for loop
+  
+  
+  ##save the plots to a file
+  if (!is.null(filename)){
+    ext.type<-substr(filename,nchar(filename)-2,nchar(filename))
+    
+    ##open a png, jpg, tif, ps, or pdf graphics device based on extension
+    
+    if (substr(ext.type,2,3)=="ps"){
+      postscript(filename,width=7,height=7,title=neuron.name)
+    }else{
+      if (ext.type %in% c("bmp","png","jpg","tif","pdf")){
+        if (ext.type=="bmp"){
+          bmp(filename,width=7,height=7,units="in",title=neuron.name)
+        }
+        if (ext.type=="png"){
+          png(filename,width=7,height=7,units="in",title=neuron.name)
+        }
+        if (ext.type=="jpg"){
+          jpeg(filename,width=7,height=7,units="in",title=neuron.name)
+        }
+        if (ext.type=="tif"){
+          tif(filename,width=7,height=7,units="in",title=neuron.name)
+        }
+        
+        if (ext.type=="pdf"){
+          pdf(filename,width=7,height=7,title=neuron.name)
+        }
+      }else{
+        filename <- paste0(filename,".pdf")
+        pdf(filename,width=7,height=7,title=neuron.name)
+      }
+    }
+    for(i in 1:n.plots){
+      print(int.plots[[i]])
+    }
+    dev.off()
+  }else{ ##if we have no file to save to, plot in new R Graphics Device windows
+    for(i in 1:n.plots){
+      if(!RStudio){ # if this is run in R Studio, the new plot will pop open outside of RStudio
+        dev.new()
+      }
+      print(int.plots[[i]])
+    }
+  }
+  return(int.plots)
+}

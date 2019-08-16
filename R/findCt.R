@@ -1,0 +1,33 @@
+find.ct<-function(spikes,Time,lambda,J){
+
+time.start<-min(Time)
+time.end<-max(Time)
+T.data<-time.end-time.start
+val <- floor(2^J)  
+by.terminal<-T.data/val
+
+terminal.points <- seq(time.start,time.end,by.terminal)
+ct.best<-matrix(NA,nrow=length(spikes),ncol=val)
+
+for (i in 1:length(spikes)){
+	xi <- spikes[[i]]
+	count.points<-numeric(val)
+	for (ii in 1:val){
+		count.points[ii]<-length(xi[xi>=terminal.points[ii] & xi<terminal.points[ii+1]])
+	}
+      if (J == 0){
+        ct.best[i,] <- count.points
+      } else {
+        ct.best[i,]<-Poisson.RDP(count.points,lambda)
+      }
+}
+
+##output of Poisson.RDP is not exactly c(t), needs to be scaled by multiplying by val/T.data
+ct.best<-ct.best/(by.terminal)
+
+## We have 1 c(t) estimate per spike train. This means that the process of merging partitions may not be the same on every spike train.
+## To get a single "best" estimate of c(t), we average the c(t) estimates at each time point.
+## Because the partitions may merge at different points for different spike trains, averaging the spike trains will "destroy" the apparent merge.
+ct.avg<-apply(ct.best,2,mean)
+return(list(ct.avg = ct.avg, ct.best = ct.best))
+}
