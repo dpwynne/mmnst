@@ -1,16 +1,12 @@
-##OLD FUNCTION
-#ISIPlot <- function(NeuronNumber,TrialNumber,spikes=spikes){
-#  title.graph <- paste("Neuron: ", as.character(NeuronNumber)," - Trial #",as.character(TrialNumber),sep='')
-#  x <- spikes[[TrialNumber]]
-#  log.diff.x<-log(diff(x))
-#  time.fire<-x[2:length(x)]
-#  par(mar=c(5, 4, 4, 2) + 1.2)
-#  plot(time.fire,log.diff.x,pch=".",cex=2,axes=F,xlab='Time (Sec.)',ylab=expression(log(T[i] - T[i-1])),font.lab=1,cex.lab=2)
-#  axis(1,lwd=1,font=1,cex.axis=2)
-#  axis(2,lwd=1,font=1,cex.axis=2)
-#  rug(time.fire,lwd=1)
-#  title(main=title.graph,cex.main=1.5)
-#}
+#' Inter-spike interval plot
+#'
+#' Produces an inter-spike interval (ISI) plot for a single trial
+#'
+#' @param NeuronNumber an identifier for the neuron being plotted
+#' @param TrialNumber the trial number whose spike train is being plotted
+#' @param spike.train a list of spike trains
+#'
+#' @return a ggplot object containing the parameters of the ISI plot
 
 ISIPlot <- function(NeuronNumber, TrialNumber, spike.train=spikes){
 library(ggplot2)
@@ -34,3 +30,17 @@ plot.titled<-plot.labeled+ggtitle(title.graph)+theme(plot.title=element_text(siz
 
 return(plot.titled)
 }
+
+##OLD FUNCTION
+#ISIPlot <- function(NeuronNumber,TrialNumber,spikes=spikes){
+#  title.graph <- paste("Neuron: ", as.character(NeuronNumber)," - Trial #",as.character(TrialNumber),sep='')
+#  x <- spikes[[TrialNumber]]
+#  log.diff.x<-log(diff(x))
+#  time.fire<-x[2:length(x)]
+#  par(mar=c(5, 4, 4, 2) + 1.2)
+#  plot(time.fire,log.diff.x,pch=".",cex=2,axes=F,xlab='Time (Sec.)',ylab=expression(log(T[i] - T[i-1])),font.lab=1,cex.lab=2)
+#  axis(1,lwd=1,font=1,cex.axis=2)
+#  axis(2,lwd=1,font=1,cex.axis=2)
+#  rug(time.fire,lwd=1)
+#  title(main=title.graph,cex.main=1.5)
+#}
