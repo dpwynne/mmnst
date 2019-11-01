@@ -1,9 +1,23 @@
+#' Find c(t)
+#'
+#' Compute the piecewise constant estimate of the intensity function, c(t), for each spike train
+#'
+#' @param spikes a list of spike trains
+#' @param Time a numeric vector containing, at minimum, the start and end points of the spike train recording
+#' @param lambda a penalty term used in estimating the piecewise constant intensity function c(t). Larger values of lambda result in "smoother" estimates.
+#' @param J the maximum size of the tree in the initial dyadic partitioning used to estimate c(t). The final estimate of c(t) will have 2^J values.
+#'
+#' @return a list of length 2
+#' The first item in the list is the estimate of c(t) created by averaging the estimates for each spike train
+#' The second item is a matrix in which each row represents the estimate of c(t) for an individual spike train
+#'
+#' @export
 find.ct<-function(spikes,Time,lambda,J){
 
 time.start<-min(Time)
 time.end<-max(Time)
 T.data<-time.end-time.start
-val <- floor(2^J)  
+val <- floor(2^J)
 by.terminal<-T.data/val
 
 terminal.points <- seq(time.start,time.end,by.terminal)

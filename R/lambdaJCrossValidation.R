@@ -1,7 +1,22 @@
-# This function also calculates the likelihood for J=0 and returns that
-# if a homog. model (J=0) is best in terms of ISE/IKL
+#' Recursive dyadic partitioning cross-validation
+#'
+#' Optimizes a penalized log-likelihood to find the optimal number of partitions for the recursive dyadic partitioning
+#'
+#' @param spikes a list of spike trains
+#' @param Time a numeric vector containing, at minimum, the start and end points of the recording
+#' @param poss.lambda a numeric vector containing a grid of penalty values
+#' @param max.J the maximum resolution of the dyadic partitioning used the estimate the piecewise constant intensity function c(t)
+#' @param max.diff the maximum allowance for the integrated squared error (ISE) of a smaller model to deviate from the overall minimum ISE
+#' @param pct.diff.plot a logical value indicating whether to produce a plot of the percentage difference (above minimum ISE) vs. J
+#'
+#' @return a list of length 3
+#' The first item in the list is the optimal partition depth as computed by ISE
+#' The second item in the list is the optimal penalty term as corresponding to that partition depth
+#' The third item in the list is a matrix containing the ISE values for all combinations of partition depth and penalty term
+#'
+#' @export
 
-lambda.J.cross.validation = function(spikes, Time, poss.lambda = seq(0, 10, by = 0.1), max.J = 7, max.diff = 0.005, pct.diff.plot = TRUE){  
+lambda.J.cross.validation = function(spikes, Time, poss.lambda = seq(0, 10, by = 0.1), max.J = 7, max.diff = 0.005, pct.diff.plot = TRUE){
   # spikes = list of vectors; each vector represents the spike train for one of many repeated trials
   # Time = Time vector; can be just the start and end times of the recording; should be the same for all spike trains
   # poss.lambda = a grid of penalty values; by default, 0 to 10 in increments of 0.1
@@ -12,31 +27,31 @@ lambda.J.cross.validation = function(spikes, Time, poss.lambda = seq(0, 10, by =
   # as long as the integrated squared error is within max.diff relative change of overall minimum; by default, max.diff = 0.005 corresponding to a 0.5% allowance
   # when max.diff is large enough, the model with no partitioning (constant intensity) will be chosen; this case is equivalent to infinite penalty and will return J = 0
   # pct.diff.plot produces a plot of % difference vs. J
-  
+
   time.start<-min(Time)
   time.end<-max(Time)
   T.data<-time.end-time.start
-  
+
   ##get N.values
   N.values<-floor(2^(1:max.J))
-  
+
   terminal.points<-vector("list",length=max.J)
-  
+
   by.terminal<-(time.end-time.start)/N.values
-  
+
   for (j in 1:length(N.values)){
     terminal.points[[j]] <- seq(time.start,time.end,by=by.terminal[j])
   }
-  
+
   ##integrated kullback-leibler and integrated squared error
-  ISE.matrix<-matrix(NA,nrow=length(poss.lambda),ncol=length(N.values))  
-  
+  ISE.matrix<-matrix(NA,nrow=length(poss.lambda),ncol=length(N.values))
+
   ##IKL = D_KL(f|f.hat) - using Wikipedia notation for our formula
-  #IKL.matrix<-matrix(NA,nrow=length(poss.lambda),ncol=length(N.values))  
-  
-  
+  #IKL.matrix<-matrix(NA,nrow=length(poss.lambda),ncol=length(N.values))
+
+
   n.trials<-length(spikes) ##number of spike trains
-  
+
   for(J in 1:length(N.values)){ ##one pass = one column of ISE matrix
     cat("J=",J,"\n")
     val <- N.values[J]
@@ -53,14 +68,14 @@ lambda.J.cross.validation = function(spikes, Time, poss.lambda = seq(0, 10, by =
           f.hat.i[i,] = rep(0 , length(count.points))
         }else{
           f.hat.i[i,]<-(Poisson.RDP(count.points,lambda))*(val)/(T.data*length(xi))
-        } 
+        }
       }
-      
+
       ##get f.hat estimate, square it, and integrate the squared estimate
       f.hat <- apply(f.hat.i,2,mean)
       delta.t<-diff(terminal.points[[J]])
       integral.term <- sum(f.hat^2*delta.t)
-      
+
       ##for loop for f.hat.minus.i
       f.hat.minus.i <- matrix(NA,nrow=n.trials,ncol=val)
       f.hat.minus.i.bar<-numeric(n.trials)*NA
@@ -73,45 +88,45 @@ lambda.J.cross.validation = function(spikes, Time, poss.lambda = seq(0, 10, by =
         }else{
           f.hat.minus.i.ti = rep(0 , dim(temp.f)[2])
         }
-        
+
         #f.hat.minus.i.bar for use in ISE
         f.hat.minus.i.bar[i]<-mean(f.hat.minus.i.ti)
-        
+
         #f.hat.minus.i.log.bar for use in IKL
         #f.hat.minus.i.IKL<-f.hat.minus.i.ti
         #f.hat.minus.i.IKL[which(f.hat.minus.i.IKL <= 1e-20)] <- 1e-20
         #f.hat.minus.i.log.bar[i]<-mean(log(f.hat.minus.i.IKL))
       }
-      
+
       C.V.ISE <- mean(f.hat.minus.i.bar)*2
-      
+
       #C.V.IKL <- -mean(f.hat.minus.i.log.bar)
-      
+
       ##ISE
       ISE.matrix[which(poss.lambda==lambda),J]<-(integral.term-C.V.ISE)
-      
+
       ##IKL
       #IKL.matrix[which(poss.lambda==lambda),J]<- C.V.IKL
-      
+
     }
   }
-  
-  
+
+
   ISE.for.J.equal.to.0 = -1/T.data
   #IKL.for.J.equal.to.0 = -log(1/T.data)
-  
+
   min.ISE.for.each.J <- c(ISE.for.J.equal.to.0, apply(ISE.matrix, 2, min))
   min.ISE.overall <- min(min.ISE.for.each.J)
-  
+
   # the code below identifies the minimum J - the original code, with a plot of % diff vs. J, is in the archive
   min.threshold <- min.ISE.overall*(1-max.diff)
-  
+
   J.within.threshold <- which(min.ISE.for.each.J < min.threshold)
   # note: this is a vector possibly starting at 1, which corresponds to J = 0
   # e.g. if J.within.threshold = c(2, 3, 7), the corresponding J are 1, 2, 6
-  
+
   min.J.allowable <- min(J.within.threshold)-1
-  
+
   if (min.J.allowable == 0){
     cv.output.list <- list(J.ISE = 0, lambda.ISE = Inf, ISE = ISE.matrix)
   } else {
@@ -126,6 +141,6 @@ lambda.J.cross.validation = function(spikes, Time, poss.lambda = seq(0, 10, by =
     abline(h = max.diff*100, lty = "dotted")
   }
   # The leftmost point under the horizontal line corresponds to the chosen value of J
-  
-  return(cv.output.list)  
+
+  return(cv.output.list)
 }

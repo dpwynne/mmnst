@@ -1,3 +1,15 @@
+#' Calculate y(i)
+#'
+#' Calculates Yi in equation (39) of Haslinger (2010)
+#'
+#' @param spike.train a list of numeric vectors, each of which contains the spike times for one trial of the experiment
+#' @param endpoints.bins a numeric vector containing the endpoints of the bins for the binned spike train
+#' @param q a numeric vector containing the q values calculated by the \code{q.vector} function
+#'
+#' @return a numeric vector of Yi values as defined in equation (39) of Haslinger (2010)
+#'
+#' @export
+
 calculate.yi<-function(spike.train,endpoints.bins,q){
 ##spike.train is the spike train
 ##endpoints.bins is the vector of start/endpoints of the bins
