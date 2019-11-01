@@ -1,10 +1,27 @@
+#' Estimate \theta(t)
+#'
+#' Estimates average intensity function and computes bootstrap confidence intervals for a number of specified models
+#'
+#' @param spikes a list of spike trains
+#' @param f.hat a list containing estimated frequencies for each model
+#' @param w0.hat.list a list containing estimated phases for each model
+#' @param K.list a list of matrices containing estimated eta and gamma parameters for each model and the estimated goodness-of-fit criteria (AIC, etc.) for each model
+#' @param best.models a list containing the indices of the models to estimate an intensity function for and their corresponding model names
+#' Typically best.models is either the list of all models or a list of models chosen by specific goodness-of-fit criteria
+#' @param Time a numeric vector containing (at least) the start and end times of the spike train recording
+#' @param terminal.points a numeric vector containing the time points at which the piecewise constant estimate c(t) changes
+#' @param ct a numeric vector containing the estimated piecewise constant intensity function
+#' @param intensity.function.length the number of points in the discretized intensity function
+#' The larger this value is, the better the resolution
+#' For spike trains of 10 seconds or less, the default value corresponds to 10 ms resolution
+#' For spike trains of 10-100 seconds, the default value corresponds to 100 ms resolution
+#'
+#' @return  a list of length 2
+#' The first item in the list is a list of matrices containing the intensity estimates (average and bootstrap CI) for each model
+#' The second item in the list is a list of matrices containing the intensity estimates (for each spike train) for each model
+#'
+#' @export
 estimate.theta.t<-function(spikes,f.hat.list,w0.hat.list,K.list,best.models,Time,terminal.points,ct,intensity.function.length=(1+diff(range((Time)))*10^(3-ceiling(log10(diff(range(Time))))))){
-#produces average intensity estimate and bootstrap confidence intervals without plotting
-##f.hat.list, w0.hat.list are lists of f.hat and w0.hat for each model
-##K.list is the list of matrices of eta.hat,gama.hat,fit for each model
-##intensity.function.length is the number of points in the discretized intensity function
-##for 10 seconds or less it defaults to 10 ms; for 10-100 seconds it defaults to 100 ms
-##increase the value of intensity.function.length for better resolution
 
 cat("Determining Intensity Function for Models\n")
 
@@ -76,8 +93,8 @@ colnames(theta.matrix)<-c("Time","Lower","Average","Upper")
 for (j in which(selected.models==selected.models[i])){
 int.estimate[[j]]<-theta.matrix
 fitted.models<-c(fitted.models,j)
-}##end for 
-}##end if 
+}##end for
+}##end if
 }##end i for loop
 
 names(theta.t.list) <- selected.names
@@ -86,7 +103,7 @@ cat("Intensity Function Estimated\n")
 #return(int.estimate)
 #return(int.estimate[c(2,3)])
 #return(list(AIC = int.estimate[[1]],
-#	AICc = int.estimate[[2]], 
+#	AICc = int.estimate[[2]],
 #	BIC = int.estimate[[3]],
 #	individual.thetas = theta.t.list))
 return(list(int.estimate = int.estimate,

@@ -1,4 +1,23 @@
+#' Fit additive model
+#'
+#' Fits the additive multiscale model from Ramezan et al. (2014)
+#'
+#' @param spikes a lits of spike trains
+#' @param f.hat a numeric vector containing frequency estimates for a particular model
+#' @param w0.hat a matrix containing phase estimates for each spike train for a particular model
+#' @param setup.pars a list of additional parameters for the likelihood function, computed by the \code{setup.likelihoods} function
+#' @param terminal.points a numeric vector containing the time points at which c(t) changes
+#' @param ct a numeric vector containing the estimated piecewise constant intensity function c(t). The length of ct should be a whole number power of 2.
+#'
+#' @return a list of length 3
+#' The first item in the list is a matrix whose rows each containi the MLEs of eta for a single spike train
+#' The second item in the list is a matrix whose rows each contain the MLEs of gamma for a single spike train
+#' The third item in the list is a matrix whose rows each contain the AIC, AICc, BIC, and log-likelihood for the model for a single spike train
+#'
+#' @export
+
 fit.add.model<-function(spikes,f.hat,w0.hat,setup.pars,terminal.points,ct){
+
 K<-length(f.hat)
 J<-setup.pars$J
 K.hat <- (K*4)+(2^J)

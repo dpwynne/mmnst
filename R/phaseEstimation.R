@@ -11,7 +11,7 @@ w0.hat <- matrix(NA,ntrials,length(w.hat))
 for(itr in 1:ntrials){
 	w0.hat.itr <- numeric(length(w.hat))
 	for(i in 1:length(w.hat)){
-	spike.train <- spikes[[itr]]
+	spike.train <- spikes[[itr]]  # this goes outside the second for loop
 	sum.sin<- sum(sin(w.hat[i]*spike.train))
 	sum.cos<-sum(cos(w.hat[i]*spike.train))
 	phi.hat<-atan(-sum.sin/sum.cos)
