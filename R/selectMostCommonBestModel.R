@@ -1,3 +1,14 @@
+#' Select most common best model
+#'
+#' Identifies the model chosen as "best" for the most spike trains
+#'
+#' @param selected.models a factor vector containing names of the "best" models as chosen by some IC
+#' @param model.names a factor vector containing the names of all models fit to the data
+#'
+#' @return the name of the overall "best" model as chosen by plurality vote over all spike trains with a clear best model
+#'
+#' @export
+
 select.most.common.best.model <- function(selected.models, model.names){
 # selected.models is a factor vector of "best" models chosen by AIC or AICc or BIC
 # should be one entry per spike train, but some can be NA
