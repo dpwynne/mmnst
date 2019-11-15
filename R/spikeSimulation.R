@@ -1,4 +1,5 @@
-spike.simulation<-function(nruns,Time,pass.arg,ct,type="m",envelope.function=function(t) return(1)){
+spike.simulation<-function(nruns,t.start = 0, t.end,
+                           pass.arg,ct,type="m",envelope.function=function(t) return(1)){
 ##returns a list of vectors containing simulated spike times
 ##nruns is number of simulated runs desired
 ##Time is vector of at least start and end times
@@ -15,8 +16,6 @@ w0<-pass.arg[[2]]
 eta<-pass.arg[[3]]
 gamma<-pass.arg[[4]]
 
-t.start<-min(Time)
-t.end<-max(Time)
 terminal.points <- identify.terminal.points(t.start,t.end,log(length(ct),2))
 ##get terminal points from ct
 
