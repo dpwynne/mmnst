@@ -2,7 +2,7 @@
 #'
 #' Calculates the multiplicative intensity function introduced in Ramezan et al. (2014)
 #'
-#' @param t a numeric vector of time points at which the intensity function is to be calculated
+#' @param t a numeric vector of time points at which to calculate the function
 #' @param f a numeric vector containing frequency values
 #' @param w0 a numeric vector containing initial phase values
 #' @param eta a numeric vector containing eta values (contribution of each periodic component to the intensity function)
