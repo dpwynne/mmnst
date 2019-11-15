@@ -3,7 +3,8 @@
 #' Optimizes a penalized log-likelihood to find the optimal number of partitions for the recursive dyadic partitioning
 #'
 #' @param spikes a list of spike trains
-#' @param Time a numeric vector containing, at minimum, the start and end points of the recording
+#' @param t.start the starting time of the recording window; the default value is 0
+#' @param t.end the ending time of the recording window
 #' @param poss.lambda a numeric vector containing a grid of penalty values
 #' @param max.J the maximum resolution of the dyadic partitioning used the estimate the piecewise constant intensity function c(t)
 #' @param max.diff the maximum allowance for the integrated squared error (ISE) of a smaller model to deviate from the overall minimum ISE
@@ -16,7 +17,9 @@
 #'
 #' @export
 
-lambda.J.cross.validation = function(spikes, Time, poss.lambda = seq(0, 10, by = 0.1), max.J = 7, max.diff = 0.005, pct.diff.plot = TRUE){
+lambda.J.cross.validation = function(spikes, t.start = 0, t.end,
+                                     poss.lambda = seq(0, 10, by = 0.1), max.J = 7,
+                                     max.diff = 0.005, pct.diff.plot = TRUE){
   # spikes = list of vectors; each vector represents the spike train for one of many repeated trials
   # Time = Time vector; can be just the start and end times of the recording; should be the same for all spike trains
   # poss.lambda = a grid of penalty values; by default, 0 to 10 in increments of 0.1
@@ -28,19 +31,17 @@ lambda.J.cross.validation = function(spikes, Time, poss.lambda = seq(0, 10, by =
   # when max.diff is large enough, the model with no partitioning (constant intensity) will be chosen; this case is equivalent to infinite penalty and will return J = 0
   # pct.diff.plot produces a plot of % difference vs. J
 
-  time.start<-min(Time)
-  time.end<-max(Time)
-  T.data<-time.end-time.start
+  T.data<-t.end-t.start
 
   ##get N.values
   N.values<-floor(2^(1:max.J))
 
   terminal.points<-vector("list",length=max.J)
 
-  by.terminal<-(time.end-time.start)/N.values
+  by.terminal<-(t.end-t.start)/N.values
 
   for (j in 1:length(N.values)){
-    terminal.points[[j]] <- seq(time.start,time.end,by=by.terminal[j])
+    terminal.points[[j]] <- seq(t.start,t.end,by=by.terminal[j])
   }
 
   ##integrated kullback-leibler and integrated squared error

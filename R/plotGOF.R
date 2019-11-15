@@ -4,7 +4,8 @@
 #'
 #' @param spikes a list of spike trains
 #' @param theta a numeric vector containing the average of the intensity function estimates across trials
-#' @param Time a numeric vector containing the start and end points of the recording window
+#' @param t.start the starting time of the recording window; the default value is 0
+#' @param t.end the ending time of the recording window
 #' @param neuron.name a string containing the name of the neuron being plotted, used only to title the plot
 #' @param resolution a scalar determining the bin width. This is equivalent to Delta in Haslinger (2010).
 #' @param axis.label.size a scalar determining the font size of the x- and y-axis labels of the plot
@@ -15,7 +16,9 @@
 #'
 #' @export
 
-plot.gof<-function(spikes, theta, Time, neuron.name = NULL, resolution= (max(Time)-min(Time))/(length(theta)-1), axis.label.size = 18, title.size = 24){
+plot.gof<-function(spikes, theta, t.start = 0, t.end,
+                   neuron.name = NULL, resolution= (t.end - t.start)/(length(theta)-1),
+                   axis.label.size = 18, title.size = 24){
   ##spikes is the list of spike trains you want to check goodness of fit for
   ##theta is the average intensity function (across trials) and Time is the vector of start/end times
   ##neuron.name is the name of the neuron being plotted, used only to title the plot if you want it
@@ -25,7 +28,7 @@ plot.gof<-function(spikes, theta, Time, neuron.name = NULL, resolution= (max(Tim
 
 #library(ggplot2)
 
-  endpoints.bins<-seq(min(Time),max(Time),by=resolution)
+  endpoints.bins<-seq(t.start, t.end, by=resolution)
 
   ##This error should never occur with the default resolution but might with user-defined resolution
   if (length(endpoints.bins)> length(theta)){

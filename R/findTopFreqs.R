@@ -3,7 +3,8 @@
 #' Finds the highest-amplitude frequency components in each spike train
 #'
 #' @param spikes a list of spike trains
-#' @param Time a vector of time points containing, at minimum, the start and end times of the recording
+#' @param t.start the starting time of the recording window; the default value is 0
+#' @param t.end the ending time of the recording window
 #' @param freqrange a list of (non-overlapping) frequency ranges. Each item in the list should be a numeric vector of lowest and highest frequencies in the range.
 #' @param q the number of highest-amplitude frequency components to find in each train
 #' @param default.grid.spacing the spacing to use in the frequency search. This can be a single number reflecting the same grid spacing over all frequency ranges or a vector of the same length as freqrange
@@ -14,7 +15,11 @@
 #'
 #' @export
 
-find.top.freqs<-function(spikes,Time,freqrange=list(c(2,30)),q=5, default.grid.spacing = 1, periodogram.window.size = 25, default.coef.step = 0.01){
+find.top.freqs<-function(spikes, t.start = 0, t.end,
+                         freqrange=list(c(2,30)), q=5,
+                         default.grid.spacing = 1,
+                         periodogram.window.size = 25,
+                         default.coef.step = 0.01){
 ## spikes, a list of spike train data
 ## Time can be a vector of time points, a vector of start/end points,
 ## or the duration of recording (time.start assumed to be 0)
@@ -28,15 +33,8 @@ find.top.freqs<-function(spikes,Time,freqrange=list(c(2,30)),q=5, default.grid.s
 
   #cat("Finding Most Common Peak Frequencies\n")
 
-  if (length(Time) > 1){
-    time.start<-min(Time)
-    time.end<-max(Time)
-  }else{
-    time.start<-0
-    time.end<-Time
-  }
   ntrials<-length(spikes)
-  T.data<-time.end-time.start
+  T.data<-t.end-t.start
 
   ##get appropriate range of frequencies to check
   f = c()
@@ -62,7 +60,7 @@ find.top.freqs<-function(spikes,Time,freqrange=list(c(2,30)),q=5, default.grid.s
   f.max<-vector("list",length=ntrials)
   for (replication.counter in 1:ntrials){
     x <- spikes[[replication.counter]]
-    x <- x[(x >= time.start & x < time.end)] ##spikes within the time window
+    x <- x[(x >= t.start & x < t.end)] ##spikes within the time window
 
     if (length(x)>q){ ##we should have at least q+1 spikes if we are to estimate q frequencies
 

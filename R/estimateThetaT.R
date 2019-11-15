@@ -8,7 +8,8 @@
 #' @param K.list a list of matrices containing estimated eta and gamma parameters for each model and the estimated goodness-of-fit criteria (AIC, etc.) for each model
 #' @param best.models a list containing the indices of the models to estimate an intensity function for and their corresponding model names
 #' Typically best.models is either the list of all models or a list of models chosen by specific goodness-of-fit criteria
-#' @param Time a numeric vector containing (at least) the start and end times of the spike train recording
+#' @param t.start the starting time of the recording window; the default value is 0
+#' @param t.end the ending time of the recording window
 #' @param terminal.points a numeric vector containing the time points at which the piecewise constant estimate c(t) changes
 #' @param ct a numeric vector containing the estimated piecewise constant intensity function
 #' @param intensity.function.length the number of points in the discretized intensity function
@@ -21,7 +22,7 @@
 #' The second item in the list is a list of matrices containing the intensity estimates (for each spike train) for each model
 #'
 #' @export
-estimate.theta.t<-function(spikes,f.hat.list,w0.hat.list,K.list,best.models,Time,terminal.points,ct,intensity.function.length=(1+diff(range((Time)))*10^(3-ceiling(log10(diff(range(Time))))))){
+estimate.theta.t<-function(spikes, f.hat.list, w0.hat.list, K.list, best.models, t.start = 0, t.end, terminal.points, ct, intensity.function.length=(1+(t.end - t.start)*10^(3-ceiling(log10(t.end - t.start))))){
 
 cat("Determining Intensity Function for Models\n")
 
@@ -59,7 +60,7 @@ list.number<-selected.models[i]
 
 theta.t<-matrix(NA,intensity.function.length,length(spikes))
 
-Time.vector<-seq(min(Time),max(Time),length=intensity.function.length)
+Time.vector<-seq(t.start,t.end,length=intensity.function.length)
 
 if (is.null(dim(ct))){ # if this is a vector of average ct, not a matrix of individual ct
   ct <- matrix(rep(ct, length(spikes)), nrow = length(spikes), byrow = TRUE)
