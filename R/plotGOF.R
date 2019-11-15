@@ -35,7 +35,7 @@ plot.gof<-function(spikes, theta, Time, neuron.name = NULL, resolution= (max(Tim
 
   spike.gof<-vector("list",length(spikes))
   names(spike.gof)<-paste0("Trial",seq(1,length(spikes)))
-  qk <- p.vector(endpoints.bins,theta,resolution)
+  qk <- q.vector(endpoints.bins,theta,resolution)
 
   for(i in 1:length(spikes)){
     transformed.y <- calculate.yi(spikes[[i]],endpoints.bins,qk)
