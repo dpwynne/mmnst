@@ -26,72 +26,71 @@ find.top.freqs<-function(spikes,Time,freqrange=list(c(2,30)),q=5, default.grid.s
 ## i.e. the range of frequencies to look at to smooth at a frequency f is f +/- (periodogram.window.size)*(default.coef.step)
 ## and the spacing of the individual f values is default.grid.spacing
 
-#cat("Finding Most Common Peak Frequencies\n")
+  #cat("Finding Most Common Peak Frequencies\n")
 
-if (length(Time) > 1){
-time.start<-min(Time)
-time.end<-max(Time)
-}else{
-time.start<-0
-time.end<-Time
-}
-ntrials<-length(spikes)
-T.data<-time.end-time.start
+  if (length(Time) > 1){
+    time.start<-min(Time)
+    time.end<-max(Time)
+  }else{
+    time.start<-0
+    time.end<-Time
+  }
+  ntrials<-length(spikes)
+  T.data<-time.end-time.start
 
-##get appropriate range of frequencies to check
-w<-c()
+  ##get appropriate range of frequencies to check
+  f = c()
 
+  if (length(default.grid.spacing) != length(freqrange)){
 
-if (length(default.grid.spacing) != length(freqrange)){
+    # if default grid spacing is one number, repeat for every range in freqrange
+    if (length(default.grid.spacing) == 1){
+      default.grid.spacing <- rep(default.grid.spacing, length(freqrange))
+    } else {
+      stop("There must be either one overall grid resolution or one grid resolution per interval of the frequency range to search over.")
+    }
+  }
 
-# if default grid spacing is one number, repeat for every range in freqrange
-if (length(default.grid.spacing) == 1){
- default.grid.spacing <- rep(default.grid.spacing, length(freqrange))
-} else {
- stop("There must be either one overall grid resolution or one grid resolution per interval of the frequency range to search over.")
-}
-}
+  for(nrhythms in 1:length(freqrange)){
+    minfreq<-freqrange[[nrhythms]][1]
+    maxfreq<-freqrange[[nrhythms]][2]
 
-for(nrhythms in 1:length(freqrange)){
-minfreq<-freqrange[[nrhythms]][1]
-maxfreq<-freqrange[[nrhythms]][2]
+    f<-c(f,seq(minfreq,maxfreq,by=max(default.grid.spacing[nrhythms],1/T.data)))
 
-w<-c(w,2*pi*seq(minfreq,maxfreq,by=max(default.grid.spacing[nrhythms],1/T.data)))
-}
+  }
 
-f.max<-vector("list",length=ntrials)
-for (replication.counter in 1:ntrials){
-x <- spikes[[replication.counter]]
-x <- x[(x >= time.start & x < time.end)] ##spikes within the time window
+  f.max<-vector("list",length=ntrials)
+  for (replication.counter in 1:ntrials){
+    x <- spikes[[replication.counter]]
+    x <- x[(x >= time.start & x < time.end)] ##spikes within the time window
 
-if (length(x)>q){ ##we should have at least q+1 spikes if we are to estimate q frequencies
+    if (length(x)>q){ ##we should have at least q+1 spikes if we are to estimate q frequencies
 
-smoothed.periodogram.w<-smoothed.periodogram(x,w,T.data, m = periodogram.window.size, coef.step = default.coef.step)
+      smoothed.periodogram.f<-smoothed.periodogram(x,f,T.data, m = periodogram.window.size, coef.step = default.coef.step)
 
-estimate<-sapply(w,smoothed.periodogram.w)
+      estimate<-sapply(f,smoothed.periodogram.f)
 
-##pick the q best frequencies
-q.max <- tail(sort(estimate),q)
+      ##pick the q best frequencies
+      q.max <- tail(sort(estimate),q)
 
-max.indx <- which(estimate %in% q.max)
-max.indx <- max.indx[max.indx>0]  # this line fixes a bug; we have forgotten what the bug is
-f.max.i <- w[max.indx]/(2*pi)
-f.max[[replication.counter]] <- f.max.i
-}else{
-f.max[[replication.counter]]<-rep(0,q)
-}
-#print(replication.counter) ##this just checks to make sure the for loop runs all the way through
-}
+      max.indx <- which(estimate %in% q.max)
+      max.indx <- max.indx[max.indx>0]  # this line fixes a bug; we have forgotten what the bug is
+      f.max[[replication.counter]] <- f[max.indx]
+    }else{
+      f.max[[replication.counter]]<-rep(0,q)
+    }
+    #print(replication.counter) ##this just checks to make sure the for loop runs all the way through
+  }
 
-##get the full list of frequencies
-f.common <- unlist(f.max)
-##summarize nonzero frequencies
-f.common <- table(f.common[f.common>0])
-f.sorted <- rev(sort(f.common)) ##ties broken by highest frequency
-##f.sorted <- sort(f.common, decreasing=T) ##ties broken by lowest frequency
-#cat("Most Common Peak Frequencies Found\n")
-f.sorted.printable<-f.sorted
-names(f.sorted.printable)<-paste0(names(f.sorted.printable),"Hz")
-print(f.sorted.printable)
-return(f.sorted)
+  ##get the full list of frequencies
+  f.common <- unlist(f.max)
+  ##summarize nonzero frequencies
+  f.common <- table(f.common[f.common>0])
+  f.sorted <- rev(sort(f.common)) ##ties broken by highest frequency
+  ##f.sorted <- sort(f.common, decreasing=T) ##ties broken by lowest frequency
+  #cat("Most Common Peak Frequencies Found\n")
+  f.sorted.printable<-f.sorted
+  names(f.sorted.printable)<-paste0(names(f.sorted.printable),"Hz")
+  print(f.sorted.printable)
+  return(f.sorted)
 }
