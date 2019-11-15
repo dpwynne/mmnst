@@ -2,7 +2,7 @@
 #'
 #' Computes c(t) at all arbitrary points in a time vector
 #'
-#' @param t a numeric vector of time points at which to calculate the function
+#' @param t a numeric vector of time points at which to evaluate the function
 #' @param terminal.points a numeric vector containing the time points at which c(t) changes
 #' @param ct a numeric vector containing the estimated piecewise constant estimated intensity function c(t). The length of ct should be a whole number power of 2.
 #'
