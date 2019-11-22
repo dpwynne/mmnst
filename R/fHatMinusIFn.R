@@ -1,10 +1,10 @@
 #' Leave-one-out density function cross-validation
 #'
-#' Calculates the average of m-1 density function estiamtes for a given set of time points with the ith density estimate removed.
+#' Calculates the average of m-1 density function estimates for a given set of time points with the ith density estimate removed.
 #' This function implements equation (1) of the supplementary material in Ramezan et al., 2014
 #'
-#' @param til a numeric vector of spike times for the lth trial
-#' @param i a scalar determining which estimated density function is to be removed
+#' @param til the time of the lth spike in trial i of a set of spike trains
+#' @param i the index of the trial whose estimated density function is to be removed (in leave-one-out cross-validation)
 #' @param points a numerical vector containing the end points of the dyadic partitioning for a given resolution
 #' @param f.hat.minus.i a numeric matrix where the columns represent the m density estimates and the rows represent the time points at which the density estimates are calculated
 #'
