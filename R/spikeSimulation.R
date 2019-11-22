@@ -1,10 +1,17 @@
-spike.simulation<-function(nruns,t.start = 0, t.end,
-                           pass.arg,ct,type="m",envelope.function=function(t) return(1)){
+#### BIG NOTE: FIGURE OUT HOW TO USE ... ARGUMENTS TO PASS DIRECTLY TO intensity.function
+# We want to fix this to work with arbitrary intensity function with arbitrary parameters
+## Use do.call with an argslist
+
+spike.simulation<-function(nruns, t.start = 0, t.end,
+                           resolution = 0.001,
+                           intensity.function,
+                           pass.arg,
+                           envelope.function=function(t) return(1)){
 ##returns a list of vectors containing simulated spike times
 ##nruns is number of simulated runs desired
-##Time is vector of at least start and end times
-##type is "m" for muliplicative and "a" for additive
-##pass.arg is a list of, in order, f, w0, eta, and gamma (parameters)
+  ## intensity.function is any intensity function for the corresponding process from which you want to simulate data
+##resolution: 0.001 = 1 ms assuming time in seconds
+  ##pass.arg is a list of arguments to pass to intensity.function
 ##ct is the simulated piecewise constant intensity function
 ##envelope.function is the envelope function
 
@@ -15,21 +22,18 @@ f<-pass.arg[[1]]
 w0<-pass.arg[[2]]
 eta<-pass.arg[[3]]
 gamma<-pass.arg[[4]]
+ct <- pass.arg[[5]]
+# figure out how to use ... notation; then we can pass these arguments directly as f, w0, eta, gamma, ct instead of pass.arg
 
 terminal.points <- identify.terminal.points(t.start,t.end,log(length(ct),2))
 ##get terminal points from ct
 
-##type determines which function to call
-if (type == "m"){
-spike.fun<-theta.m
-}
-if (type == "a"){
-spike.fun<-theta.a
-}
 
-simulated.intensity<-sapply(Time,spike.fun,f=f,w0=w0,eta=eta,gamma=gamma,terminal.points=terminal.points,ct=ct)
+Time.vector <- seq(t.start, t.end, by = resolution)  # by default 1 ms assuming time in seconds
 
-envelope<-sapply(Time,envelope.function)
+simulated.intensity<-sapply(Time.vector,intensity.function,f=f,w0=w0,eta=eta,gamma=gamma,terminal.points=terminal.points,ct=ct)
+
+envelope<-sapply(Time.vector,envelope.function)
 
 if(min(envelope)<=0){
 warning("Envelope function must be strictly positive")
@@ -57,7 +61,7 @@ for (i in 1:nruns){
 		t0 <- t0-(1/lambda.u)*log(u1)
       	if(t0>t.end) break
       	u2<-runif(1)
-		lambda.t <- spike.fun(t0,f,w0,eta,gamma,terminal.points,ct)
+		lambda.t <- intensity.function(t0,f,w0,eta,gamma,terminal.points,ct)
       	if(u2<=(lambda.t/lambda.u)){
 			spike.counter <- spike.counter+1
 			x[spike.counter] <- t0
