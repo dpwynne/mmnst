@@ -12,6 +12,8 @@
 #'
 #' @return a numeric vector containing the values of the additive intensity function calculated at given time points
 #'
+#' @references Ramezan, R., Marriott, P., and Chenouri, S. (2014), Statistics in Medicine, 33(2), 238-256. doi: 10.1002/sim.5923.
+#'
 #' @export
 
 theta.a <- function(t,f,w0,eta,gamma,terminal.points,ct){

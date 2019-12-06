@@ -1,6 +1,6 @@
 #' Fit multiplicative model
 #'
-#' Fits the multiplicative multiscale model from Ramezan et al. (2014)
+#' Fits the multiplicative multiscale model
 #'
 #' @param spikes a lits of spike trains
 #' @param f.hat a numeric vector containing frequency estimates for a particular model
@@ -13,6 +13,8 @@
 #' The first item in the list is a matrix whose rows each containi the MLEs of eta for a single spike train
 #' The second item in the list is a matrix whose rows each contain the MLEs of gamma for a single spike train
 #' The third item in the list is a matrix whose rows each contain the AIC, AICc, BIC, and log-likelihood for the model for a single spike train
+#'
+#' @references Ramezan, R., Marriott, P., and Chenouri, S. (2014), \emph{Statistics in Medicine}, \strong{33}(2), 238-256. doi: 10.1002/sim.5923.
 #'
 #' @export
 

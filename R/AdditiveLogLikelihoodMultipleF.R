@@ -14,6 +14,8 @@
 #'
 #' @return the value of the log-likelihood function for the additive model
 #'
+#' @references Ramezan, R., Marriott, P., and Chenouri, S. (2014), \emph{Statistics in Medicine}, \strong{33}(2), 238-256. doi: 10.1002/sim.5923.
+#'
 #' @export
 
 AdditiveLogLikelihood.Multiple.f<-function(param,f.hat,w0.hat.itr,setup.pars,ct,ct.spike.times,individual.spike.train){
