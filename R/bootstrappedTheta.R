@@ -7,8 +7,7 @@
 #' @param B the number of desired bootstrap resamples
 #'
 #' @return a matrix containing the lower and upper bounds of the percentile confidence interval at each time point
-#'
-#' @export
+
 bootstrapped.theta<-function(theta.t,B=1000){
 
 ntrains<-dim(theta.t)[2]

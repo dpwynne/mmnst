@@ -9,8 +9,6 @@
 #' @param f.hat.minus.i a numeric matrix where the columns represent the m density estimates and the rows represent the time points at which the density estimates are calculated
 #'
 #' @return a numeric vector of the average of m-1 density function estimates for a given set of time points with the ith density estimate removed
-#'
-#' @export
 
 f.hat.minus.i.fn <- function(til,i,points,f.hat.minus.i){
 

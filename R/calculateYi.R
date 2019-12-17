@@ -8,7 +8,6 @@
 #'
 #' @return a numeric vector of Yi values as defined in equation (39) of Haslinger (2010)
 #'
-#' @export
 
 calculate.yi<-function(spike.train,endpoints.bins,q){
 ##spike.train is the spike train

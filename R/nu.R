@@ -6,7 +6,6 @@
 #'
 #' @return 1 + cos(2 \pi x)
 #'
-#' @export
 
 nu <- function(x){
 ##almost periodic function

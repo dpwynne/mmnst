@@ -7,6 +7,8 @@
 #' @param spike.train a list of spike trains
 #'
 #' @return a ggplot object containing the parameters of the ISI plot
+#'
+#' @export
 
 ISIPlot <- function(NeuronNumber, TrialNumber, spike.train=spikes){
 library(ggplot2)

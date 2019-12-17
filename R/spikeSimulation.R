@@ -1,6 +1,21 @@
-#### BIG NOTE: FIGURE OUT HOW TO USE ... ARGUMENTS TO PASS DIRECTLY TO intensity.function
-# We want to fix this to work with arbitrary intensity function with arbitrary parameters
-## Use do.call with an argslist
+#' Spike train simulation
+#'
+#' Simulates spike trains from an inhomogeneous Poisson process with a given time-varying intensity function
+#'
+#' @param nruns a scalar determining the number of spike trains (trials) to be simulated
+#' @param t.start the starting time of the simulated data collection
+#' @param t.end the ending time of the simulated data collection
+#' @param resolution
+#' @param intensity.function any intensity function for the corresponding process from which you want to simulate data
+#' @param pass.arg a list of arguments to pass to the intensity function. In the additive and multiplicative models, this contains four numeric vectors;
+#' the first vector determines the frequencies, the second vector determines initial phases, the third vector determines the eta values and the fourth vector determines the gamma values
+#' @param envelope.function The envelope function used for acceptance-rejection sampling to simulate the data
+#'
+#' @return A list of numeric vectors, each of which contains a simulated spike train
+#'
+#' @references Ramezan, R., Marriott, P., and Chenouri, S. (2014), \emph{Statistics in Medicine}, \strong{33}(2), 238-256. doi: 10.1002/sim.5923.
+#'
+#' @export
 
 spike.simulation<-function(nruns, t.start = 0, t.end,
                            resolution = 0.001,
@@ -14,6 +29,11 @@ spike.simulation<-function(nruns, t.start = 0, t.end,
   ##pass.arg is a list of arguments to pass to intensity.function
 ##ct is the simulated piecewise constant intensity function
 ##envelope.function is the envelope function
+
+
+  #### BIG NOTE: FIGURE OUT HOW TO USE ... ARGUMENTS TO PASS DIRECTLY TO intensity.function
+  # We want to fix this to work with arbitrary intensity function with arbitrary parameters
+  ## Use do.call with an argslist
 
 simulated.spikes<-vector("list",length=nruns)
 

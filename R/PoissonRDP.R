@@ -13,6 +13,8 @@
 #'
 #' @references Kolaczyk, E.D. and Nowak, R.D. (2004). Multiscale likelihood analysis and complexity penalized estimation, \emph{The Annals of Statistics}, \strong{32}(2), 500-527. doi: 10.1214/009053604000000076.
 #' Kolaczyk, E.D. and Nowak, R.D. (2005). Multiscale generalized linear models for nonparametric function estimation. \emph{Biometrika},  \strong{92}(1), 119–133. doi: 10.1093/biomet/92.1.119.
+#'
+#' @export
 
 Poisson.RDP<-function(sig,gamma){
 # This is a translation of the MATLAB code from Nowak and Kolaczyk (2005)

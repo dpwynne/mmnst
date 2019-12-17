@@ -9,8 +9,6 @@
 #' @param f.max a scalar indicating the absolute highest frequency of spiking activity
 #'
 #' @return warning message(s) if the constraints on parameters are violated, otherwise NULL
-#'
-#' @export
 
 parameter.check <- function(f.hat, w0.hat.itr, eta.hat, gama.hat, f.max = 100){
 ##parameter checks for log-likelihood function

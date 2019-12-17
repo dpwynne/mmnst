@@ -2,8 +2,6 @@
 #'
 #' Calculates the smoothed periodogram
 #'
-#' This code is adapted from
-#'
 #' @param data a numeric vector containing the spike times for the analyzed spike train
 #' @param f a numeric vector containing frequency estimates for a particular model
 #' @param T.data The length of the data recording window
