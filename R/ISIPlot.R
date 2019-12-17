@@ -6,12 +6,13 @@
 #' @param TrialNumber the trial number whose spike train is being plotted
 #' @param spike.train a list of spike trains
 #'
+#' @import ggplot2
+#'
 #' @return a ggplot object containing the parameters of the ISI plot
 #'
 #' @export
 
 ISIPlot <- function(NeuronNumber, TrialNumber, spike.train=spikes){
-library(ggplot2)
 
 x <- spike.train[[TrialNumber]]
 log.diff.x<-log(diff(x)) #base e log, we're just looking to see when points line up

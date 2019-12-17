@@ -2,6 +2,8 @@
 #'
 #' Produces a raster plot for a single neuron
 #'
+#' @import ggplot2
+#'
 #' @param NeuronNumber the ID for the neuron to be plotted
 #' @param spike.train a list of numeric vectors, each of which contains the spike times from a single trial of the experiment
 #'
@@ -11,8 +13,6 @@
 
 Raster <- function(NeuronNumber,spike.train=spikes){
 ##new Raster function for Raster plots in ggplot2
-
-library(ggplot2)
 
 spike.times<-unlist(spike.train)
 spike.trials<-sapply(spike.train,length)

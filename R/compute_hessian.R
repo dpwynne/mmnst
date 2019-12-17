@@ -5,8 +5,6 @@ compute.hessian<-function(spikes,K.list,f.hat.list,w0.hat.list,terminal.points,c
 ##spikes is a list of spike trains
 ##K.list is a list of eta and gamma, from ____ function
 
-library(numDeriv)
-
 setup.pars<-setup.likelihoods(terminal.points)
 
 etas<-lapply(K.list,"[[",1) ##list of eta matrices
@@ -42,7 +40,7 @@ spike.train<-spikes[[itr]]
 ct.spike.times<-sapply(spike.train,ct.all.points,terminal.points=terminal.points,ct=ct)
 #8/8 Dwight changed the below line
 #hess <- hess + hessian(ll.function,param.eta.gamma,f.hat.actual,w0.hat.actual[itr],
-hess <- hess + hessian(ll.function,param.eta.gamma,f.hat=f.hat.actual,w0.hat.itr=w0.hat.actual[itr],
+hess <- hess + numDeriv::hessian(ll.function,param.eta.gamma,f.hat=f.hat.actual,w0.hat.itr=w0.hat.actual[itr],
 setup.pars=setup.pars,ct=ct,individual.spike.train=spikes[[itr]],ct.spike.times=ct.spike.times)
 }
 Observed.Fisher.Information<- -hess/max.itr
