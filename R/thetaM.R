@@ -1,4 +1,4 @@
-#' Multiplicative \theta(t)
+#' Multiplicative \eqn{\theta(t)}
 #'
 #' Calculates the multiplicative intensity function introduced in Ramezan et al. (2014)
 #'

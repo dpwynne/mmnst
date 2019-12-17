@@ -2,7 +2,7 @@
 % Please edit documentation in R/thetaA.R
 \name{theta.a}
 \alias{theta.a}
-\title{Additive \theta(t)}
+\title{Additive \eqn{\theta(t)}}
 \usage{
 theta.a(t, f, w0, eta, gamma, terminal.points, ct)
 }

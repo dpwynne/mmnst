@@ -1,9 +1,9 @@
 #' Bootstrapped Theta
 #'
-#' Computes a 95% pointwise confidence interval for \theta(t) using the bootstrap percentile method
+#' Computes a 95\% pointwise confidence interval for \eqn{\theta(t)} using the bootstrap percentile method
 #'
-#' @param theta.t a matrix containing estimates of \theta(t). Each row represents a time point and each column reprsents a spike train.
-#' Thus, each value in the matrix represents the value of \theta(t) at time point t estimated from a particular spike train.
+#' @param theta.t a matrix containing estimates of \eqn{\theta(t)}. Each row represents a time point and each column reprsents a spike train.
+#' Thus, each value in the matrix represents the value of \eqn{\theta(t)} at time point t estimated from a particular spike train.
 #' @param B the number of desired bootstrap resamples
 #'
 #' @return a matrix containing the lower and upper bounds of the percentile confidence interval at each time point

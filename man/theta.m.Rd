@@ -2,7 +2,7 @@
 % Please edit documentation in R/thetaM.R
 \name{theta.m}
 \alias{theta.m}
-\title{Multiplicative \theta(t)}
+\title{Multiplicative \eqn{\theta(t)}}
 \usage{
 theta.m(t, f, w0, eta, gamma, terminal.points, ct)
 }

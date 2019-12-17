@@ -15,6 +15,8 @@ spike.simulation(nruns, t.start = 0, t.end, resolution = 0.001,
 
 \item{t.end}{the ending time of the simulated data collection}
 
+\item{resolution}{the time resolution of the spike train. The default is 0.001 (1 ms).}
+
 \item{intensity.function}{any intensity function for the corresponding process from which you want to simulate data}
 
 \item{pass.arg}{a list of arguments to pass to the intensity function. In the additive and multiplicative models, this contains four numeric vectors;

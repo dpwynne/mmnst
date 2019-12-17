@@ -10,8 +10,8 @@ nu(x)
 \item{x}{an arbitrary numeric vector or scalar}
 }
 \value{
-1 + cos(2 \pi x)
+\eqn{1 + cos(2 \pi x)}
 }
 \description{
-Computes the function \nu(x) = 1 + cos(2 \pi x)
+Computes the function \eqn{\nu(x) = 1 + cos(2 \pi x)}
 }

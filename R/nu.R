@@ -1,10 +1,10 @@
 #' Almost periodic function
 #'
-#' Computes the function \nu(x) = 1 + cos(2 \pi x)
+#' Computes the function \eqn{\nu(x) = 1 + cos(2 \pi x)}
 #'
 #' @param x an arbitrary numeric vector or scalar
 #'
-#' @return 1 + cos(2 \pi x)
+#' @return \eqn{1 + cos(2 \pi x)}
 #'
 
 nu <- function(x){

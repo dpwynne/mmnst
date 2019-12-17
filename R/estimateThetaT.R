@@ -1,4 +1,4 @@
-#' Estimate \theta(t)
+#' Estimate \eqn{\theta(t)}
 #'
 #' Estimates average intensity function and computes bootstrap confidence intervals for a number of specified models
 #'

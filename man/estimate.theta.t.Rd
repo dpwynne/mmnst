@@ -2,7 +2,7 @@
 % Please edit documentation in R/estimateThetaT.R
 \name{estimate.theta.t}
 \alias{estimate.theta.t}
-\title{Estimate \theta(t)}
+\title{Estimate \eqn{\theta(t)}}
 \usage{
 estimate.theta.t(spikes, f.hat.list, w0.hat.list, K.list, best.models,
   t.start = 0, t.end, terminal.points, ct,

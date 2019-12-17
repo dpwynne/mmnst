@@ -1,4 +1,4 @@
-#' Additive \theta(t)
+#' Additive \eqn{\theta(t)}
 #'
 #' Calculates the additive intensity function introduced in Ramezan et al. (2014)
 #'
