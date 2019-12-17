@@ -8,6 +8,7 @@
 #' @param setup.pars a list of additional parameters for the likelihood function, computed by \code{setup.likelihoods}
 #' @param terminal.points a numeric vector containing the time points at which c(t) changes
 #' @param ct a numeric vector containing the estimated piecewise constant intensity function c(t). The length of c(t) should be a whole number power of 2.
+#' @param user.select whether to allow the user to select the frequencies for the model; must be FALSE for this function to run effectively
 #'
 #' @return a list of length 3
 #' The first item in the list is a list of frequency estimates for each model

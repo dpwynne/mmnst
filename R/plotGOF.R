@@ -2,7 +2,6 @@
 #'
 #' Runs a goodness-of-fit test for a particular model, i.e., a given intensity function estimate
 #'
-#' @import ggplot2
 #'
 #' @param spikes a list of spike trains
 #' @param theta a numeric vector containing the average of the intensity function estimates across trials

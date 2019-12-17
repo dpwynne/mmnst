@@ -3,7 +3,7 @@
 #' Estimates average intensity function and computes bootstrap confidence intervals for a number of specified models
 #'
 #' @param spikes a list of spike trains
-#' @param f.hat a list containing estimated frequencies for each model
+#' @param f.hat.list a list containing estimated frequencies for each model
 #' @param w0.hat.list a list containing estimated phases for each model
 #' @param K.list a list of matrices containing estimated eta and gamma parameters for each model and the estimated goodness-of-fit criteria (AIC, etc.) for each model
 #' @param best.models a list containing the indices of the models to estimate an intensity function for and their corresponding model names
