@@ -19,6 +19,8 @@ fit.all.mult.add.models(K, spikes, f.common.table, setup.pars,
 \item{terminal.points}{a numeric vector containing the time points at which c(t) changes}
 
 \item{ct}{a numeric vector containing the estimated piecewise constant intensity function c(t). The length of c(t) should be a whole number power of 2.}
+
+\item{user.select}{whether to allow the user to select the frequencies for the model; must be FALSE for this function to run effectively}
 }
 \value{
 a list of length 3

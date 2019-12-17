@@ -12,6 +12,8 @@ estimate.theta.t(spikes, f.hat.list, w0.hat.list, K.list, best.models,
 \arguments{
 \item{spikes}{a list of spike trains}
 
+\item{f.hat.list}{a list containing estimated frequencies for each model}
+
 \item{w0.hat.list}{a list containing estimated phases for each model}
 
 \item{K.list}{a list of matrices containing estimated eta and gamma parameters for each model and the estimated goodness-of-fit criteria (AIC, etc.) for each model}
@@ -31,8 +33,6 @@ Typically best.models is either the list of all models or a list of models chose
 The larger this value is, the better the resolution
 For spike trains of 10 seconds or less, the default value corresponds to 10 ms resolution
 For spike trains of 10-100 seconds, the default value corresponds to 100 ms resolution}
-
-\item{f.hat}{a list containing estimated frequencies for each model}
 }
 \value{
 a list of length 2
