@@ -2,6 +2,8 @@
 #'
 #' Runs a goodness-of-fit test for a particular model, i.e., a given intensity function estimate
 #'
+#' @import ggplot2
+#'
 #' @param spikes a list of spike trains
 #' @param theta a numeric vector containing the average of the intensity function estimates across trials
 #' @param t.start the starting time of the recording window; the default value is 0
@@ -18,7 +20,7 @@
 #'
 #' @export
 
-plot.gof<-function(spikes, theta, t.start = 0, t.end,
+gof_plot <-function(spikes, theta, t.start = 0, t.end,
                    neuron.name = NULL, resolution= (t.end - t.start)/(length(theta)-1),
                    axis.label.size = 18, title.size = 24){
   ##spikes is the list of spike trains you want to check goodness of fit for
