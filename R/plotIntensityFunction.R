@@ -130,16 +130,16 @@ intensity_function_plot <- function(model.estimates, model.number, best.models, 
     }else{
       if (ext.type %in% c("bmp","png","jpg","tif","pdf")){
         if (ext.type=="bmp"){
-          bmp(filename,width=7,height=7,units="in",title=neuron.name)
+          bmp(filename,width=7,height=7,units="in")
         }
         if (ext.type=="png"){
-          png(filename,width=7,height=7,units="in",title=neuron.name)
+          png(filename,width=7,height=7,units="in")
         }
         if (ext.type=="jpg"){
-          jpeg(filename,width=7,height=7,units="in",title=neuron.name)
+          jpeg(filename,width=7,height=7,units="in")
         }
         if (ext.type=="tif"){
-          tif(filename,width=7,height=7,units="in",title=neuron.name)
+          tif(filename,width=7,height=7,units="in")
         }
 
         if (ext.type=="pdf"){
