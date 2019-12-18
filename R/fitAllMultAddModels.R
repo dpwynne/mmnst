@@ -29,7 +29,7 @@ FitAllMultAddModels <- function(K, spikes, f.common.table, setup.pars, terminal.
 for(k in 1:K){
    f.hat.list[[2*k]] <- f.hat.list[[2*(k-1)+1]] <- SelectTopFrequencies(f.common.table, k, user.select = user.select)
    w0.hat.list[[2*(k-1)+1]] <-  w0.hat.list[[2*k]] <- EstimatePhase(spikes,f.hat.list[[2*k]])
-   K.list[[2*(k-1)+1]] <- fitMultiplicativeModel(spikes, f.hat.list[[2*(k-1)+1]], w0.hat.list[[2*(k-1)+1]], setup.pars, terminal.points, ct)
+   K.list[[2*(k-1)+1]] <- FitMultiplicativeModel(spikes, f.hat.list[[2*(k-1)+1]], w0.hat.list[[2*(k-1)+1]], setup.pars, terminal.points, ct)
    K.list[[2*k]] <- FitAdditiveModel(spikes, f.hat.list[[2*k]], w0.hat.list[[2*k]], setup.pars, terminal.points, ct)
    names(f.hat.list)[c(2*k-1, 2*k)] <- paste(c("Multiplicative", "Additive"), k)
 }

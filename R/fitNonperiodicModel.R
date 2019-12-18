@@ -26,7 +26,6 @@ FitNonperiodicModel<-function(spikes,setup.pars,terminal.points,ct){
 
   cat("Fitting Nonperiodic Model\n")
 
-
   mult.gama <- mult.eta <- matrix(NA,nrow=length(spikes),ncol=K)
   fit.matrix<-matrix(NA,nrow=length(spikes),ncol=4)
   colnames(fit.matrix) <- c("AIC","AICc","BIC","Log-Likelihood")
@@ -44,6 +43,6 @@ FitNonperiodicModel<-function(spikes,setup.pars,terminal.points,ct){
     fit.matrix[itr,]<-EvaluateModelFit(new.ll,(2^J),length(spikes[[itr]]))
   }##end for loop
 
-  cat("Multiplicative Model with",n.frequencies,"Frequencies Fitted\n")
+  cat("Nonperiodic Model Fitted\n")
   return(list(eta=mult.eta,gama=mult.gama,fit=fit.matrix))
 }

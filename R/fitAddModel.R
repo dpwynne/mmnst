@@ -52,7 +52,7 @@ if (!(0 %in% f.hat)){
 for(itr in 1:length(spikes)){
 #cat("Spike Train",itr,"\n")
 
-ct.spike.times<-sapply(spikes[[itr]],ctAllPoints,terminal.points=terminal.points,ct=ct[itr,])
+ct.spike.times<-sapply(spikes[[itr]],CtAllPoints,terminal.points=terminal.points,ct=ct[itr,])
 threshold<-sqrt(sum((init.par)^2))
 threshold.counter <- 0
 par.new<-init.par
