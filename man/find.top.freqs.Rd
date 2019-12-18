@@ -4,9 +4,16 @@
 \alias{find.top.freqs}
 \title{Find highest-amplitude frequencies}
 \usage{
-find.top.freqs(spikes, t.start = 0, t.end, freqrange = list(c(2, 30)),
-  q = 5, default.grid.spacing = 1, periodogram.window.size = 25,
-  default.coef.step = 0.01)
+find.top.freqs(
+  spikes,
+  t.start = 0,
+  t.end,
+  freqrange = list(c(2, 30)),
+  q = 5,
+  default.grid.spacing = 1,
+  periodogram.window.size = 25,
+  default.coef.step = 0.01
+)
 }
 \arguments{
 \item{spikes}{a list of spike trains}

@@ -4,10 +4,19 @@
 \alias{estimate.theta.t}
 \title{Estimate \eqn{\theta(t)}}
 \usage{
-estimate.theta.t(spikes, f.hat.list, w0.hat.list, K.list, best.models,
-  t.start = 0, t.end, terminal.points, ct,
-  intensity.function.length = (1 + (t.end - t.start) * 10^(3 -
-  ceiling(log10(t.end - t.start)))))
+estimate.theta.t(
+  spikes,
+  f.hat.list,
+  w0.hat.list,
+  K.list,
+  best.models,
+  t.start = 0,
+  t.end,
+  terminal.points,
+  ct,
+  intensity.function.length = (1 + (t.end - t.start) * 10^(3 - ceiling(log10(t.end -
+    t.start))))
+)
 }
 \arguments{
 \item{spikes}{a list of spike trains}

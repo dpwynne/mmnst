@@ -4,9 +4,16 @@
 \alias{gof_plot}
 \title{Goodness of fit pp-plot}
 \usage{
-gof_plot(spikes, theta, t.start = 0, t.end, neuron.name = NULL,
+gof_plot(
+  spikes,
+  theta,
+  t.start = 0,
+  t.end,
+  neuron.name = NULL,
   resolution = (t.end - t.start)/(length(theta) - 1),
-  axis.label.size = 18, title.size = 24)
+  axis.label.size = 18,
+  title.size = 24
+)
 }
 \arguments{
 \item{spikes}{a list of spike trains}

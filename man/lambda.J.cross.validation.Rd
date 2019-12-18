@@ -4,9 +4,15 @@
 \alias{lambda.J.cross.validation}
 \title{Recursive dyadic partitioning cross-validation}
 \usage{
-lambda.J.cross.validation(spikes, t.start = 0, t.end,
-  poss.lambda = seq(0, 10, by = 0.1), max.J = 7, max.diff = 0.005,
-  pct.diff.plot = TRUE)
+lambda.J.cross.validation(
+  spikes,
+  t.start = 0,
+  t.end,
+  poss.lambda = seq(0, 10, by = 0.1),
+  max.J = 7,
+  max.diff = 0.005,
+  pct.diff.plot = TRUE
+)
 }
 \arguments{
 \item{spikes}{a list of spike trains}

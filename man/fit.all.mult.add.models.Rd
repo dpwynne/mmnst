@@ -4,8 +4,15 @@
 \alias{fit.all.mult.add.models}
 \title{Fit all multiplicative and additive models}
 \usage{
-fit.all.mult.add.models(K, spikes, f.common.table, setup.pars,
-  terminal.points, ct, user.select = FALSE)
+fit.all.mult.add.models(
+  K,
+  spikes,
+  f.common.table,
+  setup.pars,
+  terminal.points,
+  ct,
+  user.select = FALSE
+)
 }
 \arguments{
 \item{K}{the number of frequency components in the largest model to fit}

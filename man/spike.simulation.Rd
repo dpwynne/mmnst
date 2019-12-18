@@ -4,9 +4,15 @@
 \alias{spike.simulation}
 \title{Spike train simulation}
 \usage{
-spike.simulation(nruns, t.start = 0, t.end, resolution = 0.001,
-  intensity.function, pass.arg, envelope.function = function(t)
-  return(1))
+spike.simulation(
+  nruns,
+  t.start = 0,
+  t.end,
+  resolution = 0.001,
+  intensity.function,
+  pass.arg,
+  envelope.function = function(t) return(1)
+)
 }
 \arguments{
 \item{nruns}{a scalar determining the number of spike trains (trials) to be simulated}

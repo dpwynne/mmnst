@@ -4,8 +4,15 @@
 \alias{AdditiveLogLikelihood.Multiple.f}
 \title{Additive Model Log Likelihood}
 \usage{
-AdditiveLogLikelihood.Multiple.f(param, f.hat, w0.hat.itr, setup.pars, ct,
-  ct.spike.times, individual.spike.train)
+AdditiveLogLikelihood.Multiple.f(
+  param,
+  f.hat,
+  w0.hat.itr,
+  setup.pars,
+  ct,
+  ct.spike.times,
+  individual.spike.train
+)
 }
 \arguments{
 \item{param}{a numeric vector containing the value of the eta and gamma parameters in the model.

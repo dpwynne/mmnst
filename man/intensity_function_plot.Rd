@@ -4,10 +4,20 @@
 \alias{intensity_function_plot}
 \title{Plot intensity function}
 \usage{
-intensity_function_plot(model.estimates, model.number, best.models,
-  add.title = F, filename = NULL, neuron.name = NULL,
-  time.resolution = NULL, y.limits = NULL, axis.label.size = 18,
-  title.size = 24, IC.type = NULL, RStudio = FALSE)
+intensity_function_plot(
+  model.estimates,
+  model.number,
+  best.models,
+  add.title = F,
+  filename = NULL,
+  neuron.name = NULL,
+  time.resolution = NULL,
+  y.limits = NULL,
+  axis.label.size = 18,
+  title.size = 24,
+  IC.type = NULL,
+  RStudio = FALSE
+)
 }
 \arguments{
 \item{model.estimates}{a list containing all intensity function estimates and corresponding parameter estimates for all models.
