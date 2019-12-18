@@ -10,7 +10,7 @@
 #'
 #' @return a matrix containing the lower and upper bounds of the percentile confidence interval at each time point
 
-bootstrapped.theta<-function(theta.t,B=1000){
+BootstrappedTheta<-function(theta.t,B=1000){
 
 ntrains<-dim(theta.t)[2]
 bootstrap.matrix<-matrix(0,dim(theta.t)[1],B)

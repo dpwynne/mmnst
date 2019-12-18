@@ -12,7 +12,7 @@
 #'
 #' @export
 
-Raster <- function(NeuronNumber,spike.train){
+RasterPlot <- function(NeuronNumber,spike.train){
 ##new Raster function for Raster plots in ggplot2
 
 spike.times<-unlist(spike.train)

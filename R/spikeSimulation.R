@@ -19,7 +19,7 @@
 #'
 #' @export
 
-spike.simulation<-function(nruns, t.start = 0, t.end,
+SpikeSimulation<-function(nruns, t.start = 0, t.end,
                            resolution = 0.001,
                            intensity.function,
                            pass.arg,
@@ -47,7 +47,7 @@ gamma<-pass.arg[[4]]
 ct <- pass.arg[[5]]
 # figure out how to use ... notation; then we can pass these arguments directly as f, w0, eta, gamma, ct instead of pass.arg
 
-terminal.points <- identify.terminal.points(t.start,t.end,log(length(ct),2))
+terminal.points <- IdentifyTerminalPoints(t.start,t.end,log(length(ct),2))
 ##get terminal points from ct
 
 

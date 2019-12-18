@@ -14,7 +14,7 @@
 #'
 #' @export
 
-smoothed.periodogram<-function(data,f,T.data,m=5,coef.step=0.01){
+SmoothedPeriodogram<-function(data,f,T.data,m=5,coef.step=0.01){
   #T.data<-(time.end-time.start); #m=max(1,floor(.1*length(data)))
   #commented out the above line, let's see if this works
   # In Brillinger's book, w is the angular frequency, but we use f: regular frequency

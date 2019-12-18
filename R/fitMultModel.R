@@ -7,7 +7,7 @@
 #' @param spikes a lits of spike trains
 #' @param f.hat a numeric vector containing frequency estimates for a particular model
 #' @param w0.hat a matrix containing phase estimates for each spike train for a particular model
-#' @param setup.pars a list of additional parameters for the likelihood function, computed by the \code{setup.likelihoods} function
+#' @param setup.pars a list of additional parameters for the likelihood function, computed by the \code{SetupLikelihoods} function
 #' @param terminal.points a numeric vector containing the time points at which c(t) changes
 #' @param ct a numeric vector containing the estimated piecewise constant intensity function c(t). The length of ct should be a whole number power of 2.
 #'
@@ -20,7 +20,7 @@
 #'
 #' @export
 
-fit.mult.model<-function(spikes,f.hat,w0.hat,setup.pars,terminal.points,ct){
+FitMultiplicativeModel<-function(spikes,f.hat,w0.hat,setup.pars,terminal.points,ct){
 
 K<-length(f.hat)
 J<-setup.pars$J
@@ -48,23 +48,21 @@ if (is.null(dim(ct))){ # if this is a vector of average ct, not a matrix of indi
   ct <- matrix(rep(ct, length(spikes)), nrow = length(spikes), byrow = TRUE)
 }
 
-if (!(0 %in% f.hat)){
-
 for(itr in 1:length(spikes)){
 #cat("Spike Train",itr,"\n")
 
-ct.spike.times<-sapply(spikes[[itr]],ct.all.points,terminal.points=terminal.points,ct=ct[itr,])
+ct.spike.times<-sapply(spikes[[itr]],CtAllPoints,terminal.points=terminal.points,ct=ct[itr,])
 threshold<-sqrt(sum((init.par)^2))
 threshold.counter <- 0
 par.new<-init.par
 
 while(threshold>(1e-5) && threshold.counter<=10){
 	par.old<-par.new
-	optimization<-optim(par.old,MultiplicativeLogLikelihood.Multiple.f,f.hat=f.hat,w0.hat.itr=w0.hat[itr,],setup.pars=setup.pars,ct=ct[itr,],ct.spike.times=ct.spike.times,individual.spike.train=spikes[[itr]],method="Nelder-Mead", control=list(maxit=2000,fnscale=-1))
+	optimization<-optim(par.old,MultiplicativeLogLikelihood,f.hat=f.hat,w0.hat.itr=w0.hat[itr,],setup.pars=setup.pars,ct=ct[itr,],ct.spike.times=ct.spike.times,individual.spike.train=spikes[[itr]],method="Nelder-Mead", control=list(maxit=2000,fnscale=-1))
   	par.new<-optimization$par
 	threshold<-sqrt(sum(par.new-par.old)^2)
 	threshold.counter <- threshold.counter+1
-  	new.ll<-MultiplicativeLogLikelihood.Multiple.f(par.new,f.hat=f.hat,w0.hat.itr=w0.hat[itr,],setup.pars=setup.pars,ct=ct[itr,],ct.spike.times=ct.spike.times,individual.spike.train=spikes[[itr]])
+  	new.ll<-MultiplicativeLogLikelihood(par.new,f.hat=f.hat,w0.hat.itr=w0.hat[itr,],setup.pars=setup.pars,ct=ct[itr,],ct.spike.times=ct.spike.times,individual.spike.train=spikes[[itr]])
 
 	values<-round(c(par.new,threshold,new.ll),6)
 	names(values)<-c(val.names,"Convergence Criterion","Log-Likelihood")
@@ -73,18 +71,10 @@ while(threshold>(1e-5) && threshold.counter<=10){
 
 mult.eta[itr,]<-par.new[1:K]
 mult.gama[itr,]<-par.new[(K+1):(2*K)]
-fit.matrix[itr,]<-check.fit(new.ll,K.hat,length(spikes[[itr]]))
+fit.matrix[itr,]<-EvaluateModelFit(new.ll,K.hat,length(spikes[[itr]]))
 }##end for loop
-}else{
-for (itr in 1:length(spikes)){
-ct.spike.times<-sapply(spikes[[itr]],ct.all.points,terminal.points=terminal.points,ct=ct[itr,])
-mult.eta[itr,]<-rep(0,K)
-mult.gama[itr,]<-rep(0,K)
-DeltaDi <- setup.pars$DeltaDi
-new.ll<- sum(log(ct.spike.times+1e-10))-sum(ct*DeltaDi)
-fit.matrix[itr,]<-check.fit(new.ll,(2^J),length(spikes[[itr]]))
-}##end for loop
-}##end if-else
+
+
 cat("Multiplicative Model with",n.frequencies,"Frequencies Fitted\n")
 return(list(eta=mult.eta,gama=mult.gama,fit=fit.matrix))
 }

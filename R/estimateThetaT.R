@@ -16,13 +16,12 @@
 #' The larger this value is, the better the resolution
 #' For spike trains of 10 seconds or less, the default value corresponds to 10 ms resolution
 #' For spike trains of 10-100 seconds, the default value corresponds to 100 ms resolution
-#'
-#' @return  a list of length 2
-#' The first item in the list is a list of matrices containing the intensity estimates (average and bootstrap CI) for each model
-#' The second item in the list is a list of matrices containing the intensity estimates (for each spike train) for each model
+#' @return  a list of length 2.
+#' The first item in the list is a list of matrices containing the intensity estimates (average and bootstrap CI) for each model.
+#' The second item in the list is a list of matrices containing the intensity estimates (for each spike train) for each model.
 #'
 #' @export
-estimate.theta.t<-function(spikes, f.hat.list, w0.hat.list, K.list, best.models, t.start = 0, t.end, terminal.points, ct, intensity.function.length=(1+(t.end - t.start)*10^(3-ceiling(log10(t.end - t.start))))){
+EstimateThetaT<-function(spikes, f.hat.list, w0.hat.list, K.list, best.models, t.start = 0, t.end, terminal.points, ct, intensity.function.length=(1+(t.end - t.start)*10^(3-ceiling(log10(t.end - t.start))))){
 
 cat("Determining Intensity Function for Models\n")
 
@@ -74,9 +73,9 @@ eta.hat<-etas[[list.number]][ntrains,]
 gamma.hat<-gamas[[list.number]][ntrains,]
 
 if (list.number%%2==1){
-theta.t[,ntrains]<-sapply(Time.vector,theta.m,f=f.hat,w0=w0.hat,eta=eta.hat,gamma=gamma.hat,terminal.points=terminal.points,ct=ct[ntrains,])
+theta.t[,ntrains]<-sapply(Time.vector,ThetaMultiplicative,f=f.hat,w0=w0.hat,eta=eta.hat,gamma=gamma.hat,terminal.points=terminal.points,ct=ct[ntrains,])
 }else{
-theta.t[,ntrains]<-sapply(Time.vector,theta.a,f=f.hat,w0=w0.hat,eta=eta.hat,gamma=gamma.hat,terminal.points=terminal.points,ct=ct[ntrains,])
+theta.t[,ntrains]<-sapply(Time.vector,ThetaAdditive,f=f.hat,w0=w0.hat,eta=eta.hat,gamma=gamma.hat,terminal.points=terminal.points,ct=ct[ntrains,])
 }
 
 }##end ntrains for loop
@@ -88,9 +87,9 @@ theta.avg<-apply(theta.t,1,mean)
 
 if (!(i %in% fitted.models)){
 cat(paste("Determining Bootstrap Confidence Interval for",selected.names[i],"Model\n"))
-theta.bootstrap<-bootstrapped.theta(theta.t)
-theta.matrix<-cbind(Time.vector,theta.bootstrap[,1],theta.avg,theta.bootstrap[,2])
-colnames(theta.matrix)<-c("Time","Lower","Average","Upper")
+theta.bootstrap <- BootstrappedTheta(theta.t)
+theta.matrix <- cbind(Time.vector,theta.bootstrap[,1],theta.avg,theta.bootstrap[,2])
+colnames(theta.matrix) <- c("Time","Lower","Average","Upper")
 for (j in which(selected.models==selected.models[i])){
 int.estimate[[j]]<-theta.matrix
 fitted.models<-c(fitted.models,j)

@@ -13,7 +13,7 @@
 #' The second item is a matrix in which each row represents the estimate of c(t) for an individual spike train
 #'
 #' @export
-find.ct<-function(spikes, t.start, t.end, lambda, J){
+FindCt<-function(spikes, t.start, t.end, lambda, J){
 
 T.data<-t.end-t.start
 val <- floor(2^J)
@@ -31,11 +31,11 @@ for (i in 1:length(spikes)){
       if (J == 0){
         ct.best[i,] <- count.points
       } else {
-        ct.best[i,]<-Poisson.RDP(count.points,lambda)
+        ct.best[i,]<-PoissonRDP(count.points,lambda)
       }
 }
 
-##output of Poisson.RDP is not exactly c(t), needs to be scaled by multiplying by val/T.data
+##output of PoissonRDP is not exactly c(t), needs to be scaled by multiplying by val/T.data
 ct.best<-ct.best/(by.terminal)
 
 ## We have 1 c(t) estimate per spike train. This means that the process of merging partitions may not be the same on every spike train.

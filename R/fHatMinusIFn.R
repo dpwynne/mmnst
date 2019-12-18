@@ -10,7 +10,7 @@
 #'
 #' @return a numeric vector of the average of m-1 density function estimates for a given set of time points with the ith density estimate removed
 
-f.hat.minus.i.fn <- function(til,i,points,f.hat.minus.i){
+LeaveOneOutDensityEstimate <- function(til,i,points,f.hat.minus.i){
 
 if (til < min(points) | til > max(points)) return(0)
 if (til==min(points)) return(f.hat.minus.i[i,1])

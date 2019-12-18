@@ -7,7 +7,7 @@
 #'
 #' @return the name of the overall "best" model as chosen by plurality vote over all spike trains with a clear best model
 
-select.most.common.best.model <- function(selected.models, model.names){
+SelectMostCommonBestModel <- function(selected.models, model.names){
 # selected.models is a factor vector of "best" models chosen by AIC or AICc or BIC
 # should be one entry per spike train, but some can be NA
 # model.names is the levels of the factors

@@ -13,7 +13,7 @@
 #'
 #' @export
 
-setup.likelihoods<-function(terminal.points){
+SetupLikelihoods <-function(terminal.points){
       D.i.plus.one<-terminal.points[-c(1)]
       D.i<-rev(rev(terminal.points)[-c(1)])
       DeltaDi=D.i.plus.one-D.i

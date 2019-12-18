@@ -2,14 +2,15 @@
 #'
 #' Calculate the value of \eqn{\theta(t)} at an individual time point t
 #'
-#' @param t the time at which to calculate \eqn{\theta(t)}. The function \code{q.vector} integrates this function, so t can be of any length (including 1).
+#' @param t the time at which to calculate \eqn{\theta(t)}. The function \code{HaslingerQ} integrates this function, so t can be of any length (including 1).
 #' @param theta a numeric vector containing the estimated intensity function \eqn{\theta(t)}.
 #' @param t.start the starting time of the recording
 #' @param resolution the time difference between successive points in the theta vector
 #'
-#' @return the value of the intensity function \eqn{\theta(t)} at a specific time point
+#' @return the value of the intensity function \eqn{\theta(t)} at (a) specific time point(s)
 
-theta.function<-function(t,theta,t.start = 0,resolution){
+ThetaT <- function(t,theta,t.start = 0,resolution){
+  ##pull the value of the intensity function that corresponds to a particular time value
   theta[(1+floor((t-t.start)/resolution))]
 }
-##pull the value of the intensity function that corresponds to a particular time value
+

@@ -5,7 +5,7 @@ compute.hessian<-function(spikes,K.list,f.hat.list,w0.hat.list,terminal.points,c
 ##spikes is a list of spike trains
 ##K.list is a list of eta and gamma, from ____ function
 
-setup.pars<-setup.likelihoods(terminal.points)
+setup.pars<-SetupLikelihoods(terminal.points)
 
 etas<-lapply(K.list,"[[",1) ##list of eta matrices
 gammas<-lapply(K.list,"[[",2) ##list of gamma matrices
@@ -17,14 +17,14 @@ f.hat.actual<-f.hat.list[[2*k-1]]
 w0.hat.actual<-w0.hat.list[[2*k-1]]
 etas.actual<-etas[[2*k-1]]
 gammas.actual<-gammas[[2*k-1]]
-ll.function<-MultiplicativeLogLikelihood.Multiple.f
+ll.function<-MultiplicativeLogLikelihood
 }else{
 f.hat.actual<-f.hat.list[[2*k]]
 w0.hat.actual<-w0.hat.list[[2*k]]
 if (type== "a" | type == "A"){
 etas.actual<-etas[[2*k]]
 gammas.actual<-gammas[[2*k]]
-ll.function<-AdditiveLogLikelihood.Multiple.f
+ll.function<-AdditiveLogLikelihood
 }else{
 stop("Invalid type, please select \"additive\" or \"multiplicative\" \n")
 }
@@ -37,7 +37,7 @@ max.itr<-dim(param.true)[1]
 for (itr in 1:max.itr){
 param.eta.gamma<-param.true[itr,]
 spike.train<-spikes[[itr]]
-ct.spike.times<-sapply(spike.train,ct.all.points,terminal.points=terminal.points,ct=ct)
+ct.spike.times<-sapply(spike.train,CtAllPoints,terminal.points=terminal.points,ct=ct)
 #8/8 Dwight changed the below line
 #hess <- hess + hessian(ll.function,param.eta.gamma,f.hat.actual,w0.hat.actual[itr],
 hess <- hess + numDeriv::hessian(ll.function,param.eta.gamma,f.hat=f.hat.actual,w0.hat.itr=w0.hat.actual[itr],

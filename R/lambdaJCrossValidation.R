@@ -13,14 +13,14 @@
 #' @param pct.diff.plot a logical value indicating whether to produce a plot of the percentage difference (above minimum ISE) vs. J
 #' @param print.J.value a logical value indicating whether to print off the J value at each step of the corss-validation or not
 #'
-#' @return a list of length 3
-#' The first item in the list is the optimal partition depth as computed by ISE
-#' The second item in the list is the optimal penalty term as corresponding to that partition depth
-#' The third item in the list is a matrix containing the ISE values for all combinations of partition depth and penalty term
+#' @return a list of length 3.
+#' The first item in the list is the optimal partition depth as computed by ISE (\eqn{\lambda}).
+#' The second item in the list is the optimal penalty term as corresponding to that partition depth (J).
+#' The third item in the list is a matrix containing the ISE values for all combinations of partition depth and penalty term.
 #'
 #' @export
 
-lambda.J.cross.validation = function(spikes, t.start = 0, t.end,
+RDPCrossValidation = function(spikes, t.start = 0, t.end,
                                      poss.lambda = seq(0, 10, by = 0.1), max.J = 7,
                                      max.diff = 0.005, pct.diff.plot = TRUE  , print.J.value = TRUE){
   # spikes = list of vectors; each vector represents the spike train for one of many repeated trials
@@ -71,7 +71,7 @@ lambda.J.cross.validation = function(spikes, t.start = 0, t.end,
         if(sum(xi) == 0){
           f.hat.i[i,] = rep(0 , length(count.points))
         }else{
-          f.hat.i[i,]<-(Poisson.RDP(count.points,lambda))*(val)/(T.data*length(xi))
+          f.hat.i[i,]<-(PoissonRDP(count.points,lambda))*(val)/(T.data*length(xi))
         }
       }
 
@@ -88,7 +88,8 @@ lambda.J.cross.validation = function(spikes, t.start = 0, t.end,
         temp.f<-f.hat.i[-i,,drop=F]
         f.hat.minus.i[i,]<-apply(temp.f,2,mean)
         if (length(spikes[[i]])>0){
-          f.hat.minus.i.ti<-sapply(spikes[[i]],f.hat.minus.i.fn,points=terminal.points[[J]],i=i,f.hat.minus.i=f.hat.minus.i)
+          f.hat.minus.i.ti<-sapply(spikes[[i]], LeaveOneOutDensityEstimate,
+                                   points=terminal.points[[J]],i=i,f.hat.minus.i=f.hat.minus.i)
         }else{
           f.hat.minus.i.ti = rep(0 , dim(temp.f)[2])
         }
