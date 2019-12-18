@@ -2,6 +2,8 @@
 #'
 #' Finds the highest-amplitude frequency components in each spike train
 #'
+#' @importFrom utils tail
+#'
 #' @param spikes a list of spike trains
 #' @param t.start the starting time of the recording window; the default value is 0
 #' @param t.end the ending time of the recording window

@@ -2,6 +2,8 @@
 #'
 #' Computes a 95\% pointwise confidence interval for \eqn{\theta(t)} using the bootstrap percentile method
 #'
+#' @importFrom stats quantile
+#'
 #' @param theta.t a matrix containing estimates of \eqn{\theta(t)}. Each row represents a time point and each column reprsents a spike train.
 #' Thus, each value in the matrix represents the value of \eqn{\theta(t)} at time point t estimated from a particular spike train.
 #' @param B the number of desired bootstrap resamples
@@ -20,7 +22,7 @@ for (i in 1:B){
 	bootstrap.matrix[,i]<-new.mean
 }##end for loop
 
-bootstrapped.limits<-apply(bootstrap.matrix,1,quantile,probs=c(0.025,0.975))
+bootstrapped.limits<-apply(bootstrap.matrix, 1, quantile, probs=c(0.025,0.975))
 if (dim(bootstrapped.limits)[2]>=dim(bootstrapped.limits)[1]) bootstrapped.limits<-t(bootstrapped.limits)
 return(bootstrapped.limits)
 }

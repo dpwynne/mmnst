@@ -2,6 +2,8 @@
 #'
 #' Simulates spike trains from an inhomogeneous Poisson process with a given time-varying intensity function
 #'
+#' @importFrom stats runif
+#'
 #' @param nruns a scalar determining the number of spike trains (trials) to be simulated
 #' @param t.start the starting time of the simulated data collection
 #' @param t.end the ending time of the simulated data collection

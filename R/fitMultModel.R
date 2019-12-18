@@ -2,6 +2,8 @@
 #'
 #' Fits the multiplicative multiscale model
 #'
+#' @importFrom stats optim
+#'
 #' @param spikes a lits of spike trains
 #' @param f.hat a numeric vector containing frequency estimates for a particular model
 #' @param w0.hat a matrix containing phase estimates for each spike train for a particular model

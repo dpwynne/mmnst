@@ -2,6 +2,7 @@
 #'
 #' Runs a goodness-of-fit test for a particular model, i.e., a given intensity function estimate
 #'
+#' @importFrom rlang .data
 #'
 #' @param spikes a list of spike trains
 #' @param theta a numeric vector containing the average of the intensity function estimates across trials
@@ -60,8 +61,18 @@ gof_plot <-function(spikes, theta, t.start = 0, t.end,
 
 
   ##setup the plot
-  plot.basics<-ggplot2::ggplot(spike.gof[[1]],ggplot2::aes(model.quantiles,empirical.quantiles))+ggplot2::theme_classic()+ggplot2::theme(panel.grid.major=ggplot2::element_blank(),panel.grid.minor=ggplot2::element_blank(),plot.margin=ggplot2::unit(c(5.08,5.08,5.08,5.08),"mm"),
-                                                                                                     axis.text=ggplot2::element_text(size=axis.label.size),axis.line.x=ggplot2::element_line(size=0.5),axis.line.y=ggplot2::element_line(size=0.5))+ggplot2::scale_x_continuous(limits=c(0,1))+ggplot2::scale_y_continuous(limits=c(0,1))
+  plot.basics<-ggplot2::ggplot(spike.gof[[1]],ggplot2::aes(x = .data$model.quantiles,
+                                                           y = .data$empirical.quantiles))+
+    ggplot2::theme_classic()+
+    ggplot2::theme(panel.grid.major=ggplot2::element_blank(),
+                   panel.grid.minor=ggplot2::element_blank(),
+                   plot.margin=ggplot2::unit(c(5.08,5.08,5.08,5.08),"mm"),
+                   axis.text=ggplot2::element_text(size=axis.label.size),
+                   axis.line.x=ggplot2::element_line(size=0.5),
+                   axis.line.y=ggplot2::element_line(size=0.5))+
+    ggplot2::scale_x_continuous(limits=c(0,1))+
+    ggplot2::scale_y_continuous(limits=c(0,1))
+
   #it looks like it automatically does xlim(0,1) and ylim(0,1) but include just to be sure
   plot.labeled<-plot.basics+ggplot2::labs(x="Empirical CDF",y="Uniform CDF")+ggplot2::theme(axis.title=ggplot2::element_text(size=axis.label.size))
 
@@ -69,7 +80,7 @@ gof_plot <-function(spikes, theta, t.start = 0, t.end,
 
 
   for (i in 1:length(spike.gof)){
-    plot.cdfs<-plot.cdfs+ggplot2::geom_line(data=spike.gof[[i]],ggplot2::aes(x=model.quantiles,y=empirical.quantiles),color="gray",linetype=1)
+    plot.cdfs<-plot.cdfs+ggplot2::geom_line(data=spike.gof[[i]],ggplot2::aes(x=.data$model.quantiles,y=.data$empirical.quantiles),color="gray",linetype=1)
   }
 
   alpha.corrected <- 0.05/length(spikes)  # bonferroni correction

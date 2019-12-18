@@ -2,6 +2,8 @@
 #'
 #' Calculates Yi in equation (39) of Haslinger (2010)
 #'
+#' @importFrom stats runif
+#'
 #' @param spike.train a list of numeric vectors, each of which contains the spike times for one trial of the experiment
 #' @param endpoints.bins a numeric vector containing the endpoints of the bins for the binned spike train
 #' @param q a numeric vector containing the q values calculated by the \code{q.vector} function

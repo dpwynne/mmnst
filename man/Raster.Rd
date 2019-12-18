@@ -4,7 +4,7 @@
 \alias{Raster}
 \title{Raster plot}
 \usage{
-Raster(NeuronNumber, spike.train = spikes)
+Raster(NeuronNumber, spike.train)
 }
 \arguments{
 \item{NeuronNumber}{the ID for the neuron to be plotted}

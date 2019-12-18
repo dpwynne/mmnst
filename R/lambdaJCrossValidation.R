@@ -2,6 +2,8 @@
 #'
 #' Optimizes a penalized log-likelihood to find the optimal number of partitions for the recursive dyadic partitioning
 #'
+#' @importFrom graphics plot abline
+#'
 #' @param spikes a list of spike trains
 #' @param t.start the starting time of the recording window; the default value is 0
 #' @param t.end the ending time of the recording window

@@ -4,7 +4,7 @@
 \alias{ISIPlot}
 \title{Inter-spike interval plot}
 \usage{
-ISIPlot(NeuronNumber, TrialNumber, spike.train = spikes)
+ISIPlot(NeuronNumber, TrialNumber, spike.train)
 }
 \arguments{
 \item{NeuronNumber}{an identifier for the neuron being plotted}
