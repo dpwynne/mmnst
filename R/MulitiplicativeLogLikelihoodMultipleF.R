@@ -27,6 +27,9 @@ MultiplicativeLogLikelihood.Multiple.f<-function(param,f.hat,w0.hat.itr,setup.pa
 ##individual.spike.train is a single spike train
 ##ct.spike.times is c(t) evaluated at each spike time on the individual spike train
 
+  if (any(f.hat <= 0)){
+    stop("Frequencies should all be positive")
+  }
 
 ##unpack setup.pars
 DeltaDi <- setup.pars$DeltaDi

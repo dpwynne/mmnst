@@ -20,6 +20,10 @@
 
 AdditiveLogLikelihood.Multiple.f<-function(param,f.hat,w0.hat.itr,setup.pars,ct,ct.spike.times,individual.spike.train){
 
+  if (any(f.hat <= 0)){
+    stop("Frequencies should all be positive")
+  }
+
 ##unpack setup.pars
 DeltaDi <- setup.pars$DeltaDi
 D.i.plus.one<-setup.pars$Di.1

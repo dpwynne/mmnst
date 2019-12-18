@@ -21,6 +21,8 @@ fit.all.mult.add.models <- function(K, spikes, f.common.table, setup.pars, termi
 ## This abstracts Step 6 and 7 of the original script to run for each neuron
 ## For some value K, it fits Multiplicative 1-K, Additive 1-K, and the no periodicity model (i.e. c(t))
 
+
+  # this is bad, we know EXACTLY the length of f.hat.list, etc. = 2*K + 1
  f.hat.list<-list(c())
  w0.hat.list<-list(c())
  K.list<-list(c())
