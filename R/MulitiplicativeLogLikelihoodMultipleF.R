@@ -7,7 +7,7 @@
 #' This must be the first argument as we wish to maximize the value of the log-likelihood function over the entire set of eta and gamma parameters.
 #' @param f.hat a numeric vector containing frequency estimates for a particular model
 #' @param w0.hat.itr a numeric vector containing phase estimates for a particular model and spike train
-#' @param setup.pars a list of additional parameters for the likelihood function, computed by the \code{setup.likelihoods} function
+#' @param setup.pars a list of additional parameters for the likelihood function, computed by the \code{SetupLikelihoods} function
 #' @param ct a numeric vector containing the estimated piecewise constant intensity function. The length of ct should be a whole number power of 2.
 #' @param ct.spike.times a numeric vector containing the values of ct at the specific times a spike was recorded
 #' @param individual.spike.train a numeric vector containing the spike times for that spike train
@@ -18,7 +18,7 @@
 #'
 #' @export
 
-MultiplicativeLogLikelihood.Multiple.f<-function(param,f.hat,w0.hat.itr,setup.pars,ct,ct.spike.times,individual.spike.train){
+MultiplicativeLogLikelihood<-function(param,f.hat,w0.hat.itr,setup.pars,ct,ct.spike.times,individual.spike.train){
 ##param is eta.hat and gama.hat - parameters to optimize over
 ##f.hat is vector of K frequencies
 ##w0.hat.itr is a vector of K phases
@@ -42,7 +42,7 @@ K<-length(f.hat)
 eta.hat<-param[1:K]; gama.hat<-param[(K+1):(2*K)];
 
 	# parameter check
-	warning.message <- parameter.check(f.hat, w0.hat.itr, eta.hat, gama.hat)
+	warning.message <- ParameterFeasibilityCheck(f.hat, w0.hat.itr, eta.hat, gama.hat)
 	if(!is.null(warning.message)){
 #		warning.message <- c(warning.message, "NaN returned for log-likelihood.")
 #		cat(paste(warning.message, collapse = "\n"))

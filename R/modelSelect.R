@@ -1,6 +1,6 @@
-#' Model selection
+#' Model selection for fitted multiscale models
 #'
-#' Finds the simplest model within a given tolerance of the "optimal" model as computed by an information criterion
+#' Finds the simplest multiscale model within a given tolerance of the "optimal" model as computed by an information criterion
 #'
 #' @param K.list a list containing eta/gamma estimates and model fit criteria for each fitted model
 #'
@@ -11,7 +11,7 @@
 #'
 #' @export
 
-model.select<-function(K.list){
+MultiscaleModelSelection <- function(K.list){
 
 cat("Selecting Best Models\n")
 
@@ -74,9 +74,9 @@ criteriaBIC<-unlist(BICall)
 ## 1. Find minimum AIC/etc.
 ## 2. Find all models within tolerance of minimum AIC/etc.
 
-indxAIC <- select.best.model.by.IC(criteriaAIC)
-indxAICc <- select.best.model.by.IC(criteriaAICc)
-indxBIC <- select.best.model.by.IC(criteriaBIC)
+indxAIC <- SelectBestModelByIC(criteriaAIC)
+indxAICc <- SelectBestModelByIC(criteriaAICc)
+indxBIC <- SelectBestModelByIC(criteriaBIC)
 
 #indxAIC<-which.min(criteriaAIC)
 #indxAICc<-which.min(criteriaAICc)
@@ -114,9 +114,9 @@ level.names <- model.list
 
 fit.output<-data.frame(AIC=factor(fit.matrix[,1],levels=level.names),AICc=factor(fit.matrix[,2],levels=level.names),BIC=factor(fit.matrix[,3],levels=level.names))
 
-bestAIC <- select.most.common.best.model(fit.output$AIC, model.names = level.names)
-bestAICc <- select.most.common.best.model(fit.output$AICc, model.names = level.names)
-bestBIC <- select.most.common.best.model(fit.output$BIC, model.names = level.names)
+bestAIC <- SelectMostCommonBestModel(fit.output$AIC, model.names = level.names)
+bestAICc <- SelectMostCommonBestModel(fit.output$AICc, model.names = level.names)
+bestBIC <- SelectMostCommonBestModel(fit.output$BIC, model.names = level.names)
 
 best.all <- c(bestAIC, bestAICc, bestBIC)
 

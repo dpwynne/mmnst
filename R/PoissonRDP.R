@@ -16,7 +16,7 @@
 #'
 #' @export
 
-Poisson.RDP<-function(sig,gamma){
+PoissonRDP<-function(sig,gamma){
 # This is a translation of the MATLAB code from Nowak and Kolaczyk (2005)
 # adjusting for constant, not polynomial, intensity function; i.e., m = 0 in the original MATLAB code
 

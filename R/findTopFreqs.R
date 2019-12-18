@@ -17,7 +17,7 @@
 #'
 #' @export
 
-find.top.freqs<-function(spikes, t.start = 0, t.end,
+FindTopFrequencies<-function(spikes, t.start = 0, t.end,
                          freqrange=list(c(2,30)), q=5,
                          default.grid.spacing = 1,
                          periodogram.window.size = 25,
@@ -66,7 +66,7 @@ find.top.freqs<-function(spikes, t.start = 0, t.end,
 
     if (length(x)>q){ ##we should have at least q+1 spikes if we are to estimate q frequencies
 
-      smoothed.periodogram.f<-smoothed.periodogram(x,f,T.data, m = periodogram.window.size, coef.step = default.coef.step)
+      smoothed.periodogram.f<-SmoothedPeriodogram(x,f,T.data, m = periodogram.window.size, coef.step = default.coef.step)
 
       estimate<-sapply(f,smoothed.periodogram.f)
 

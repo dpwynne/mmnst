@@ -1,4 +1,4 @@
-#' Model selection
+#' Information criterion-based multiscale model selection
 #'
 #' Selects the best model given a vector of AIC/AICc/BIC values for each model under consideration
 #'
@@ -8,7 +8,7 @@
 #'
 #' @return the index (in the IC vector) of the selected model, unless two equally simple models could be selected, then NA
 
-select.best.model.by.IC <- function(IC, tolerance = 1e-6){
+SelectBestModelByIC <- function(IC, tolerance = 1e-6){
 ## selects the best model given a vector IC of AIC/AICc/BIC values for each model
 ## we are assuming the traditional mult-1, add-1, mult-2, add-2, ..., nonperiodic structure of the list
 ## tolerance is the amount by which we can go over the "minimum" IC value to select a smaller model

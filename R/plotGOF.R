@@ -20,7 +20,7 @@
 #'
 #' @export
 
-gof_plot <-function(spikes, theta, t.start = 0, t.end,
+GOFPlot <-function(spikes, theta, t.start = 0, t.end,
                    neuron.name = NULL, resolution= (t.end - t.start)/(length(theta)-1),
                    axis.label.size = 18, title.size = 24){
   ##spikes is the list of spike trains you want to check goodness of fit for
@@ -42,10 +42,10 @@ gof_plot <-function(spikes, theta, t.start = 0, t.end,
 
   spike.gof<-vector("list",length(spikes))
   names(spike.gof)<-paste0("Trial",seq(1,length(spikes)))
-  qk <- q.vector(endpoints.bins,theta,resolution)
+  qk <- HaslingerQ(endpoints.bins,theta,resolution)
 
   for(i in 1:length(spikes)){
-    transformed.y <- calculate.yi(spikes[[i]],endpoints.bins,qk)
+    transformed.y <- HaslingerYi(spikes[[i]],endpoints.bins,qk)
     transformed.y<-transformed.y[!is.na(transformed.y) & !is.nan(transformed.y)]
     n <- length(transformed.y)
     if (n > 0){

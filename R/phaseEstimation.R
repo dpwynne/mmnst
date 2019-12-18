@@ -9,7 +9,7 @@
 #'
 #' @export
 
-phase.estimation<-function(spikes,f.hat){
+EstimatePhase <- function(spikes,f.hat){
 ##spikes is the list of spike trains
 ##f.hat is the identified best frequencies
 

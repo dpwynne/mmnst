@@ -6,7 +6,7 @@
 #'
 #' @return a character vector containing model names
 
-generate.model.names <- function(K.length){
+GenerateModelNames <- function(K.length){
 ## K.length is the length of the K.list - i.e. the number of models
 ## this assumes a structure of muliplicative k, additive k, multiplicative k+1, additive k+1, etc.
 

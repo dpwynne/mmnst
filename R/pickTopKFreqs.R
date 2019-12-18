@@ -1,11 +1,11 @@
-#' Pick top frequencies
+#' Select top frequencies
 #'
 #' Identifies the K frequencies that appear most often in a given list of spike trains
 #'
 #' @importFrom utils head
 #'
 #' @param f.sorted a sorted table. The names of the table, in order, are the most common frequencies in the periodograms of the individual spike trains.
-#' This is usually output by the find.top.freqs function.
+#' This is usually output by the FindTopFrequencies function.
 #' @param K a scalar determining the number of periodic components to include in the model
 #' @param user.select whether to allow manual (user) control over accepting the identified frequencies. By default this is FALSE to allow running in batch mode.
 #'
@@ -13,7 +13,7 @@
 #'
 #' @export
 
-pick.top.K.freqs<-function(f.sorted,K, user.select = FALSE){
+SelectTopFrequencies <- function(f.sorted,K, user.select = FALSE){
 ##pick the K frequencies that appear the most often
 ##in the sorted f.common table
 cat("Identifying",K,"Most Common Peak Frequencies\n")

@@ -10,7 +10,7 @@
 #'
 #' @export
 
-ct.individual.point<-function(t1, terminal.points, ct){
+CtIndividualPoint<-function(t1, terminal.points, ct){
 	##if t1 is outside the time frame specified by t.start and t.end, c(t1) is 0
 	if( t1 < min(terminal.points) | t1 > max(terminal.points) ) return(0)
 	##if t1 is t.start or t.end, c(t1) is the appropriate value

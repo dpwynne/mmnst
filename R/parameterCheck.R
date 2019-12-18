@@ -10,7 +10,7 @@
 #'
 #' @return warning message(s) if the constraints on parameters are violated, otherwise NULL
 
-parameter.check <- function(f.hat, w0.hat.itr, eta.hat, gama.hat, f.max = 100){
+ParameterFeasibilityCheck <- function(f.hat, w0.hat.itr, eta.hat, gama.hat, f.max = 100){
 ##parameter checks for log-likelihood function
 ## Note: this parameter check assumes no frequency above f.max = 100 Hz
 
