@@ -7,7 +7,7 @@
 #' This must be the first argument as we wish to maximize the value of the log-likelihood function over the entire set of eta and gamma parameters.
 #' @param f.hat a numeric vector containing frequency estimates for a particular model
 #' @param w0.hat.itr a numeric vector containing phase estimates for a particular model and spike train
-#' @param setup.pars a list of additional parameters for the likelihood function, computed by the \code{SetupLikelihoods} function
+#' @param setup.pars a list of additional parameters for the likelihood function, computed by the \code{\link{SetupLikelihoods}} function
 #' @param ct a numeric vector containing the estimated piecewise constant intensity function. The length of ct should be a whole number power of 2.
 #' @param ct.spike.times a numeric vector containing the values of ct at the specific times a spike was recorded
 #' @param individual.spike.train a numeric vector containing the spike times for that spike train
