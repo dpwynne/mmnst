@@ -1,4 +1,4 @@
-#' Almost periodic function
+#' A periodic function
 #'
 #' Computes the function \eqn{\nu(x) = 1 + cos(2 \pi x)}
 #'
@@ -8,7 +8,7 @@
 #'
 
 nu <- function(x){
-##almost periodic function
+##periodic function
 	1+cos(2*pi*x)
 }
 

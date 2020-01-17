@@ -2,7 +2,7 @@
 % Please edit documentation in R/nu.R
 \name{nu}
 \alias{nu}
-\title{Almost periodic function}
+\title{A periodic function}
 \usage{
 nu(x)
 }

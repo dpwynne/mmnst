@@ -11,9 +11,9 @@
 #' @param max.J the maximum resolution of the dyadic partitioning used the estimate the piecewise constant intensity function c(t)
 #' @param max.diff the maximum allowance for the integrated squared error (ISE) of a smaller model to deviate from the overall minimum ISE
 #' @param pct.diff.plot a logical value indicating whether to produce a plot of the percentage difference (above minimum ISE) vs. J
-#' @param print.J.value a logical value indicating whether to print off the J value at each step of the corss-validation or not
+#' @param print.J.value a logical value indicating whether to print off the J value at each step of the cross-validation or not
 #'
-#' @return a list of length 3.
+#' @return A list of length 3 is returned returned.
 #' The first item in the list is the optimal partition depth as computed by ISE (\eqn{\lambda}).
 #' The second item in the list is the optimal penalty term as corresponding to that partition depth (J).
 #' The third item in the list is a matrix containing the ISE values for all combinations of partition depth and penalty term.
@@ -47,7 +47,7 @@ RDPCrossValidation = function(spikes, t.start = 0, t.end,
     terminal.points[[j]] <- seq(t.start,t.end,by=by.terminal[j])
   }
 
-  ##integrated kullback-leibler and integrated squared error
+  ##integrated Kullback-Leibler and integrated squared error
   ISE.matrix<-matrix(NA,nrow=length(poss.lambda),ncol=length(N.values))
 
   ##IKL = D_KL(f|f.hat) - using Wikipedia notation for our formula

@@ -12,7 +12,7 @@ SelectMostCommonBestModel(selected.models, model.names)
 \item{model.names}{a factor vector containing the names of all models fit to the data}
 }
 \value{
-the name of the overall "best" model as chosen by plurality vote over all spike trains with a clear best model
+The name of the overall "best" model as chosen by plurality vote over all spike trains with a clear best model
 }
 \description{
 Identifies the model chosen as "best" for the most spike trains

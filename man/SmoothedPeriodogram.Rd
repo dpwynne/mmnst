@@ -11,14 +11,14 @@ SmoothedPeriodogram(data, f, T.data, m = 5, coef.step = 0.01)
 
 \item{f}{a numeric vector containing frequency estimates for a particular model}
 
-\item{T.data}{The length of the data recording window}
+\item{T.data}{the length of the data recording window}
 
 \item{m}{a scalar determining the number of steps on each side of a given frequency over which the raw periodogram is averaged}
 
 \item{coef.step}{a scalar determining the resolution of frequency values (over 2m+1 of which the raw periodogram is averaged)}
 }
 \value{
-a numerical vector of smoothed periodogram values over a range of frequencies
+A numerical vector of smoothed periodogram values over a range of frequencies
 }
 \description{
 Calculates the smoothed periodogram

@@ -1,6 +1,6 @@
 #' Spike train simulation
 #'
-#' Simulates spike trains from an inhomogeneous Poisson process with a given time-varying intensity function
+#' Simulates spike trains from an inhomogeneous Poisson process with a given time-varying intensity function of one of the forms discussed in Ramezan \emph{et al.} (2014)
 #'
 #' @importFrom stats runif
 #'

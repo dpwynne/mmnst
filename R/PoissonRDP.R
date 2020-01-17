@@ -1,17 +1,17 @@
 #' Poisson Recursive Dyadic Partitioning
 #'
-#' Penalized recursive dyadic partitioning based on a Poisson model.
 #'
-#' Calculates the piecewise constant intensity function using penalized likelihood  and recursive dyadic partitioning methods.
+#' Calculates the piecewise constant intensity function using penalized likelihood recursive dyadic partitioning method in a Poisson model.
 #'
 #' @param sig a numeric vector determining the raw data, e.g., the heights (counts) of the histograms to be smoothed
 #' @param gamma a scalar determining the penalty factor in the penalized likelihood method
 #'
-#' @return a numeric vector of estimated c(t), the smoothed histogram of data.
+#' @return A numeric vector of estimated c(t), the smoothed histogram of data.
 #'
-#' @source This code is based on \url{MATLAB code}{http://math.bu.edu/people/kolaczyk/software/msglmcode.zip} from Kolaczyk and Nowak (2005). Drs. Kolaczyk and Nowak have agreed to allow our translation in the package.
+#' @source This code is based on \href{http://math.bu.edu/people/kolaczyk/software/msglmcode.zip}{MATLAB code} from Kolaczyk and Nowak (2005). Drs. Kolaczyk and Nowak have agreed to allow our translation in the package.
 #'
 #' @references Kolaczyk, E.D. and Nowak, R.D. (2004). Multiscale likelihood analysis and complexity penalized estimation, \emph{The Annals of Statistics}, \strong{32}(2), 500-527. doi: 10.1214/009053604000000076.
+#'
 #' Kolaczyk, E.D. and Nowak, R.D. (2005). Multiscale generalized linear models for nonparametric function estimation. \emph{Biometrika},  \strong{92}(1), 119–133. doi: 10.1093/biomet/92.1.119.
 #'
 #' @export

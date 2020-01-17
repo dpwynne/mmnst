@@ -4,7 +4,7 @@
 \alias{PoissonRDP}
 \title{Poisson Recursive Dyadic Partitioning}
 \source{
-This code is based on \url{MATLAB code}{http://math.bu.edu/people/kolaczyk/software/msglmcode.zip} from Kolaczyk and Nowak (2005). Drs. Kolaczyk and Nowak have agreed to allow our translation in the package.
+This code is based on \href{http://math.bu.edu/people/kolaczyk/software/msglmcode.zip}{MATLAB code} from Kolaczyk and Nowak (2005). Drs. Kolaczyk and Nowak have agreed to allow our translation in the package.
 }
 \usage{
 PoissonRDP(sig, gamma)
@@ -15,15 +15,13 @@ PoissonRDP(sig, gamma)
 \item{gamma}{a scalar determining the penalty factor in the penalized likelihood method}
 }
 \value{
-a numeric vector of estimated c(t), the smoothed histogram of data.
+A numeric vector of estimated c(t), the smoothed histogram of data.
 }
 \description{
-Penalized recursive dyadic partitioning based on a Poisson model.
-}
-\details{
-Calculates the piecewise constant intensity function using penalized likelihood  and recursive dyadic partitioning methods.
+Calculates the piecewise constant intensity function using penalized likelihood recursive dyadic partitioning method in a Poisson model.
 }
 \references{
 Kolaczyk, E.D. and Nowak, R.D. (2004). Multiscale likelihood analysis and complexity penalized estimation, \emph{The Annals of Statistics}, \strong{32}(2), 500-527. doi: 10.1214/009053604000000076.
+
 Kolaczyk, E.D. and Nowak, R.D. (2005). Multiscale generalized linear models for nonparametric function estimation. \emph{Biometrika},  \strong{92}(1), 119–133. doi: 10.1093/biomet/92.1.119.
 }

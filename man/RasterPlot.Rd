@@ -7,12 +7,12 @@
 RasterPlot(NeuronNumber, spike.train)
 }
 \arguments{
-\item{NeuronNumber}{the ID for the neuron to be plotted}
+\item{NeuronNumber}{the ID for the neuron to be plotted (only used in the title of the raster plot)}
 
 \item{spike.train}{a list of numeric vectors, each of which contains the spike times from a single trial of the experiment}
 }
 \value{
-a ggplot object containing the parameters of the Raster plot
+A ggplot object containing the parameters of the Raster plot
 }
 \description{
 Produces a raster plot for a single neuron

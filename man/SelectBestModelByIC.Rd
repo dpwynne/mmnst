@@ -13,7 +13,7 @@ SelectBestModelByIC(IC, tolerance = 1e-06)
 The simplest model within tolerance of the minimum IC value is selected as the best model.}
 }
 \value{
-the index (in the IC vector) of the selected model, unless two equally simple models could be selected, then NA
+The index (in the IC vector) of the selected model, unless two equally simple models could be selected, in which case NA is returned.
 }
 \description{
 Selects the best model given a vector of AIC/AICc/BIC values for each model under consideration

@@ -34,7 +34,7 @@ the first vector determines the frequencies, the second vector determines initia
 A list of numeric vectors, each of which contains a simulated spike train
 }
 \description{
-Simulates spike trains from an inhomogeneous Poisson process with a given time-varying intensity function
+Simulates spike trains from an inhomogeneous Poisson process with a given time-varying intensity function of one of the forms discussed in Ramezan \emph{et al.} (2014)
 }
 \references{
 Ramezan, R., Marriott, P., and Chenouri, S. (2014), \emph{Statistics in Medicine}, \strong{33}(2), 238-256. doi: 10.1002/sim.5923.

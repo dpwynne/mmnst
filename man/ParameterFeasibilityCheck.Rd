@@ -13,12 +13,12 @@ ParameterFeasibilityCheck(f.hat, w0.hat.itr, eta.hat, gama.hat, f.max = 100)
 
 \item{eta.hat}{a numeric vector containing the contribution of each periodic term to the intensity function}
 
-\item{gama.hat}{a numeric vector containing the amplitudes of each perioidic term in the intensity function}
+\item{gama.hat}{a numeric vector containing the amplitudes of each periodic term in the intensity function}
 
 \item{f.max}{a scalar indicating the absolute highest frequency of spiking activity}
 }
 \value{
-warning message(s) if the constraints on parameters are violated, otherwise NULL
+Warning message(s) if the constraints on parameters are violated, otherwise NULL
 }
 \description{
 A test function to ensure that appropriate constraints on parameters of the likelihood function are met

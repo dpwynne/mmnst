@@ -30,10 +30,10 @@ RDPCrossValidation(
 
 \item{pct.diff.plot}{a logical value indicating whether to produce a plot of the percentage difference (above minimum ISE) vs. J}
 
-\item{print.J.value}{a logical value indicating whether to print off the J value at each step of the corss-validation or not}
+\item{print.J.value}{a logical value indicating whether to print off the J value at each step of the cross-validation or not}
 }
 \value{
-a list of length 3.
+A list of length 3 is returned returned.
 The first item in the list is the optimal partition depth as computed by ISE (\eqn{\lambda}).
 The second item in the list is the optimal penalty term as corresponding to that partition depth (J).
 The third item in the list is a matrix containing the ISE values for all combinations of partition depth and penalty term.

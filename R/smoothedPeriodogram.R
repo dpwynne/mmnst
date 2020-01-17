@@ -4,11 +4,11 @@
 #'
 #' @param data a numeric vector containing the spike times for the analyzed spike train
 #' @param f a numeric vector containing frequency estimates for a particular model
-#' @param T.data The length of the data recording window
+#' @param T.data the length of the data recording window
 #' @param m a scalar determining the number of steps on each side of a given frequency over which the raw periodogram is averaged
 #' @param coef.step a scalar determining the resolution of frequency values (over 2m+1 of which the raw periodogram is averaged)
 #'
-#' @return a numerical vector of smoothed periodogram values over a range of frequencies
+#' @return A numerical vector of smoothed periodogram values over a range of frequencies
 #'
 #' @references Brillinger, D.R. (1974), Time Series: data analysis and theory. New York, NY, Holt, Rinehart, and Winston.
 #'
