@@ -10,9 +10,9 @@ This code is based on \href{http://math.bu.edu/people/kolaczyk/software/msglmcod
 PoissonRDP(sig, gamma)
 }
 \arguments{
-\item{sig}{a numeric vector determining the raw data, e.g., the heights (counts) of the histograms to be smoothed}
+\item{sig}{a numeric vector determining the raw data, e.g., the heights (counts) of the histograms to be smoothed.}
 
-\item{gamma}{a scalar determining the penalty factor in the penalized likelihood method}
+\item{gamma}{a scalar determining the penalty factor in the penalized likelihood method.}
 }
 \value{
 A numeric vector of estimated c(t), the smoothed histogram of data.

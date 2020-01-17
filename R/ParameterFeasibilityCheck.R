@@ -2,13 +2,13 @@
 #'
 #' A test function to ensure that appropriate constraints on parameters of the likelihood function are met
 #'
-#' @param f.hat a numeric vector containing frequency estimates for a particular model
-#' @param w0.hat.itr a numeric vector containing initial phase estimates for every spike train used to fit a particular model
-#' @param eta.hat a numeric vector containing the contribution of each periodic term to the intensity function
-#' @param gama.hat a numeric vector containing the amplitudes of each periodic term in the intensity function
-#' @param f.max a scalar indicating the absolute highest frequency of spiking activity
+#' @param f.hat a numeric vector containing frequency estimates for a particular model.
+#' @param w0.hat.itr a numeric vector containing initial phase estimates for every spike train used to fit a particular model.
+#' @param eta.hat a numeric vector containing the contribution of each periodic term to the intensity function.
+#' @param gama.hat a numeric vector containing the amplitudes of each periodic term in the intensity function.
+#' @param f.max a scalar indicating the absolute highest frequency of spiking activity.
 #'
-#' @return Warning message(s) if the constraints on parameters are violated, otherwise NULL
+#' @return Warning message(s) if the constraints on parameters are violated, otherwise NULL.
 
 ParameterFeasibilityCheck <- function(f.hat, w0.hat.itr, eta.hat, gama.hat, f.max = 100){
 ## Note: this parameter check assumes no frequency above f.max = 100 Hz

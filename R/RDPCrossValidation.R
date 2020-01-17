@@ -1,17 +1,17 @@
 #' Recursive dyadic partitioning cross-validation
 #'
-#' Optimizes a penalized log-likelihood to find the optimal number of partitions for the recursive dyadic partitioning
+#' Optimizes a penalized log-likelihood to find the optimal number of partitions for the recursive dyadic partitioning.
 #'
 #' @importFrom graphics plot abline
 #'
-#' @param spikes a list of spike trains
-#' @param t.start the starting time of the recording window; the default value is 0
-#' @param t.end the ending time of the recording window
-#' @param poss.lambda a numeric vector containing a grid of penalty values
-#' @param max.J the maximum resolution of the dyadic partitioning used the estimate the piecewise constant intensity function c(t)
-#' @param max.diff the maximum allowance for the integrated squared error (ISE) of a smaller model to deviate from the overall minimum ISE
-#' @param pct.diff.plot a logical value indicating whether to produce a plot of the percentage difference (above minimum ISE) vs. J
-#' @param print.J.value a logical value indicating whether to print off the J value at each step of the cross-validation or not
+#' @param spikes a list of spike trains.
+#' @param t.start the starting time of the recording window; the default value is 0.
+#' @param t.end the ending time of the recording window.
+#' @param poss.lambda a numeric vector containing a grid of penalty values.
+#' @param max.J the maximum resolution of the dyadic partitioning used the estimate the piecewise constant intensity function \eqn{c(t)}.
+#' @param max.diff the maximum allowance for the integrated squared error (ISE) of a smaller model to deviate from the overall minimum ISE.
+#' @param pct.diff.plot a logical value indicating whether to produce a plot of the percentage difference (above minimum ISE) vs. J.
+#' @param print.J.value a logical value indicating whether to print off the J value at each step of the cross-validation or not.
 #'
 #' @return A list of length 3 is returned returned.
 #' The first item in the list is the optimal partition depth as computed by ISE (\eqn{\lambda}).

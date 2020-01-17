@@ -1,4 +1,4 @@
-#' Estimate initial phases
+#' Estimate initial phases of the periodic function \eqn{\nu}
 #'
 #' Computes the initial phases for spike trains based on the given frequencies.
 #'

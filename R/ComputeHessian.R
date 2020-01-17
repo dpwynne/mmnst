@@ -1,7 +1,7 @@
 ################################################
 ### Compute the Hessian of the loglikelihood ###
 ################################################
-compute.hessian<-function(spikes,K.list,f.hat.list,w0.hat.list,terminal.points,ct,type,k){
+ComputeHessian<-function(spikes,K.list,f.hat.list,w0.hat.list,terminal.points,ct,type,k){
 ##spikes is a list of spike trains
 ##K.list is a list of eta and gamma, from ____ function
 

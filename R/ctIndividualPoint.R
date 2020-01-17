@@ -1,4 +1,4 @@
-#' c(t) at Individual Points
+#' \eqn{c(t)} at Individual Points
 #'
 #' Computes the estimated piecewise constant intensity function c(t) at a particular time point t1.
 #'

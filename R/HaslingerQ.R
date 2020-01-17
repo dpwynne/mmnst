@@ -8,7 +8,7 @@
 #' @param theta a numeric vector containing the average of intensity function estimates across trials.
 #' @param resolution the time resolution of the intensity function, related to the number of points at which the function is evaluated.
 #'
-#' @return A numeric vector of q values from Haslinger et al. (2010).
+#' @return A numeric vector of q values from Haslinger \emph{et al.} (2010).
 #'
 #' @references Haslinger, R., Pipa G., and Brown, E. (2010). Discrete time rescaling theorem: determining goodness of fit for discrete time statistical models of neural spiking. \emph{Neural Computation}. \strong{22}(10):2477-506. doi: 10.1162/NECO_a_00015.
 

@@ -1,19 +1,19 @@
 #' Spike train simulation
 #'
-#' Simulates spike trains from an inhomogeneous Poisson process with a given time-varying intensity function of one of the forms discussed in Ramezan \emph{et al.} (2014)
+#' Simulates spike trains from an inhomogeneous Poisson process with a given time-varying intensity function of one of the forms discussed in Ramezan \emph{et al.} (2014).
 #'
 #' @importFrom stats runif
 #'
-#' @param nruns a scalar determining the number of spike trains (trials) to be simulated
-#' @param t.start the starting time of the simulated data collection
-#' @param t.end the ending time of the simulated data collection
+#' @param nruns a scalar determining the number of spike trains (trials) to be simulated.
+#' @param t.start the starting time of the simulated data collection.
+#' @param t.end the ending time of the simulated data collection.
 #' @param resolution the time resolution of the spike train. The default is 0.001 (1 ms).
-#' @param intensity.function any intensity function for the corresponding process from which you want to simulate data
+#' @param intensity.function any intensity function for the corresponding process from which you want to simulate data.
 #' @param pass.arg a list of arguments to pass to the intensity function. In the additive and multiplicative models, this contains four numeric vectors;
-#' the first vector determines the frequencies, the second vector determines initial phases, the third vector determines the eta values and the fourth vector determines the gamma values
-#' @param envelope.function The envelope function used for acceptance-rejection sampling to simulate the data
+#' the first vector determines the frequencies, the second vector determines initial phases, the third vector determines the eta values and the fourth vector determines the \code{\gamma} values.
+#' @param envelope.function The envelope function used for acceptance-rejection sampling to simulate the data.
 #'
-#' @return A list of numeric vectors, each of which contains a simulated spike train
+#' @return A list of numeric vectors, each of which contains a simulated spike train.
 #'
 #' @references Ramezan, R., Marriott, P., and Chenouri, S. (2014), \emph{Statistics in Medicine}, \strong{33}(2), 238-256. doi: 10.1002/sim.5923.
 #'

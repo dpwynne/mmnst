@@ -7,11 +7,11 @@
 nu(x)
 }
 \arguments{
-\item{x}{an arbitrary numeric vector or scalar}
+\item{x}{an arbitrary numeric vector or scalar.}
 }
 \value{
-\eqn{1 + cos(2 \pi x)}
+The value of the function \eqn{1 + cos(2 \pi x)}.
 }
 \description{
-Computes the function \eqn{\nu(x) = 1 + cos(2 \pi x)}
+Computes the function \eqn{\nu(x) = 1 + cos(2 \pi x)}.
 }

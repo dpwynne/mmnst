@@ -3,8 +3,8 @@
 #'
 #' Calculates the piecewise constant intensity function using penalized likelihood recursive dyadic partitioning method in a Poisson model.
 #'
-#' @param sig a numeric vector determining the raw data, e.g., the heights (counts) of the histograms to be smoothed
-#' @param gamma a scalar determining the penalty factor in the penalized likelihood method
+#' @param sig a numeric vector determining the raw data, e.g., the heights (counts) of the histograms to be smoothed.
+#' @param gamma a scalar determining the penalty factor in the penalized likelihood method.
 #'
 #' @return A numeric vector of estimated c(t), the smoothed histogram of data.
 #'

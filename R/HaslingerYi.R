@@ -1,6 +1,6 @@
 #' Calculate y(i)
 #'
-#' Calculates Yi in equation (39) of Haslinger et al. (2010)
+#' Calculates Yi in equation (39) of Haslinger \emph{et al.} (2010)
 #'
 #' @importFrom stats runif
 #'
@@ -8,7 +8,7 @@
 #' @param endpoints.bins a numeric vector containing the endpoints of the bins for the binned spike train.
 #' @param q a numeric vector containing the q values calculated by the \code{\link{HaslingerQ}} function.
 #'
-#' @return A numeric vector of Yi values as defined in equation (39) of Haslinger et al. (2010).
+#' @return A numeric vector of Yi values as defined in equation (39) of Haslinger \emph{et al.} (2010).
 #'
 #' @references Haslinger, R., Pipa G., and Brown, E. (2010). Discrete time rescaling theorem: determining goodness of fit for discrete time statistical models of neural spiking. \emph{Neural Computation}. \strong{22}(10):2477-506. doi: 10.1162/NECO_a_00015.
 

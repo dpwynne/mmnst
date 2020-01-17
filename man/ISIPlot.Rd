@@ -7,15 +7,18 @@
 ISIPlot(NeuronNumber, TrialNumber, spike.train)
 }
 \arguments{
-\item{NeuronNumber}{an identifier for the neuron being plotted}
+\item{NeuronNumber}{an identifier for the neuron being plotted.}
 
-\item{TrialNumber}{the trial number whose spike train is being plotted}
+\item{TrialNumber}{the trial number whose spike train is being plotted.}
 
-\item{spike.train}{a list of spike trains}
+\item{spike.train}{a list of spike trains.}
 }
 \value{
-a ggplot object containing the parameters of the ISI plot
+A ggplot object containing the parameters of the ISI plot.
 }
 \description{
-Produces an inter-spike interval (ISI) plot for a single trial
+Produces an inter-spike interval (ISI) plot for a single trial.
+}
+\references{
+Ramezan, R., Marriott, P., and Chenouri, S. (2014), \emph{Statistics in Medicine}, \strong{33}(2), 238-256. doi: 10.1002/sim.5923.
 }

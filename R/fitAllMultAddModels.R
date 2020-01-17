@@ -6,11 +6,11 @@
 #' @param spikes a list of spike trains.
 #' @param f.common.table a table whose names contain the high-amplitude frequency components as computed by \code{\link{FindTopFrequencies}}.
 #' @param setup.pars a list of additional parameters for the likelihood function, computed by \code{\link{SetupLikelihoods}}.
-#' @param terminal.points a numeric vector containing the time points at which c(t) changes.
-#' @param ct a numeric vector containing the estimated piecewise constant intensity function c(t). The length of c(t) should be a whole number power of 2.
+#' @param terminal.points a numeric vector containing the time points at which \eqn{c(t)} changes.
+#' @param ct a numeric vector containing the estimated piecewise constant intensity function \eqn{c(t)}. The length of \eqn{c(t)} should be a whole number power of 2.
 #' @param user.select whether to allow the user to select the frequencies for the model; must be FALSE for this function to run effectively.
 #'
-#' @return A list of length 3.
+#' @return A list of length 3 is returned.
 #' The first item in the list is a list of frequency estimates for each model.
 #' The second item in the list is a list of phase estimates for each model.
 #' The third item in the list is a list of eta/gamma estimates and fit criteria for each model.

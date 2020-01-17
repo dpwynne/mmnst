@@ -11,6 +11,8 @@
 #'
 #' @return A ggplot object containing the parameters of the ISI plot.
 #'
+#' @references Ramezan, R., Marriott, P., and Chenouri, S. (2014), \emph{Statistics in Medicine}, \strong{33}(2), 238-256. doi: 10.1002/sim.5923.
+#'
 #' @export
 
 ISIPlot <- function(NeuronNumber, TrialNumber, spike.train){

@@ -1,12 +1,12 @@
 #' Identify terminal points
 #'
-#' Computes a vector of times at which the estimated piecewise constant intensity function c(t) changes.
+#' Computes a vector of times at which the estimated piecewise constant intensity function \eqn{c(t)} changes.
 #'
 #' @param t.start the starting time of the data collection.
 #' @param t.end the ending time of the data collection.
-#' @param J the maximum size of the tree in the initial dyadic partitioning used to estimate c(t).
+#' @param J the maximum size of the tree in the initial dyadic partitioning used to estimate \eqn{c(t)}.
 #'
-#' @return A numeric vector of points at which c(t) changes.
+#' @return A numeric vector of points at which \eqn{c(t)} changes.
 #'
 #' @export
 

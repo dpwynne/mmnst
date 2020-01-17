@@ -1,8 +1,8 @@
 #' Information criterion-based multiscale model selection
 #'
-#' Selects the best model given a vector of AIC/AICc/BIC values for each model under consideration
+#' Selects the best model given a vector of AIC/AICc/BIC values for each model under consideration.
 #'
-#' @param IC a numeric vector of AIC, AICc, or BIC values for each model
+#' @param IC a numeric vector of AIC, AICc, or BIC values for each model.
 #' @param tolerance a very small positive scalar accounting for machine precision and roundoff errors in the optimization.
 #' The simplest model within tolerance of the minimum IC value is selected as the best model.
 #'

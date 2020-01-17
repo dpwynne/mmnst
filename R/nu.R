@@ -1,10 +1,10 @@
 #' A periodic function
 #'
-#' Computes the function \eqn{\nu(x) = 1 + cos(2 \pi x)}
+#' Computes the function \eqn{\nu(x) = 1 + cos(2 \pi x)}.
 #'
-#' @param x an arbitrary numeric vector or scalar
+#' @param x an arbitrary numeric vector or scalar.
 #'
-#' @return \eqn{1 + cos(2 \pi x)}
+#' @return The value of the function \eqn{1 + cos(2 \pi x)}.
 #'
 
 nu <- function(x){

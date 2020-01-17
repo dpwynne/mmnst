@@ -1,4 +1,4 @@
-#' c(t) at all points
+#' \eqn{c(t)} at all points
 #'
 #' Computes c(t) at all arbitrary points in a time vector.
 #'

@@ -1,14 +1,14 @@
 #' Raster plot
 #'
-#' Produces a raster plot for a single neuron
+#' Produces a raster plot for a single neuron.
 #'
 #' @import ggplot2
 #' @importFrom rlang .data
 #'
-#' @param NeuronNumber the ID for the neuron to be plotted (only used in the title of the raster plot)
-#' @param spike.train a list of numeric vectors, each of which contains the spike times from a single trial of the experiment
+#' @param NeuronNumber the ID for the neuron to be plotted (only used in the title of the raster plot).
+#' @param spike.train a list of numeric vectors, each of which contains the spike times from a single trial of the experiment.
 #'
-#' @return A ggplot object containing the parameters of the Raster plot
+#' @return A ggplot object containing the parameters of the Raster plot.
 #'
 #' @export
 

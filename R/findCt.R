@@ -1,15 +1,15 @@
-#' Find c(t)
+#' Find \eqn{c(t)}
 #'
-#' Compute the piecewise constant estimate of the intensity function, c(t), for each spike train
+#' Compute the piecewise constant estimate of the intensity function, \eqn{c(t)}, for each spike train
 #'
-#' @param spikes a list of spike trains
-#' @param t.start the starting time of the recording window; the default value is 0
-#' @param t.end the ending time of the recording window
+#' @param spikes a list of spike trains.
+#' @param t.start the starting time of the recording window; the default value is 0.
+#' @param t.end the ending time of the recording window.
 #' @param lambda a penalty term used in estimating the piecewise constant intensity function c(t). Larger values of lambda result in "smoother" estimates.
 #' @param J the maximum size of the tree in the initial dyadic partitioning used to estimate c(t). The final estimate of c(t) will have 2^J values.
 #'
-#' @return a list of length 2.
-#' The first item in the list is the estimate of c(t) created by averaging the estimates for each spike train.
+#' @return A list of length 2 is returned.
+#' The first item in the list is the estimate of \eqn{c(t)} created by averaging the estimates for each spike train.
 #' The second item is a matrix in which each row represents the estimate of c(t) for an individual spike train.
 #'
 #' @export
