@@ -1,13 +1,13 @@
 #' Model selection for fitted multiscale models
 #'
-#' Finds the simplest multiscale model within a given tolerance of the "optimal" model as computed by an information criterion
+#' Finds the simplest multiscale model within a given tolerance of the "optimal" model as computed by an information criterion.
 #'
-#' @param K.list a list containing eta/gamma estimates and model fit criteria for each fitted model
+#' @param K.list a list containing eta/gamma estimates and model fit criteria for each fitted model.
 #'
-#' @return a list of length 3
-#' The first item in the list is a character vector containing the names of the best model(s)
-#' The second item in the list is a numeric vector containing the indices of the best model(s) in the list of models
-#' The third item in the list is a data frame containing the best model for each spike train analyzed by each fit criterion
+#' @return A list of length 3.
+#' The first item in the list is a character vector containing the names of the best model(s).
+#' The second item in the list is a numeric vector containing the indices of the best model(s) in the list of models.
+#' The third item in the list is a data frame containing the best model for each spike train analyzed by each fit criterion.
 #'
 #' @export
 

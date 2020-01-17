@@ -1,15 +1,15 @@
 #' Inter-spike interval plot
 #'
-#' Produces an inter-spike interval (ISI) plot for a single trial
+#' Produces an inter-spike interval (ISI) plot for a single trial.
 #'
-#' @param NeuronNumber an identifier for the neuron being plotted
-#' @param TrialNumber the trial number whose spike train is being plotted
-#' @param spike.train a list of spike trains
+#' @param NeuronNumber an identifier for the neuron being plotted.
+#' @param TrialNumber the trial number whose spike train is being plotted.
+#' @param spike.train a list of spike trains.
 #'
 #' @import ggplot2
 #' @importFrom rlang .data
 #'
-#' @return a ggplot object containing the parameters of the ISI plot
+#' @return A ggplot object containing the parameters of the ISI plot.
 #'
 #' @export
 
