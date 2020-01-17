@@ -1,22 +1,22 @@
 #' Estimate \eqn{\theta(t)}
 #'
-#' Estimates average intensity function and computes bootstrap confidence intervals for a number of specified models
+#' Estimates average intensity function and computes bootstrap confidence intervals for a number of specified models.
 #'
-#' @param spikes a list of spike trains
-#' @param f.hat.list a list containing estimated frequencies for each model
-#' @param w0.hat.list a list containing estimated phases for each model
-#' @param K.list a list of matrices containing estimated eta and gamma parameters for each model and the estimated goodness-of-fit criteria (AIC, etc.) for each model
-#' @param best.models a list containing the indices of the models to estimate an intensity function for and their corresponding model names
-#' Typically best.models is either the list of all models or a list of models chosen by specific goodness-of-fit criteria
-#' @param t.start the starting time of the recording window; the default value is 0
-#' @param t.end the ending time of the recording window
-#' @param terminal.points a numeric vector containing the time points at which the piecewise constant estimate c(t) changes
-#' @param ct a numeric vector containing the estimated piecewise constant intensity function
-#' @param intensity.function.length the number of points in the discretized intensity function
-#' The larger this value is, the better the resolution
-#' For spike trains of 10 seconds or less, the default value corresponds to 10 ms resolution
-#' For spike trains of 10-100 seconds, the default value corresponds to 100 ms resolution
-#' @return  a list of length 2.
+#' @param spikes a list of spike trains.
+#' @param f.hat.list a list containing estimated frequencies for each model.
+#' @param w0.hat.list a list containing estimated phases for each model.
+#' @param K.list a list of matrices containing estimated eta and gamma parameters for each model and the estimated goodness-of-fit criteria (AIC, etc.) for each model.
+#' @param best.models a list containing the indices of the models to estimate an intensity function for and their corresponding model names.
+#' Typically, this list contains either all models or only the models chosen by specific goodness-of-fit criteria.
+#' @param t.start the starting time of the recording window; the default value is 0.
+#' @param t.end the ending time of the recording window.
+#' @param terminal.points a numeric vector containing the time points at which the piecewise constant estimate c(t) changes.
+#' @param ct a numeric vector containing the estimated piecewise constant intensity function.
+#' @param intensity.function.length the number of points in the discretized intensity function.
+#' The larger this value is, the better the resolution.
+#' For spike trains of 10 seconds or less, the default value corresponds to 10 ms resolution.
+#' For spike trains of 10-100 seconds, the default value corresponds to 100 ms resolution.
+#' @return  A list of length 2.
 #' The first item in the list is a list of matrices containing the intensity estimates (average and bootstrap CI) for each model.
 #' The second item in the list is a list of matrices containing the intensity estimates (for each spike train) for each model.
 #'

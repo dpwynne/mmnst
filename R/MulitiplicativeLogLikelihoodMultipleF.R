@@ -1,18 +1,18 @@
 #' Multiplicative Model Log Likelihood
 #'
-#' Computes the log-likelihood of a spike train under the assumptions of the multiplicative model
+#' Computes the log-likelihood of a spike train under the assumptions of the multiplicative model.
 #'
 #' @param param a numeric vector containing the value of the eta and gamma parameters in the model.
 #' For a model containing K frequencies, the first K numbers are eta values and the second K numbers are gamma values.
 #' This must be the first argument as we wish to maximize the value of the log-likelihood function over the entire set of eta and gamma parameters.
-#' @param f.hat a numeric vector containing frequency estimates for a particular model
-#' @param w0.hat.itr a numeric vector containing phase estimates for a particular model and spike train
-#' @param setup.pars a list of additional parameters for the likelihood function, computed by the \code{SetupLikelihoods} function
-#' @param ct a numeric vector containing the estimated piecewise constant intensity function. The length of ct should be a whole number power of 2.
-#' @param ct.spike.times a numeric vector containing the values of ct at the specific times a spike was recorded
-#' @param individual.spike.train a numeric vector containing the spike times for that spike train
+#' @param f.hat a numeric vector containing frequency estimates for a particular model.
+#' @param w0.hat.itr a numeric vector containing phase estimates for a particular model and spike train.
+#' @param setup.pars a list of additional parameters for the likelihood function, computed by the \code{\link{SetupLikelihoods}} function.
+#' @param ct a numeric vector containing the estimated piecewise constant intensity function. The length of \code{ct} should be a whole number power of 2.
+#' @param ct.spike.times a numeric vector containing the values of \code{ct} at the specific times a spike was recorded.
+#' @param individual.spike.train a numeric vector containing the spike times for that spike train.
 #'
-#' @return the value of the log-likelihood function for the multiplicative model
+#' @return The value of the log-likelihood function for the multiplicative model.
 #'
 #' @references Ramezan, R., Marriott, P., and Chenouri, S. (2014), \emph{Statistics in Medicine}, \strong{33}(2), 238-256. doi: 10.1002/sim.5923.
 #'
