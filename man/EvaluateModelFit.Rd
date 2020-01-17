@@ -7,15 +7,15 @@
 EvaluateModelFit(l, k, n)
 }
 \arguments{
-\item{l}{the value of the log-likelihood function evaluated at MLEs of the parameters}
+\item{l}{the value of the log-likelihood function evaluated at MLEs of the parameters.}
 
-\item{k}{the number of parameters in the model to be estimated}
+\item{k}{the number of parameters in the model to be estimated.}
 
-\item{n}{the number of observations used to estimate the parameters}
+\item{n}{the number of observations used to estimate the parameters.}
 }
 \value{
-a numeric vector containing (in order) AIC, AICc, BIC, and maximum log-likelihood
+A numeric vector containing (in order) AIC, AICc, BIC, and maximum log-likelihood.
 }
 \description{
-Computes the AIC, corrected AIC (AICc), and BIC for a model
+Computes the AIC, corrected AIC (AICc), and BIC for a model.
 }

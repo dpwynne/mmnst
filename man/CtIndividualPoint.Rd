@@ -7,15 +7,15 @@
 CtIndividualPoint(t1, terminal.points, ct)
 }
 \arguments{
-\item{t1}{a single time value}
+\item{t1}{a single time value.}
 
-\item{terminal.points}{a numeric vector containing the time points at which c(t) changes}
+\item{terminal.points}{a numeric vector containing the time points at which c(t) changes.}
 
-\item{ct}{a numeric vector containing the estimated piecewise constant intensity function c(t)}
+\item{ct}{a numeric vector containing the estimated piecewise constant intensity function c(t).}
 }
 \value{
-a single numeric value of c(t)
+A single numeric value of c(t).
 }
 \description{
-Computes the estimated piecewise constant intensity function c(t) at a particular time point t1
+Computes the estimated piecewise constant intensity function c(t) at a particular time point t1.
 }

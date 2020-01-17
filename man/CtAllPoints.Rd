@@ -7,15 +7,15 @@
 CtAllPoints(t, terminal.points, ct)
 }
 \arguments{
-\item{t}{a numeric vector of time points at which to evaluate the function}
+\item{t}{a numeric vector of time points at which to evaluate the function.}
 
-\item{terminal.points}{a numeric vector containing the time points at which c(t) changes}
+\item{terminal.points}{a numeric vector containing the time points at which c(t) changes.}
 
 \item{ct}{a numeric vector containing the estimated piecewise constant estimated intensity function c(t). The length of ct should be a whole number power of 2.}
 }
 \value{
-a numeric vector containing the value of c(t) at all time points at which to evaluate it
+A numeric vector containing the value of c(t) at all time points at which to evaluate it.
 }
 \description{
-Computes c(t) at all arbitrary points in a time vector
+Computes c(t) at all arbitrary points in a time vector.
 }

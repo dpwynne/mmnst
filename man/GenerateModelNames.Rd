@@ -10,8 +10,8 @@ GenerateModelNames(K.length)
 \item{K.length}{the number of models to fit. If K is the maximum number of frequency components, then K.length = 2K+1.}
 }
 \value{
-a character vector containing model names
+A character vector containing model names.
 }
 \description{
-Creates a vector of names identifying the 2K+1 models
+Creates a vector of names identifying the 2K+1 models.
 }

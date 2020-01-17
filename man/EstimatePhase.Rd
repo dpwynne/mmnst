@@ -2,18 +2,18 @@
 % Please edit documentation in R/phaseEstimation.R
 \name{EstimatePhase}
 \alias{EstimatePhase}
-\title{Phase estimation}
+\title{Estimate initial phases}
 \usage{
 EstimatePhase(spikes, f.hat)
 }
 \arguments{
-\item{spikes}{a list of spike trains}
+\item{spikes}{a list of spike trains.}
 
-\item{f.hat}{a numeric vector containing frequency estimates for a particular model}
+\item{f.hat}{a numeric vector containing frequency estimates for a particular model.}
 }
 \value{
-a numeric matrix containing the estimates of the initial phases for each frequency and spike train. The rows represent individual spike trains and the columns are individual frequency values.
+A numeric matrix containing the estimates of the initial phases for each frequency and spike train. The rows represent individual spike trains and the columns are individual frequency values.
 }
 \description{
-Computes the initial phases for spike trains based on the given frequencies
+Computes the initial phases for spike trains based on the given frequencies.
 }

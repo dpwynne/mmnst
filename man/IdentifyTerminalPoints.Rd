@@ -7,15 +7,15 @@
 IdentifyTerminalPoints(t.start, t.end, J)
 }
 \arguments{
-\item{t.start}{the starting time of the data collection}
+\item{t.start}{the starting time of the data collection.}
 
-\item{t.end}{the ending time of the data collection}
+\item{t.end}{the ending time of the data collection.}
 
-\item{J}{the maximum size of the tree in the initial dyadic partitioning used to estimate c(t)}
+\item{J}{the maximum size of the tree in the initial dyadic partitioning used to estimate c(t).}
 }
 \value{
-a numeric vector of points at which c(t) changes
+A numeric vector of points at which c(t) changes.
 }
 \description{
-Computes a vector of times at which the estimated piecewise constant intensity function c(t) changes
+Computes a vector of times at which the estimated piecewise constant intensity function c(t) changes.
 }

@@ -18,9 +18,9 @@ FindCt(spikes, t.start, t.end, lambda, J)
 \item{J}{the maximum size of the tree in the initial dyadic partitioning used to estimate c(t). The final estimate of c(t) will have 2^J values.}
 }
 \value{
-a list of length 2
-The first item in the list is the estimate of c(t) created by averaging the estimates for each spike train
-The second item is a matrix in which each row represents the estimate of c(t) for an individual spike train
+a list of length 2.
+The first item in the list is the estimate of c(t) created by averaging the estimates for each spike train.
+The second item is a matrix in which each row represents the estimate of c(t) for an individual spike train.
 }
 \description{
 Compute the piecewise constant estimate of the intensity function, c(t), for each spike train

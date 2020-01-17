@@ -7,14 +7,14 @@
 BootstrappedTheta(theta.t, B = 1000)
 }
 \arguments{
-\item{theta.t}{a matrix containing estimates of \eqn{\theta(t)}. Each row represents a time point and each column reprsents a spike train.
+\item{theta.t}{a matrix containing estimates of \eqn{\theta(t)}. Each row represents a time point and each column represents a spike train.
 Thus, each value in the matrix represents the value of \eqn{\theta(t)} at time point t estimated from a particular spike train.}
 
-\item{B}{the number of desired bootstrap resamples}
+\item{B}{the number of desired bootstrap resamples.}
 }
 \value{
-a matrix containing the lower and upper bounds of the percentile confidence interval at each time point
+A matrix containing the lower and upper bounds of the percentile confidence interval at each time point.
 }
 \description{
-Computes a 95\% pointwise confidence interval for \eqn{\theta(t)} using the bootstrap percentile method
+Computes a 95\% pointwise confidence interval for \eqn{\theta(t)} using the bootstrap percentile method.
 }

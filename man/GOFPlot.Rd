@@ -8,7 +8,7 @@ GOFPlot(
   spikes,
   theta,
   t.start = 0,
-  t.end,
+  t.end = 10,
   neuron.name = NULL,
   resolution = (t.end - t.start)/(length(theta) - 1),
   axis.label.size = 18,
@@ -16,28 +16,28 @@ GOFPlot(
 )
 }
 \arguments{
-\item{spikes}{a list of spike trains}
+\item{spikes}{a list of spike trains.}
 
-\item{theta}{a numeric vector containing the average of the intensity function estimates across trials}
+\item{theta}{a numeric vector containing the average of the intensity function estimates across trials.}
 
-\item{t.start}{the starting time of the recording window; the default value is 0}
+\item{t.start}{the starting time of the recording window; the default value is 0.}
 
-\item{t.end}{the ending time of the recording window}
+\item{t.end}{the ending time of the recording window. The default value is 10, corresponding to a 10-second recording.}
 
-\item{neuron.name}{a string containing the name of the neuron being plotted, used only to title the plot}
+\item{neuron.name}{a string containing the name of the neuron being plotted, used only to title the plot.}
 
 \item{resolution}{a scalar determining the bin width. This is equivalent to Delta in Haslinger et al. (2010).}
 
-\item{axis.label.size}{a scalar determining the font size of the x- and y-axis labels of the plot}
+\item{axis.label.size}{a scalar determining the font size of the x- and y-axis labels of the plot.}
 
-\item{title.size}{a scalar determining the font size of the title of the plot (if one exists)}
+\item{title.size}{a scalar determining the font size of the title of the plot (if one exists).}
 }
 \value{
 a list of data frames. Each data frame includes the model and empirical quantiles for one spike train.
 This data is used to generate the pp-plot outlined in Haslinger et al. (2010).
 }
 \description{
-Runs a goodness-of-fit test for a particular model, i.e., a given intensity function estimate
+Runs a goodness-of-fit test for a particular model, i.e., a given intensity function estimate.
 }
 \references{
 Haslinger, R., Pipa G., and Brown, E. (2010). Discrete time rescaling theorem: determining goodness of fit for discrete time statistical models of neural spiking. \emph{Neural Computation}. \strong{22}(10):2477-506. doi: 10.1162/NECO_a_00015.
