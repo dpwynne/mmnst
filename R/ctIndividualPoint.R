@@ -1,12 +1,12 @@
 #' c(t) at Individual Points
 #'
-#' Computes the estimated piecewise constant intensity function c(t) at a particular time point t1
+#' Computes the estimated piecewise constant intensity function c(t) at a particular time point t1.
 #'
-#' @param t1 a single time value
-#' @param terminal.points a numeric vector containing the time points at which c(t) changes
-#' @param ct a numeric vector containing the estimated piecewise constant intensity function c(t)
+#' @param t1 a single time value.
+#' @param terminal.points a numeric vector containing the time points at which c(t) changes.
+#' @param ct a numeric vector containing the estimated piecewise constant intensity function c(t).
 #'
-#' @return a single numeric value of c(t)
+#' @return A single numeric value of c(t).
 #'
 #' @export
 

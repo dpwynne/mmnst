@@ -1,17 +1,17 @@
 #' Goodness of fit pp-plot
 #'
-#' Runs a goodness-of-fit test for a particular model, i.e., a given intensity function estimate
+#' Runs a goodness-of-fit test for a particular model, i.e., a given intensity function estimate.
 #'
 #' @importFrom rlang .data
 #'
-#' @param spikes a list of spike trains
-#' @param theta a numeric vector containing the average of the intensity function estimates across trials
-#' @param t.start the starting time of the recording window; the default value is 0
-#' @param t.end the ending time of the recording window
-#' @param neuron.name a string containing the name of the neuron being plotted, used only to title the plot
+#' @param spikes a list of spike trains.
+#' @param theta a numeric vector containing the average of the intensity function estimates across trials.
+#' @param t.start the starting time of the recording window; the default value is 0.
+#' @param t.end the ending time of the recording window. The default value is 10, corresponding to a 10-second recording.
+#' @param neuron.name a string containing the name of the neuron being plotted, used only to title the plot.
 #' @param resolution a scalar determining the bin width. This is equivalent to Delta in Haslinger et al. (2010).
-#' @param axis.label.size a scalar determining the font size of the x- and y-axis labels of the plot
-#' @param title.size a scalar determining the font size of the title of the plot (if one exists)
+#' @param axis.label.size a scalar determining the font size of the x- and y-axis labels of the plot.
+#' @param title.size a scalar determining the font size of the title of the plot (if one exists).
 #'
 #' @return a list of data frames. Each data frame includes the model and empirical quantiles for one spike train.
 #' This data is used to generate the pp-plot outlined in Haslinger et al. (2010).
@@ -20,7 +20,7 @@
 #'
 #' @export
 
-GOFPlot <-function(spikes, theta, t.start = 0, t.end,
+GOFPlot <-function(spikes, theta, t.start = 0, t.end = 10,
                    neuron.name = NULL, resolution= (t.end - t.start)/(length(theta)-1),
                    axis.label.size = 18, title.size = 24){
   ##spikes is the list of spike trains you want to check goodness of fit for

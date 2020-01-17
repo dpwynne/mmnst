@@ -1,30 +1,29 @@
 #' Find highest-amplitude frequencies
 #'
-#' Finds the highest-amplitude frequency components in each spike train
+#' Finds the highest-amplitude frequency components in each spike train.
 #'
 #' @importFrom utils tail
 #'
-#' @param spikes a list of spike trains
-#' @param t.start the starting time of the recording window; the default value is 0
-#' @param t.end the ending time of the recording window
+#' @param spikes a list of spike trains.
+#' @param t.start the starting time of the recording window. The default value is 0.
+#' @param t.end the ending time of the recording window. The default value is 10, corresponding to a 10-second recording.
 #' @param freqrange a list of (non-overlapping) frequency ranges. Each item in the list should be a numeric vector of lowest and highest frequencies in the range.
-#' @param q the number of highest-amplitude frequency components to find in each train
-#' @param default.grid.spacing the spacing to use in the frequency search. This can be a single number reflecting the same grid spacing over all frequency ranges or a vector of the same length as freqrange
-#' @param periodogram.window.size the number of points on each side of a given frequency to use when smoothing the periodogram
-#' @param default.coef.step the coef.step value to pass to the smoothed periodogram
+#' @param q the number of highest-amplitude frequency components to find in each train.
+#' @param default.grid.spacing the spacing to use in the frequency search. This can be a single number reflecting the same grid spacing over all frequency ranges or a vector of the same length as \code{freqrange}.
+#' @param periodogram.window.size the number of points on each side of a given frequency to use when smoothing the periodogram.
+#' @param default.coef.step the coef.step value to pass to the smoothed periodogram.
 #'
-#' @return a sorted table. The names of the table, in order, are the most common high-amplitude frequencies in the periodograms of the individual spike trains
+#' @return A sorted table. The names of the table, in order, are the most common high-amplitude frequencies in the periodograms of the individual spike trains, and
+#' the values in the table are the number of spike trains the frequency is of high amplitude in.
 #'
 #' @export
 
-FindTopFrequencies<-function(spikes, t.start = 0, t.end,
-                         freqrange=list(c(2,30)), q=5,
+FindTopFrequencies<-function(spikes, t.start = 0, t.end = 10,
+                         freqrange=list(c(2,30)), q = 5,
                          default.grid.spacing = 1,
                          periodogram.window.size = 25,
                          default.coef.step = 0.01){
-## spikes, a list of spike train data
-## Time can be a vector of time points, a vector of start/end points,
-## or the duration of recording (time.start assumed to be 0)
+
 ## we want to find the q highest-amplitude components in each train
 ## default.grid.spacing is the spacing to use in the frequency search, unless the spike trains are too short in time
 ## originally this was set to 0.2, but we are worried that 0.2 is too narrow to be biologically justifiable

@@ -1,10 +1,10 @@
 #' Generate model names
 #'
-#' Creates a vector of names identifying the 2K+1 models
+#' Creates a vector of names identifying the 2K+1 models.
 #'
 #' @param K.length the number of models to fit. If K is the maximum number of frequency components, then K.length = 2K+1.
 #'
-#' @return a character vector containing model names
+#' @return A character vector containing model names.
 
 GenerateModelNames <- function(K.length){
 ## K.length is the length of the K.list - i.e. the number of models

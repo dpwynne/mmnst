@@ -1,19 +1,19 @@
 #' Fit all multiplicative and additive models
 #'
-#' Wrapper function to fit all 2K+1 models (multiplicative, additive, and nonperiodic)
+#' Wrapper function to fit all 2K+1 models (multiplicative, additive, and nonperiodic).
 #'
-#' @param K the number of frequency components in the largest model to fit
-#' @param spikes a list of spike trains
-#' @param f.common.table a table whose names contain the high-amplitude frequency components as computed by \code{FindTopFrequencies}
-#' @param setup.pars a list of additional parameters for the likelihood function, computed by \code{SetupLikelihoods}
-#' @param terminal.points a numeric vector containing the time points at which c(t) changes
+#' @param K the number of frequency components in the largest model to fit.
+#' @param spikes a list of spike trains.
+#' @param f.common.table a table whose names contain the high-amplitude frequency components as computed by \code{\link{FindTopFrequencies}}.
+#' @param setup.pars a list of additional parameters for the likelihood function, computed by \code{\link{SetupLikelihoods}}.
+#' @param terminal.points a numeric vector containing the time points at which c(t) changes.
 #' @param ct a numeric vector containing the estimated piecewise constant intensity function c(t). The length of c(t) should be a whole number power of 2.
-#' @param user.select whether to allow the user to select the frequencies for the model; must be FALSE for this function to run effectively
+#' @param user.select whether to allow the user to select the frequencies for the model; must be FALSE for this function to run effectively.
 #'
-#' @return a list of length 3
-#' The first item in the list is a list of frequency estimates for each model
-#' The second item in the list is a list of phase estimates for each model
-#' The third item in the list is a list of eta/gamma estimates and fit criteria for each model
+#' @return A list of length 3.
+#' The first item in the list is a list of frequency estimates for each model.
+#' The second item in the list is a list of phase estimates for each model.
+#' The third item in the list is a list of eta/gamma estimates and fit criteria for each model.
 #'
 #' @export
 
