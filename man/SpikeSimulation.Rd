@@ -26,7 +26,7 @@ SpikeSimulation(
 \item{intensity.function}{any intensity function for the corresponding process from which you want to simulate data.}
 
 \item{pass.arg}{a list of arguments to pass to the intensity function. In the additive and multiplicative models, this contains four numeric vectors;
-the first vector determines the frequencies, the second vector determines initial phases, the third vector determines the eta values and the fourth vector determines the \code{\gamma} values.}
+the first vector determines the frequencies, the second vector determines initial phases, the third vector determines the eta values and the fourth vector determines the \eqn{\gamma} values.}
 
 \item{envelope.function}{The envelope function used for acceptance-rejection sampling to simulate the data.}
 }
