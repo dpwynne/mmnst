@@ -5,6 +5,7 @@
 #' @param K.length the number of models to fit. If K is the maximum number of frequency components, then \code{K.length} = 2K+1.
 #'
 #' @return A character vector containing model names.
+#' @export
 
 GenerateModelNames <- function(K.length){
 ## K.length is the length of the K.list - i.e. the number of models
