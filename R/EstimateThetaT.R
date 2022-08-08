@@ -6,7 +6,7 @@
 #' @param f.hat.list a list containing estimated frequencies for each model.
 #' @param w0.hat.list a list containing estimated phases for each model.
 #' @param K.list a list of matrices containing estimated eta and gamma parameters for each model and the estimated goodness-of-fit criteria (AIC, etc.) for each model.
-#' @param best.models a list containing the indices of the models to estimate an intensity function for and their corresponding model names.
+#' @param models.to.fit a list containing the names of the models to fit an intensity function for and their corresponding indices in K.list.
 #' Typically, this list contains either all models or only the models chosen by specific goodness-of-fit criteria.
 #' @param t.start the starting time of the recording window; the default value is 0.
 #' @param t.end the ending time of the recording window.
@@ -21,19 +21,15 @@
 #' The second item in the list is a list of matrices containing the intensity estimates (for each spike train) for each model.
 #'
 #' @export
-EstimateThetaT<-function(spikes, f.hat.list, w0.hat.list, K.list, best.models, t.start = 0, t.end, terminal.points, ct, intensity.function.length=(1+(t.end - t.start)*10^(3-ceiling(log10(t.end - t.start))))){
+EstimateThetaT<-function(spikes, f.hat.list, w0.hat.list, K.list, models.to.fit, t.start = 0, t.end, terminal.points, ct, intensity.function.length=(1+(t.end - t.start)*10^(3-ceiling(log10(t.end - t.start))))){
 
 cat("Determining Intensity Function for Models\n")
 
-#selected.models<-unique(best.models)
-#selected.names<-unique(model.names)
-##these two should have the same length
+selected.models<-models.to.fit[[2]] #$model.numbers
+selected.names<-models.to.fit[[1]] #$model.names
 
-##change to this
-selected.models<-best.models$model.numbers
-selected.names<-best.models$model.names
-
-model.unique<-unique(best.models)
+# This is legacy code, we keep this in case the user specifies the same model twice
+model.unique<-unique(models.to.fit)
 model.bootstrapped<-numeric(length(model.unique))
 
 nmodels<-length(selected.models)
