@@ -36,7 +36,9 @@ for(k in 1:K){
 
    f.hat.list[[2*k]] <- f.hat.list[[2*(k-1)+1]] <- user.top.frequencies[1:k]
    w0.hat.list[[2*(k-1)+1]] <-  w0.hat.list[[2*k]] <- EstimatePhase(spikes,f.hat.list[[2*k]])
+   cat("\n")
    K.list[[2*(k-1)+1]] <- FitMultiplicativeModel(spikes, f.hat.list[[2*(k-1)+1]], w0.hat.list[[2*(k-1)+1]], setup.pars, terminal.points, ct)
+   cat("\n")
    K.list[[2*k]] <- FitAdditiveModel(spikes, f.hat.list[[2*k]], w0.hat.list[[2*k]], setup.pars, terminal.points, ct)
    names(f.hat.list)[c(2*k-1, 2*k)] <- paste(c("Multiplicative", "Additive"), k)
 }
