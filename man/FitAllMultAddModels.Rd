@@ -11,7 +11,7 @@ FitAllMultAddModels(
   setup.pars,
   terminal.points,
   ct,
-  user.select = FALSE
+  user.defined.frequencies = NULL
 )
 }
 \arguments{
@@ -27,7 +27,8 @@ FitAllMultAddModels(
 
 \item{ct}{a numeric vector containing the estimated piecewise constant intensity function \eqn{c(t)}. The length of \eqn{c(t)} should be a whole number power of 2.}
 
-\item{user.select}{whether to allow the user to select the frequencies for the model; must be FALSE for this function to run effectively.}
+\item{user.defined.frequencies}{(= NULL) a numeric vector of length at least K containing the frequencies (in decreasing order of importance) to try in the model.
+By default this is NULL, and frequencies will be directly read from f.common.table.}
 }
 \value{
 A list of length 3 is returned.
