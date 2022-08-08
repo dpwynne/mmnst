@@ -45,7 +45,7 @@ for(k in 1:K){
 }
 
    f.hat.list[[2*K+1]] <- 0
-   w0.hat.list[[2*K+1]] <- 0
+   w0.hat.list[[2*K+1]] <- EstimatePhase(spikes, 0)
    K.list[[2*K+1]] <- FitNonperiodicModel(spikes, setup.pars, terminal.points, ct)
 
    names(f.hat.list)[2*K+1] <- "Non-Periodic"
