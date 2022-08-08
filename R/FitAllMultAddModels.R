@@ -30,6 +30,7 @@ FitAllMultAddModels <- function(K, spikes, f.common.table, setup.pars, terminal.
    user.defined.frequencies,
    SelectTopFrequencies(f.common.table, K)
  ))
+ cat(paste("Most Common Peak Frequencies:", paste(user.top.frequencies[1:K], "Hz", collapse = ", "), "\n\n"))
 
 for(k in 1:K){
 
