@@ -28,10 +28,6 @@ cat("Determining Intensity Function for Models\n")
 selected.models<-models.to.fit[[2]] #$model.numbers
 selected.names<-models.to.fit[[1]] #$model.names
 
-# This is legacy code, we keep this in case the user specifies the same model twice
-model.unique<-unique(models.to.fit)
-model.bootstrapped<-numeric(length(model.unique))
-
 nmodels<-length(selected.models)
 
 etas<-lapply(K.list,"[[",1)
@@ -61,10 +57,14 @@ if (is.null(dim(ct))){ # if this is a vector of average ct, not a matrix of indi
   ct <- matrix(rep(ct, length(spikes)), nrow = length(spikes), byrow = TRUE)
 }
 
+f.hat<-f.hat.list[[list.number]]
+
+w0.hat<-apply(w0.hat.list[[list.number]], 1, mean)
+# forces all phase to be average estimated phase over all spike trains
+
 for(ntrains in 1:length(spikes)){
 
-f.hat<-f.hat.list[[list.number]]
-w0.hat<-w0.hat.list[[list.number]][ntrains,]
+#w0.hat<-w0.hat.list[[list.number]][ntrains,]
 eta.hat<-etas[[list.number]][ntrains,]
 gamma.hat<-gamas[[list.number]][ntrains,]
 
