@@ -74,6 +74,10 @@ theta.t[,ntrains]<-sapply(Time.vector,ThetaMultiplicative,f=f.hat,w0=w0.hat,eta=
 theta.t[,ntrains]<-sapply(Time.vector,ThetaAdditive,f=f.hat,w0=w0.hat,eta=eta.hat,gamma=gamma.hat,terminal.points=terminal.points,ct=ct[ntrains,])
 }
 
+# these two lines are to properly scale theta(t) - this was rushed and should be revisited
+theta.t.integral <- mean(theta.t[,ntrains])*(t.end - t.start) # approximation to integral of theta(t) using mean value theorem
+theta.t[,ntrains] <-theta.t[,ntrains]/theta.t.integral*length(spikes[[ntrains]]) # scale theta.t such that it integrates to the number of spikes in the train
+
 }##end ntrains for loop
 
 theta.t.list[[i]] <- theta.t
