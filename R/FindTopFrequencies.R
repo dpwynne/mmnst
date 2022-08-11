@@ -54,9 +54,11 @@ FindTopFrequencies<-function(spikes, t.start = 0, t.end = 10,
     minfreq<-freqrange[[nrhythms]][1]
     maxfreq<-freqrange[[nrhythms]][2]
 
-    f<-c(f,seq(minfreq,maxfreq,by=max(default.grid.spacing[nrhythms],1/T.data)))
+    f<- c(f,seq(minfreq,maxfreq,by=max(default.grid.spacing[nrhythms],1/T.data)))
 
   }
+
+  f <- sort(unique(f))
 
   f.max<-vector("list",length=ntrials)
   for (replication.counter in 1:ntrials){
