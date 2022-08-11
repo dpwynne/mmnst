@@ -7,33 +7,62 @@
 #' @param t.end the ending time of the recording window.
 #' @param lambda a penalty term used in estimating the piecewise constant intensity function c(t). Larger values of lambda result in "smoother" estimates.
 #' @param J the maximum size of the tree in the initial dyadic partitioning used to estimate c(t). The final estimate of c(t) will have 2^J values.
+#' @param PSTH if TRUE, will aggregate the spikes across all trials in each and every bin and then estimate c(t) using the post-stimulus-time histogram.
+#' If FALSE, will estimate a c(t) for each trial and average the c(t) estimates.
 #'
 #' @return A list of length 2 is returned.
 #' The first item in the list is the estimate of \eqn{c(t)} created by averaging the estimates for each spike train.
 #' The second item is a matrix in which each row represents the estimate of c(t) for an individual spike train.
 #'
 #' @export
-FindCt<-function(spikes, t.start, t.end, lambda, J){
+FindCt<-function(spikes, t.start, t.end, lambda, J, PSTH = TRUE){
 
 T.data<-t.end-t.start
 val <- floor(2^J)
 by.terminal<-T.data/val
 
 terminal.points <- seq(t.start,t.end,by.terminal)
-ct.best<-matrix(NA,nrow=length(spikes),ncol=val)
 
-for (i in 1:length(spikes)){
-	xi <- spikes[[i]]
-	count.points<-numeric(val)
-	for (ii in 1:val){
-		count.points[ii]<-length(xi[xi>=terminal.points[ii] & xi<terminal.points[ii+1]])
-	}
-      if (J == 0){
-        ct.best[i,] <- count.points
-      } else {
-        ct.best[i,]<-PoissonRDP(count.points,lambda)
-      }
+if (PSTH){
+  n.total <- sum(unlist(lapply(spikes, length)))
+  # We should change this to count the aggregate total of the number of spikes within this bin, across all trains.
+  # This will involve inverting the for loop. We can hopefully code this in one afternoon.
+
+  xi <- sort(unlist(spikes)) # this is a single vector containing all spike times across all trials
+  count.points<-numeric(val)
+
+  for (ii in 1:val){
+    count.points[ii]<-length(xi[xi>=terminal.points[ii] & xi<terminal.points[ii+1]])
+  }
+
+  if (J == 0){
+    ct.best.PSTH <- count.points
+  } else {
+    ct.best.PSTH <-PoissonRDP(count.points,lambda)
+  }
+
+  ct.best <- matrix(ct.best.PSTH, nrow = length(spikes), ncol = val, byrow = TRUE)/n.total
+
+} else {
+
+  ct.best<-matrix(NA,nrow=length(spikes),ncol=val)
+
+  for (i in 1:length(spikes)){
+  	xi <- spikes[[i]]
+  	count.points<-numeric(val)
+  	for (ii in 1:val){
+  		count.points[ii]<-length(xi[xi>=terminal.points[ii] & xi<terminal.points[ii+1]])
+  	}
+        if (J == 0){
+          ct.best[i,] <- count.points
+        } else {
+          ct.best[i,]<-PoissonRDP(count.points,lambda)
+        }
+  }
 }
+
+# This is the new version. It counts the aggregate total of the number of spikes within the
+# ct.best is now a matrix that contains the aggregate best ct estimate in each row
 
 ##output of PoissonRDP is not exactly c(t), needs to be scaled by multiplying by val/T.data
 ct.best<-ct.best/(by.terminal)
