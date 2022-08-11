@@ -10,6 +10,7 @@ RDPCrossValidation(
   t.end,
   poss.lambda = seq(0, 10, by = 0.1),
   max.J = 7,
+  PSTH = FALSE,
   max.diff = 0.005,
   pct.diff.plot = TRUE,
   print.J.value = TRUE
@@ -25,6 +26,9 @@ RDPCrossValidation(
 \item{poss.lambda}{a numeric vector containing a grid of penalty values.}
 
 \item{max.J}{the maximum resolution of the dyadic partitioning used the estimate the piecewise constant intensity function \eqn{c(t)}.}
+
+\item{PSTH}{if TRUE, performs leave-one-train-out cross-validation for the c(t) estimate based on PSTH data.
+If FALSE, performs leave-one-spike-out cross-validation for the c(t) estimate from each individual train.}
 
 \item{max.diff}{the maximum allowance for the integrated squared error (ISE) of a smaller model to deviate from the overall minimum ISE.}
 

@@ -9,6 +9,8 @@
 #' @param t.end the ending time of the recording window.
 #' @param poss.lambda a numeric vector containing a grid of penalty values.
 #' @param max.J the maximum resolution of the dyadic partitioning used the estimate the piecewise constant intensity function \eqn{c(t)}.
+#' @param PSTH if TRUE, performs leave-one-train-out cross-validation for the c(t) estimate based on PSTH data.
+#' If FALSE, performs leave-one-spike-out cross-validation for the c(t) estimate from each individual train.
 #' @param max.diff the maximum allowance for the integrated squared error (ISE) of a smaller model to deviate from the overall minimum ISE.
 #' @param pct.diff.plot a logical value indicating whether to produce a plot of the percentage difference (above minimum ISE) vs. J.
 #' @param print.J.value a logical value indicating whether to print off the J value at each step of the cross-validation or not.
@@ -22,6 +24,7 @@
 
 RDPCrossValidation = function(spikes, t.start = 0, t.end,
                                      poss.lambda = seq(0, 10, by = 0.1), max.J = 7,
+                                     PSTH = FALSE,
                                      max.diff = 0.005, pct.diff.plot = TRUE  , print.J.value = TRUE){
   # spikes = list of vectors; each vector represents the spike train for one of many repeated trials
   # Time = Time vector; can be just the start and end times of the recording; should be the same for all spike trains
@@ -56,64 +59,70 @@ RDPCrossValidation = function(spikes, t.start = 0, t.end,
 
   n.trials<-length(spikes) ##number of spike trains
 
+  if (PSTH){
+    stop("Cross-validation based on PSTH is not yet implemented")  # Reza will fix this
+  } else {
+
   for(J in 1:length(N.values)){ ##one pass = one column of ISE matrix
     if(print.J.value) cat("J=",J,"\n")
     val <- N.values[J]
-    for(lambda in poss.lambda){ #one pass = one entry in the Jth column of the ISE matrix
-      ##for loop for f.hat.i
-      f.hat.i<-matrix(NA,nrow=n.trials,ncol=val)
-      for (i in 1:n.trials){
-        xi <- spikes[[i]]
-        count.points<-numeric(val)
-        for (ii in 1:val){
-          count.points[ii]<-length(xi[xi>=terminal.points[[J]][ii] & xi<terminal.points[[J]][ii+1]])
+    for(lambda in poss.lambda){ #one pass = one entry in the lambda^th row of the ISE matrix
+        ##for loop for f.hat.i
+        f.hat.i<-matrix(NA,nrow=n.trials,ncol=val)
+        for (i in 1:n.trials){
+          xi <- spikes[[i]]
+          count.points<-numeric(val)
+          for (ii in 1:val){
+            count.points[ii]<-length(xi[xi>=terminal.points[[J]][ii] & xi<terminal.points[[J]][ii+1]])
+          }
+          if(sum(xi) == 0){
+            f.hat.i[i,] = rep(0 , length(count.points))
+          }else{
+            f.hat.i[i,]<-(PoissonRDP(count.points,lambda))*(val)/(T.data*length(xi))
+          }
         }
-        if(sum(xi) == 0){
-          f.hat.i[i,] = rep(0 , length(count.points))
-        }else{
-          f.hat.i[i,]<-(PoissonRDP(count.points,lambda))*(val)/(T.data*length(xi))
+
+        ##get f.hat estimate, square it, and integrate the squared estimate
+        f.hat <- apply(f.hat.i,2,mean)
+        delta.t<-diff(terminal.points[[J]])
+        integral.term <- sum(f.hat^2*delta.t)
+
+        ##for loop for f.hat.minus.i
+        f.hat.minus.i <- matrix(NA,nrow=n.trials,ncol=val)
+        f.hat.minus.i.bar<-numeric(n.trials)*NA
+        f.hat.minus.i.log.bar<-numeric(n.trials)*NA
+        for (i in 1:n.trials){
+          temp.f<-f.hat.i[-i,,drop=F]
+          f.hat.minus.i[i,]<-apply(temp.f,2,mean)
+          if (length(spikes[[i]])>0){
+            f.hat.minus.i.ti<-sapply(spikes[[i]], LeaveOneOutDensityEstimate,
+                                     points=terminal.points[[J]],i=i,f.hat.minus.i=f.hat.minus.i)
+          }else{
+            f.hat.minus.i.ti = rep(0 , dim(temp.f)[2])
+          }
+
+          #f.hat.minus.i.bar for use in ISE
+          f.hat.minus.i.bar[i]<-mean(f.hat.minus.i.ti)
+
+          #f.hat.minus.i.log.bar for use in IKL
+          #f.hat.minus.i.IKL<-f.hat.minus.i.ti
+          #f.hat.minus.i.IKL[which(f.hat.minus.i.IKL <= 1e-20)] <- 1e-20
+          #f.hat.minus.i.log.bar[i]<-mean(log(f.hat.minus.i.IKL))
         }
+
+        C.V.ISE <- mean(f.hat.minus.i.bar)*2
+
+        #C.V.IKL <- -mean(f.hat.minus.i.log.bar)
+
+        ##ISE
+        ISE.matrix[which(poss.lambda==lambda),J]<-(integral.term-C.V.ISE)
+
+        ##IKL
+        #IKL.matrix[which(poss.lambda==lambda),J]<- C.V.IKL
+
       }
-
-      ##get f.hat estimate, square it, and integrate the squared estimate
-      f.hat <- apply(f.hat.i,2,mean)
-      delta.t<-diff(terminal.points[[J]])
-      integral.term <- sum(f.hat^2*delta.t)
-
-      ##for loop for f.hat.minus.i
-      f.hat.minus.i <- matrix(NA,nrow=n.trials,ncol=val)
-      f.hat.minus.i.bar<-numeric(n.trials)*NA
-      f.hat.minus.i.log.bar<-numeric(n.trials)*NA
-      for (i in 1:n.trials){
-        temp.f<-f.hat.i[-i,,drop=F]
-        f.hat.minus.i[i,]<-apply(temp.f,2,mean)
-        if (length(spikes[[i]])>0){
-          f.hat.minus.i.ti<-sapply(spikes[[i]], LeaveOneOutDensityEstimate,
-                                   points=terminal.points[[J]],i=i,f.hat.minus.i=f.hat.minus.i)
-        }else{
-          f.hat.minus.i.ti = rep(0 , dim(temp.f)[2])
-        }
-
-        #f.hat.minus.i.bar for use in ISE
-        f.hat.minus.i.bar[i]<-mean(f.hat.minus.i.ti)
-
-        #f.hat.minus.i.log.bar for use in IKL
-        #f.hat.minus.i.IKL<-f.hat.minus.i.ti
-        #f.hat.minus.i.IKL[which(f.hat.minus.i.IKL <= 1e-20)] <- 1e-20
-        #f.hat.minus.i.log.bar[i]<-mean(log(f.hat.minus.i.IKL))
-      }
-
-      C.V.ISE <- mean(f.hat.minus.i.bar)*2
-
-      #C.V.IKL <- -mean(f.hat.minus.i.log.bar)
-
-      ##ISE
-      ISE.matrix[which(poss.lambda==lambda),J]<-(integral.term-C.V.ISE)
-
-      ##IKL
-      #IKL.matrix[which(poss.lambda==lambda),J]<- C.V.IKL
-
     }
+
   }
 
 

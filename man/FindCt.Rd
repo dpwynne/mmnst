@@ -4,7 +4,7 @@
 \alias{FindCt}
 \title{Find \eqn{c(t)}}
 \usage{
-FindCt(spikes, t.start, t.end, lambda, J, PSTH = TRUE)
+FindCt(spikes, t.start, t.end, lambda, J, PSTH = FALSE)
 }
 \arguments{
 \item{spikes}{a list of spike trains.}
