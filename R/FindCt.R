@@ -24,9 +24,6 @@ by.terminal<-T.data/val
 terminal.points <- seq(t.start,t.end,by.terminal)
 
 if (PSTH){
-  n.total <- sum(unlist(lapply(spikes, length)))
-  # We should change this to count the aggregate total of the number of spikes within this bin, across all trains.
-  # This will involve inverting the for loop. We can hopefully code this in one afternoon.
 
   xi <- sort(unlist(spikes)) # this is a single vector containing all spike times across all trials
   count.points<-numeric(val)
@@ -41,7 +38,7 @@ if (PSTH){
     ct.best.PSTH <-PoissonRDP(count.points,lambda)
   }
 
-  ct.best <- matrix(ct.best.PSTH, nrow = length(spikes), ncol = val, byrow = TRUE)/n.total
+  ct.best <- matrix(ct.best.PSTH, nrow = length(spikes), ncol = val, byrow = TRUE)/length(spikes)
 
 } else {
 
