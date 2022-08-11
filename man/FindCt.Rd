@@ -4,7 +4,7 @@
 \alias{FindCt}
 \title{Find \eqn{c(t)}}
 \usage{
-FindCt(spikes, t.start, t.end, lambda, J)
+FindCt(spikes, t.start, t.end, lambda, J, PSTH = TRUE)
 }
 \arguments{
 \item{spikes}{a list of spike trains.}
@@ -16,6 +16,9 @@ FindCt(spikes, t.start, t.end, lambda, J)
 \item{lambda}{a penalty term used in estimating the piecewise constant intensity function c(t). Larger values of lambda result in "smoother" estimates.}
 
 \item{J}{the maximum size of the tree in the initial dyadic partitioning used to estimate c(t). The final estimate of c(t) will have 2^J values.}
+
+\item{PSTH}{if TRUE, will aggregate the spikes across all trials in each and every bin and then estimate c(t) using the post-stimulus-time histogram.
+If FALSE, will estimate a c(t) for each trial and average the c(t) estimates.}
 }
 \value{
 A list of length 2 is returned.

@@ -9,7 +9,7 @@ EstimateThetaT(
   f.hat.list,
   w0.hat.list,
   K.list,
-  best.models,
+  models.to.fit,
   t.start = 0,
   t.end,
   terminal.points,
@@ -27,7 +27,7 @@ EstimateThetaT(
 
 \item{K.list}{a list of matrices containing estimated eta and gamma parameters for each model and the estimated goodness-of-fit criteria (AIC, etc.) for each model.}
 
-\item{best.models}{a list containing the indices of the models to estimate an intensity function for and their corresponding model names.
+\item{models.to.fit}{a list containing the names of the models to fit an intensity function for and their corresponding indices in K.list.
 Typically, this list contains either all models or only the models chosen by specific goodness-of-fit criteria.}
 
 \item{t.start}{the starting time of the recording window; the default value is 0.}
