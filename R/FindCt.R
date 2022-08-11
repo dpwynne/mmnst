@@ -15,7 +15,7 @@
 #' The second item is a matrix in which each row represents the estimate of c(t) for an individual spike train.
 #'
 #' @export
-FindCt<-function(spikes, t.start, t.end, lambda, J, PSTH = TRUE){
+FindCt<-function(spikes, t.start, t.end, lambda, J, PSTH = FALSE){
 
 T.data<-t.end-t.start
 val <- floor(2^J)
