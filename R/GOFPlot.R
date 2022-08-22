@@ -5,7 +5,7 @@
 #' @importFrom rlang .data
 #'
 #' @param spikes a list of spike trains.
-#' @param theta a numeric vector containing the average of the intensity function estimates across trials.
+#' @param theta a numeric matrix in which the \emph{j}th column contains the intensity function estimate for the \emph{j} spike train in the list.
 #' @param t.start the starting time of the recording window; the default value is 0.
 #' @param t.end the ending time of the recording window. The default value is 10, corresponding to a 10-second recording.
 #' @param neuron.name a string containing the name of the neuron being plotted, used only to title the plot.
@@ -21,10 +21,10 @@
 #' @export
 
 GOFPlot <-function(spikes, theta, t.start = 0, t.end = 10,
-                   neuron.name = NULL, resolution= (t.end - t.start)/(length(theta)-1),
+                   neuron.name = NULL, resolution= (t.end - t.start)/(nrow(theta)-1),
                    axis.label.size = 18, title.size = 24){
   ##spikes is the list of spike trains you want to check goodness of fit for
-  ##theta is the average intensity function (across trials) and Time is the vector of start/end times
+  ##theta is a matrix in which the rows represent Time and the columns represent spike trains
   ##neuron.name is the name of the neuron being plotted, used only to title the plot if you want it
   ##resolution corresponds to bin width, Delta, in Haslinger (2010)
   ##our default value corresponds to the intensity function length in estimate.theta.t
@@ -35,16 +35,17 @@ GOFPlot <-function(spikes, theta, t.start = 0, t.end = 10,
   endpoints.bins<-seq(t.start, t.end, by=resolution)
 
   ##This error should never occur with the default resolution but might with user-defined resolution
-  if (length(endpoints.bins)> length(theta)){
+  if (length(endpoints.bins)> nrow(theta)){
     cat("The number of bins for GOF plot cannot exceed that of the intensity function, plotting stopped\n")
     return()
   }
 
   spike.gof<-vector("list",length(spikes))
   names(spike.gof)<-paste0("Trial",seq(1,length(spikes)))
-  qk <- HaslingerQ(endpoints.bins,theta,resolution)
 
+  # theta is now the list of individual theta(t) estimates
   for(i in 1:length(spikes)){
+    qk <- HaslingerQ(endpoints.bins,theta[,i],resolution)
     transformed.y <- HaslingerYi(spikes[[i]],endpoints.bins,qk)
     transformed.y<-transformed.y[!is.na(transformed.y) & !is.nan(transformed.y)]
     n <- length(transformed.y)

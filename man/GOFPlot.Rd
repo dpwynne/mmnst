@@ -10,7 +10,7 @@ GOFPlot(
   t.start = 0,
   t.end = 10,
   neuron.name = NULL,
-  resolution = (t.end - t.start)/(length(theta) - 1),
+  resolution = (t.end - t.start)/(nrow(theta) - 1),
   axis.label.size = 18,
   title.size = 24
 )
@@ -18,7 +18,7 @@ GOFPlot(
 \arguments{
 \item{spikes}{a list of spike trains.}
 
-\item{theta}{a numeric vector containing the average of the intensity function estimates across trials.}
+\item{theta}{a numeric matrix in which the \emph{j}th column contains the intensity function estimate for the \emph{j} spike train in the list.}
 
 \item{t.start}{the starting time of the recording window; the default value is 0.}
 
