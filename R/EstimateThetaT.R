@@ -59,12 +59,13 @@ if (is.null(dim(ct))){ # if this is a vector of average ct, not a matrix of indi
 
 f.hat<-f.hat.list[[list.number]]
 
-w0.hat<-apply(w0.hat.list[[list.number]], 2, mean)
+#w0.hat<-apply(w0.hat.list[[list.number]], 2, mean)
 # forces all phase to be average estimated phase over all spike trains
+# This is not good when w0 estimates are near the boundaries of the window to average over
 
 for(ntrains in 1:length(spikes)){
 
-#w0.hat<-w0.hat.list[[list.number]][ntrains,]
+w0.hat<-w0.hat.list[[list.number]][ntrains,]
 eta.hat<-etas[[list.number]][ntrains,]
 gamma.hat<-gamas[[list.number]][ntrains,]
 
