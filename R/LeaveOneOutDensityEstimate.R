@@ -1,7 +1,7 @@
 #' Leave-one-out density function cross-validation
 #'
 #' Calculates the average of m-1 density function estimates for a given set of time points with the ith density estimate removed.
-#' This function implements equation (1) of the supplementary material in Ramezan \emph{et al.} (2014).
+#' This function implements equation (1) of the supplementary material in Ramezan *et al.* (2014).
 #'
 #' @param til the time of the lth spike in trial i of a set of spike trains.
 #' @param i the index of the trial whose estimated density function is to be removed (in leave-one-out cross-validation).
@@ -10,7 +10,9 @@
 #'
 #' @return A numeric vector of the average of m-1 density function estimates for a given set of time points with the ith density estimate removed.
 #'
-#' @references Ramezan, R., Marriott, P., and Chenouri, S. (2014), \emph{Statistics in Medicine}, \strong{33}(2), 238-256. doi: 10.1002/sim.5923.
+#' @references Ramezan, R., Marriott, P., and Chenouri, S. (2014), *Statistics in Medicine*, **33**(2), 238-256. doi: 10.1002/sim.5923.
+#'
+#' @noRd
 
 
 LeaveOneOutDensityEstimate <- function(til,i,points,f.hat.minus.i){

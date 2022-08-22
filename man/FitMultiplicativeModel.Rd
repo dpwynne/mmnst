@@ -13,7 +13,7 @@ FitMultiplicativeModel(spikes, f.hat, w0.hat, setup.pars, terminal.points, ct)
 
 \item{w0.hat}{a matrix containing phase estimates for each spike train for a particular model.}
 
-\item{setup.pars}{a list of additional parameters for the likelihood function, computed by the \code{\link{SetupLikelihoods}} function.}
+\item{setup.pars}{a list of additional parameters for the likelihood function, computed by the \code{\link[=SetupLikelihoods]{SetupLikelihoods()}} function.}
 
 \item{terminal.points}{a numeric vector containing the time points at which \eqn{c(t)} changes.}
 

@@ -7,6 +7,8 @@
 #' @param ct a numeric vector containing the estimated piecewise constant estimated intensity function c(t). The length of ct should be a whole number power of 2.
 #'
 #' @return A numeric vector containing the value of c(t) at all time points at which to evaluate it.
+#'
+#' @noRd
 
 CtAllPoints <- function(t,terminal.points,ct){
 ##wrapper to compute ct.function at all time points in the time vector

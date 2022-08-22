@@ -2,7 +2,7 @@
 #'
 #' Creates a vector of names identifying the 2K+1 models.
 #'
-#' @param K.length the number of models to fit. If K is the maximum number of frequency components, then \code{K.length} = 2K+1.
+#' @param K.length the number of models to fit. If K is the maximum number of frequency components, then `K.length` = 2K+1.
 #'
 #' @return A character vector containing model names.
 #' @export

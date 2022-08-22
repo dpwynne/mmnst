@@ -9,7 +9,7 @@
 #' @param t.end the ending time of the recording window. The default value is 10, corresponding to a 10-second recording.
 #' @param freqrange a list of (non-overlapping) frequency ranges. Each item in the list should be a numeric vector of lowest and highest frequencies in the range.
 #' @param q the number of highest-amplitude frequency components to find in each train.
-#' @param default.grid.spacing the spacing to use in the frequency search. This can be a single number reflecting the same grid spacing over all frequency ranges or a vector of the same length as \code{freqrange}.
+#' @param default.grid.spacing the spacing to use in the frequency search. This can be a single number reflecting the same grid spacing over all frequency ranges or a vector of the same length as `freqrange`.
 #' @param periodogram.window.size the number of points on each side of a given frequency to use when smoothing the periodogram.
 #' @param default.coef.step the coef.step value to pass to the smoothed periodogram.
 #'

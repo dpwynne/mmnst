@@ -9,6 +9,8 @@
 #' @param B the number of desired bootstrap resamples.
 #'
 #' @return A matrix containing the lower and upper bounds of the percentile confidence interval at each time point.
+#'
+#' @noRd
 
 BootstrappedTheta<-function(theta.t,B=1000){
 

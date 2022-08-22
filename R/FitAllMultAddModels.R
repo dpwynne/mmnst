@@ -4,8 +4,8 @@
 #'
 #' @param K the number of frequency components in the largest model to fit.
 #' @param spikes a list of spike trains.
-#' @param f.common.table a table whose names contain the high-amplitude frequency components as computed by \code{\link{FindTopFrequencies}}.
-#' @param setup.pars a list of additional parameters for the likelihood function, computed by \code{\link{SetupLikelihoods}}.
+#' @param f.common.table a table whose names contain the high-amplitude frequency components as computed by [FindTopFrequencies()].
+#' @param setup.pars a list of additional parameters for the likelihood function, computed by [SetupLikelihoods()].
 #' @param terminal.points a numeric vector containing the time points at which \eqn{c(t)} changes.
 #' @param ct a numeric vector containing the estimated piecewise constant intensity function \eqn{c(t)}. The length of \eqn{c(t)} should be a whole number power of 2.
 #' @param user.defined.frequencies (= NULL) a numeric vector of length at least K containing the frequencies (in decreasing order of importance) to try in the model.

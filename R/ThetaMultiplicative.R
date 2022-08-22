@@ -1,6 +1,6 @@
 #' Multiplicative intensity function \eqn{\theta(t)}
 #'
-#' Calculates the multiplicative intensity function \eqn{\theta(t)} introduced in Ramezan \emph{et al.} (2014).
+#' Calculates the multiplicative intensity function \eqn{\theta(t)} introduced in Ramezan *et al.* (2014).
 #'
 #' @param t a numeric vector of time points at which to evaluate the function.
 #' @param f a numeric vector containing frequency values.
@@ -12,7 +12,7 @@
 #'
 #' @return A numeric vector containing the values of the multiplicative intensity function calculated at given time points.
 #'
-#' @references Ramezan, R., Marriott, P., and Chenouri, S. (2014), \emph{Statistics in Medicine}, \strong{33}(2), 238-256. doi: 10.1002/sim.5923.
+#' @references Ramezan, R., Marriott, P., and Chenouri, S. (2014), *Statistics in Medicine*, **33**(2), 238-256. doi: 10.1002/sim.5923.
 #'
 #' @export
 

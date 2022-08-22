@@ -6,6 +6,7 @@
 #'
 #' @return The value of the function \eqn{1 + cos(2 \pi x)}.
 #'
+#' @noRd
 
 nu <- function(x){
 ##periodic function

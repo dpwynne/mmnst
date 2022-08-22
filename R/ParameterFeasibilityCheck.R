@@ -9,6 +9,8 @@
 #' @param f.max a scalar indicating the absolute highest frequency of spiking activity.
 #'
 #' @return Warning message(s) if the constraints on parameters are violated, otherwise NULL.
+#'
+#' @noRd
 
 ParameterFeasibilityCheck <- function(f.hat, w0.hat.itr, eta.hat, gama.hat, f.max = 100){
 ## Note: this parameter check assumes no frequency above f.max = 100 Hz

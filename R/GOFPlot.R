@@ -5,18 +5,18 @@
 #' @importFrom rlang .data
 #'
 #' @param spikes a list of spike trains.
-#' @param theta a numeric matrix in which the \emph{j}th column contains the intensity function estimate for the \emph{j} spike train in the list.
+#' @param theta a numeric matrix in which the *j*th column contains the intensity function estimate for the *j* spike train in the list.
 #' @param t.start the starting time of the recording window; the default value is 0.
 #' @param t.end the ending time of the recording window. The default value is 10, corresponding to a 10-second recording.
 #' @param neuron.name a string containing the name of the neuron being plotted, used only to title the plot.
-#' @param resolution a scalar determining the bin width. This is equivalent to Delta in Haslinger \emph{et al.} (2010).
+#' @param resolution a scalar determining the bin width. This is equivalent to Delta in Haslinger *et al.* (2010).
 #' @param axis.label.size a scalar determining the font size of the x- and y-axis labels of the plot.
 #' @param title.size a scalar determining the font size of the title of the plot (if one exists).
 #'
 #' @return a list of data frames. Each data frame includes the model and empirical quantiles for one spike train.
-#' This data is used to generate the pp-plot outlined in Haslinger \emph{et al.} (2010).
+#' This data is used to generate the pp-plot outlined in Haslinger *et al.* (2010).
 #'
-#' @references Haslinger, R., Pipa G., and Brown, E. (2010). Discrete time rescaling theorem: determining goodness of fit for discrete time statistical models of neural spiking. \emph{Neural Computation}. \strong{22}(10):2477-506. doi: 10.1162/NECO_a_00015.
+#' @references Haslinger, R., Pipa G., and Brown, E. (2010). Discrete time rescaling theorem: determining goodness of fit for discrete time statistical models of neural spiking. *Neural Computation*. **22**(10):2477-506. doi: 10.1162/NECO_a_00015.
 #'
 #' @export
 

@@ -9,7 +9,7 @@ FitNonperiodicModel(spikes, setup.pars, terminal.points, ct)
 \arguments{
 \item{spikes}{a list of spike trains.}
 
-\item{setup.pars}{a list of additional parameters for the likelihood function, computed by the \code{\link{SetupLikelihoods}} function.}
+\item{setup.pars}{a list of additional parameters for the likelihood function, computed by the \code{\link[=SetupLikelihoods]{SetupLikelihoods()}} function.}
 
 \item{terminal.points}{a numeric vector containing the time points at which c(t) changes.}
 

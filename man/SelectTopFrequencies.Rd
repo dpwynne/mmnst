@@ -8,7 +8,7 @@ SelectTopFrequencies(f.sorted, K, user.select = FALSE)
 }
 \arguments{
 \item{f.sorted}{a sorted table. The names of the table, in order, are the most common frequencies in the periodograms of the individual spike trains.
-This is usually output by the \code{\link{FindTopFrequencies}} function.}
+This is usually output by the \code{\link[=FindTopFrequencies]{FindTopFrequencies()}} function.}
 
 \item{K}{a scalar determining the number of periodic components to include in the model.}
 

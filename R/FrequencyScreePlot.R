@@ -7,6 +7,9 @@
 #' output by [FindTopFrequencies()].
 #' @param spikes (= NULL) a list of spike trains. Can be omitted if n is given.
 #' @param n (= length(spikes)) the number of spike trains analyzed by [FindTopFrequencies()]
+#'
+#' @return the `freq.table` argument (invisibly)
+#'
 #' @export
 
 FrequencyScreePlot <- function(freq.table, spikes = NULL, n = length(spikes)){
@@ -48,6 +51,6 @@ FrequencyScreePlot <- function(freq.table, spikes = NULL, n = length(spikes)){
 
   suppressWarnings(print(plot_freq))
 
-  invisible(f.table.sorted)
+  invisible(freq.table)
 }
 

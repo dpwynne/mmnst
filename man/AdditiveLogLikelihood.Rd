@@ -23,7 +23,7 @@ This must be the first argument as we wish to maximize the value of the log-like
 
 \item{w0.hat.itr}{a numeric vector containing phase estimates for a particular model and spike train.}
 
-\item{setup.pars}{a list of additional parameters for the likelihood function, computed by the \code{\link{SetupLikelihoods}} function.}
+\item{setup.pars}{a list of additional parameters for the likelihood function, computed by the \code{\link[=SetupLikelihoods]{SetupLikelihoods()}} function.}
 
 \item{ct}{a numeric vector containing the estimated piecewise constant intensity function. The length of \code{ct} should be a whole number power of 2.}
 

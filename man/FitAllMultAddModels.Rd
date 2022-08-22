@@ -19,9 +19,9 @@ FitAllMultAddModels(
 
 \item{spikes}{a list of spike trains.}
 
-\item{f.common.table}{a table whose names contain the high-amplitude frequency components as computed by \code{\link{FindTopFrequencies}}.}
+\item{f.common.table}{a table whose names contain the high-amplitude frequency components as computed by \code{\link[=FindTopFrequencies]{FindTopFrequencies()}}.}
 
-\item{setup.pars}{a list of additional parameters for the likelihood function, computed by \code{\link{SetupLikelihoods}}.}
+\item{setup.pars}{a list of additional parameters for the likelihood function, computed by \code{\link[=SetupLikelihoods]{SetupLikelihoods()}}.}
 
 \item{terminal.points}{a numeric vector containing the time points at which \eqn{c(t)} changes.}
 

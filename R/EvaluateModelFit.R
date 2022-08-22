@@ -7,6 +7,8 @@
 #' @param n the number of observations used to estimate the parameters.
 #'
 #' @return A numeric vector containing (in order) AIC, AICc, BIC, and maximum log-likelihood.
+#'
+#' @noRd
 
 EvaluateModelFit<-function(l,k,n){
 model.AIC<-(-2*l+2*k)

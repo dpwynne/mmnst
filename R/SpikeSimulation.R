@@ -1,6 +1,6 @@
 #' Spike train simulation
 #'
-#' Simulates spike trains from an inhomogeneous Poisson process with a given time-varying intensity function of one of the forms discussed in Ramezan \emph{et al.} (2014).
+#' Simulates spike trains from an inhomogeneous Poisson process with a given time-varying intensity function of one of the forms discussed in Ramezan *et al.* (2014).
 #'
 #' @importFrom stats runif
 #'
@@ -15,7 +15,7 @@
 #'
 #' @return A list of numeric vectors, each of which contains a simulated spike train.
 #'
-#' @references Ramezan, R., Marriott, P., and Chenouri, S. (2014), \emph{Statistics in Medicine}, \strong{33}(2), 238-256. doi: 10.1002/sim.5923.
+#' @references Ramezan, R., Marriott, P., and Chenouri, S. (2014), *Statistics in Medicine*, **33**(2), 238-256. doi: 10.1002/sim.5923.
 #'
 #' @export
 
