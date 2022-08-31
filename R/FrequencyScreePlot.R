@@ -38,7 +38,7 @@ FrequencyScreePlot <- function(freq.table, spikes = NULL, n = length(spikes)){
                    #axis.text=ggplot2::element_text(size=axis.label.size),
                    axis.line.x=ggplot2::element_line(size=0.5),
                    axis.line.y=ggplot2::element_line(size=0.5))+
-    ggplot2::scale_x_continuous(limits=c(1,min(10, length(f.table.sorted))))+ # plot at most the top 10 frequencies
+    ggplot2::scale_x_continuous(limits=c(1,min(10, length(f.table.sorted))) , breaks = 1:10)+ # plot at most the top 10 frequencies
     ggplot2::scale_y_continuous(limits=c(0,1))
 
   plot_labeled<-plot_basics +
@@ -46,7 +46,7 @@ FrequencyScreePlot <- function(freq.table, spikes = NULL, n = length(spikes)){
     #ggplot2::theme(axis.title=ggplot2::element_text(size=axis.label.size))
 
   plot_freq <- plot_labeled + ggplot2::geom_point() + ggplot2::geom_line() +
-    ggplot2::geom_text(aes(label = paste(f, "Hz")), nudge_y = 0.05) +
+    ggplot2::geom_text(aes(label = paste(f, "")), nudge_y = 0.05) +
   ggplot2::geom_hline(yintercept = 0.5, linetype = "dotted")
 
   suppressWarnings(print(plot_freq))
