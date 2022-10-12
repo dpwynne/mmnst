@@ -12,7 +12,9 @@
 #'
 #' @return A list of length 2 is returned.
 #' The first item in the list is the estimate of \eqn{c(t)} created by averaging the estimates for each spike train.
-#' The second item is a matrix in which each row represents the estimate of c(t) for an individual spike train.
+#' The second item is a matrix. If PSTH=TRUE, the rows of the matrix are identical, each being the average of the c(t)
+#' values across trains/ trials. If PSTH=FALSE, the rows of the matrix represent
+#' the c(t) estimates for individual spike trains / trials.
 #'
 #' @export
 FindCt<-function(spikes, t.start, t.end, lambda, J, PSTH = FALSE){

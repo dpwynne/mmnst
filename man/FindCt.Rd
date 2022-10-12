@@ -23,7 +23,9 @@ If FALSE, will estimate a c(t) for each trial and average the c(t) estimates.}
 \value{
 A list of length 2 is returned.
 The first item in the list is the estimate of \eqn{c(t)} created by averaging the estimates for each spike train.
-The second item is a matrix in which each row represents the estimate of c(t) for an individual spike train.
+The second item is a matrix. If PSTH=TRUE, the rows of the matrix are identical, each being the average of the c(t)
+values across trains/ trials. If PSTH=FALSE, the rows of the matrix represent
+the c(t) estimates for individual spike trains / trials.
 }
 \description{
 Compute the piecewise constant estimate of the intensity function, \eqn{c(t)}, for each spike train
