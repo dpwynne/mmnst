@@ -16,37 +16,41 @@
 #'
 #' @export
 
-PoissonRDP<-function(sig,gamma){
-# This is a translation of the MATLAB code from Nowak and Kolaczyk (2005)
-# adjusting for constant, not polynomial, intensity function; i.e., m = 0 in the original MATLAB code
+PoissonRDP<-function (sig, gamma) {
+    # This is a translation and modification (computationally faster version) of the MATLAB code from Nowak and Kolaczyk (2005)
+    # adjusting for constant, not polynomial, intensity function; i.e., m = 0 in the original MATLAB code
 
-  n <- length(sig)
-  J <- log(n,2)
-  lam <- gamma*log(n)
-  bestFit <- sig + (sig==0)*1e-50
-  bestPL <- sig*log(bestFit) - bestFit
+    if (sum(sig) < 1) {
+      return(rep(0, length(sig)))
+    }
 
- ## outer for loop: start at the smallest division and build up
- for(j in seq(J-1, 0, by = -1)){
+    n <- length(sig)
+    J <- log2(n)
+    zeropadding = rep(0, 2^ceiling(J) - n)
+    sumx = c(sig, zeropadding)
+    n2 = length(sumx)
 
-   ## inner for loop: have to see whether each pair at the current level can be combined
-   for(k in 0:(2^j-1)){
+    lam <- gamma * log(n)
+    bestFit <- sig + (sig == 0) * 1e-50
+    bestPL <- sig * log(bestFit) - bestFit
 
-     xind <- (2^(J-j)*k + 1):(2^(J-j)*(k+1))
-     x <- sig[xind]
+    ind_pad = matrix(1:length(sumx), 1)
 
-     bestFit2 <- rep(max(mean(x), 1e-50), length(xind))
-     pl0 <- sum(x*log(bestFit2)) - sum(bestFit2)  # don't need matrix multiplication here after all
-     pl1 <- sum(bestPL[xind]*2/length(xind)) - lam
+    for (j in (J - 1):0) {
+      n            = 2 ^ (J - j)
+      dim(ind_pad) = c(n, length(ind_pad) / n)
+      sumx         = .Internal(colSums(sumx, 2L, length(sumx) / 2L, FALSE))
+      bestFit2     = sumx / n
+      bestFit2[bestFit2 < 1e-50] = 1e-50
+      pl0          = sumx * log(bestFit2) - bestFit2 * n
+      pl1          = .Internal(colSums(c(bestPL, zeropadding), n, n2 / n, FALSE))
+      pl1          = pl1 * 2 / n - lam
 
-     bestFit[xind] <- bestFit[xind]*(pl1>pl0) + bestFit2*(pl1<=pl0)
-     bestPL[xind] <- max(pl1, pl0)
-     }
- }
-  # If there are no spikes in a trial, this if clause will take care of it
-  # in the form of returning intensity estimate of 0.
-  if(sum(sig) < 1){
-    bestFit = rep(0,length(bestFit))
+      for (k in which(pl1[1:2^j] <= pl0[1:2^j])) bestFit[ind_pad[,k]] = bestFit2[k]
+
+      comp = pl1 > pl0
+      plmax = pl1 * comp + pl0 * !comp
+      bestPL = rep(plmax, rep(n, length(pl0)))[1:length(bestPL)]
+    }
+    return(bestFit)
   }
-  return(bestFit)
-}
