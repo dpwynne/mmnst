@@ -12,7 +12,7 @@
 #'
 #' @export
 
-RasterPlot <- function(NeuronNumber,spike.train){
+RasterPlot <- function(NeuronNumber, spike.train, time.highlight = c(), train.highlight = c()){
 ##new Raster function for Raster plots in ggplot2
 
 spike.times<-unlist(spike.train)
@@ -27,18 +27,33 @@ y.low<-50*floor(min(spike.data$Trial/50))
 y.breaks<-seq(y.low,y.high,length=6)
 y.breaks<-y.breaks[which(y.breaks<=max(spike.data$Trial))]
 
-plot.basics<-ggplot(spike.data,aes(x=.data$Time,y=.data$Trial))+
-  theme_classic()+
+trial.colors <- data.frame(spike.data, Color = rep("black", nrow(spike.data)))
+trial.colors$Color[trial.colors$Trial %in% train.highlight] <- "red"
+
+plot.basics<-ggplot(trial.colors,aes(x=.data$Time,y=.data$Trial)) +
+  theme_classic() +
   theme(panel.grid.major=element_blank(),panel.grid.minor=element_blank(),plot.margin=unit(c(5.08,5.08,5.08,5.08),"mm"),axis.text=element_text(size=24),axis.line.x=element_line(size=0.5),axis.line.y=element_line(size=0.5))
 
-plot.ticks<-plot.basics+scale_x_continuous(breaks=seq(floor(min(spike.data$Time)),ceiling(max(spike.data$Time)),by=tick.separator.x))+scale_y_continuous(breaks=y.breaks)
+plot.ticks<-plot.basics +
+  scale_x_continuous(breaks = seq(floor(min(spike.data$Time)), ceiling(max(spike.data$Time)), by=tick.separator.x)) +
+  scale_y_continuous(breaks=y.breaks)
 
-plot.raster<-plot.ticks+geom_point(aes(x=.data$Time,y=.data$Trial),size=0.2)
+plot.raster<-plot.ticks +
+  geom_point(aes(x = .data$Time, y = .data$Trial, color = .data$Color), size=0.2) +
+  scale_color_manual(values = c(red = "red", black = "black")) +
+  theme(legend.position = "none")
 
-plot.labeled<-plot.raster+labs(x="Time (sec.)",y="Trial Number")+theme(axis.title=element_text(size=24))
+plot.labeled<-plot.raster +
+  labs(x="Time (sec.)", y="Trial Number") +
+  theme(axis.title=element_text(size=24))
+
+plot.highlighted <- plot.labeled +
+  geom_vline(xintercept = time.highlight, size = 1.5, linetype = "dashed")
 
 title.graph <- paste0("Neuron: ",as.character(NeuronNumber))
-plot.titled<-plot.labeled+ggtitle(title.graph)+theme(plot.title=element_text(size=18,face="bold"))
+plot.titled<-plot.highlighted +
+  ggtitle(title.graph) +
+  theme(plot.title=element_text(size=18,face="bold"))
 
 return(plot.titled)
 }
