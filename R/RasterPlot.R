@@ -7,12 +7,14 @@
 #'
 #' @param NeuronNumber the ID for the neuron to be plotted (only used in the title of the raster plot).
 #' @param spike.train a list of numeric vectors, each of which contains the spike times from a single trial of the experiment.
+#' @param time.highlight a numeric vector indicating times (if any) to highlight with dashed vertical lines; for example, the onset/offset times of a stimulus.
+#' @param trial.highlight a numeric vector indicating trials (if any) to highlight by showing them in a different color.
 #'
 #' @return A ggplot object containing the parameters of the Raster plot.
 #'
 #' @export
 
-RasterPlot <- function(NeuronNumber, spike.train, time.highlight = c(), train.highlight = c()){
+RasterPlot <- function(NeuronNumber, spike.train, time.highlight = c(), trial.highlight = c()){
 ##new Raster function for Raster plots in ggplot2
 
 spike.times<-unlist(spike.train)
@@ -27,8 +29,8 @@ y.low<-50*floor(min(spike.data$Trial/50))
 y.breaks<-seq(y.low,y.high,length=6)
 y.breaks<-y.breaks[which(y.breaks<=max(spike.data$Trial))]
 
-trial.colors <- data.frame(spike.data, Color = rep("black", nrow(spike.data)))
-trial.colors$Color[trial.colors$Trial %in% train.highlight] <- "red"
+trial.colors <- data.frame(spike.data, Color = rep("plain", nrow(spike.data)))
+trial.colors$Color[trial.colors$Trial %in% trial.highlight] <- "highlight"
 
 plot.basics<-ggplot(trial.colors,aes(x=.data$Time,y=.data$Trial)) +
   theme_classic() +
@@ -40,7 +42,7 @@ plot.ticks<-plot.basics +
 
 plot.raster<-plot.ticks +
   geom_point(aes(x = .data$Time, y = .data$Trial, color = .data$Color), size=0.2) +
-  scale_color_manual(values = c(red = "red", black = "black")) +
+  scale_color_manual(values = c(highlight = "red", plain = "black")) +
   theme(legend.position = "none")
 
 plot.labeled<-plot.raster +
