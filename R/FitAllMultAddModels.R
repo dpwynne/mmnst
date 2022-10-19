@@ -26,23 +26,28 @@ FitAllMultAddModels <- function(K, spikes, f.common.table, setup.pars, terminal.
  w0.hat.list <- vector("list", length = 2*K+1)
  K.list <- vector("list", length = 2*K+1)
 
- user.top.frequencies <- unique(c(
-   user.defined.frequencies,
-   SelectTopFrequencies(f.common.table, K)
- ))
- cat(paste("Frequencies Used in Models:", paste(user.top.frequencies[1:K], "Hz", collapse = ", "), "\n\n"))
 
-for(k in 1:K){
+ if (K > 0){
+  # If K = 0 then we just want the nonperiodic model and no need to run any of this
 
-   f.hat.list[[2*k]] <- f.hat.list[[2*(k-1)+1]] <- user.top.frequencies[1:k]
-   w0.hat.list[[2*(k-1)+1]] <-  w0.hat.list[[2*k]] <- EstimatePhase(spikes,f.hat.list[[2*k]])
-   cat("\n")
-   K.list[[2*(k-1)+1]] <- FitMultiplicativeModel(spikes, f.hat.list[[2*(k-1)+1]], w0.hat.list[[2*(k-1)+1]], setup.pars, terminal.points, ct)
-   cat("\n")
-   K.list[[2*k]] <- FitAdditiveModel(spikes, f.hat.list[[2*k]], w0.hat.list[[2*k]], setup.pars, terminal.points, ct)
-   cat("\n")
-   names(f.hat.list)[c(2*k-1, 2*k)] <- paste(c("Multiplicative", "Additive"), k)
-}
+   user.top.frequencies <- unique(c(
+     user.defined.frequencies,
+     SelectTopFrequencies(f.common.table, K)
+   ))
+   cat(paste("Frequencies Used in Models:", paste(user.top.frequencies[1:K], "Hz", collapse = ", "), "\n\n"))
+
+   for(k in 1:K){
+     f.hat.list[[2*k]] <- f.hat.list[[2*(k-1)+1]] <- user.top.frequencies[1:k]
+     w0.hat.list[[2*(k-1)+1]] <-  w0.hat.list[[2*k]] <- EstimatePhase(spikes,f.hat.list[[2*k]])
+     cat("\n")
+     K.list[[2*(k-1)+1]] <- FitMultiplicativeModel(spikes, f.hat.list[[2*(k-1)+1]], w0.hat.list[[2*(k-1)+1]], setup.pars, terminal.points, ct)
+     cat("\n")
+     K.list[[2*k]] <- FitAdditiveModel(spikes, f.hat.list[[2*k]], w0.hat.list[[2*k]], setup.pars, terminal.points, ct)
+     cat("\n")
+     names(f.hat.list)[c(2*k-1, 2*k)] <- paste(c("Multiplicative", "Additive"), k)
+   }
+
+ }
 
    f.hat.list[[2*K+1]] <- 0
    w0.hat.list[[2*K+1]] <- EstimatePhase(spikes, 0)
