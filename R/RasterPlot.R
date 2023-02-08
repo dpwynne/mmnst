@@ -50,7 +50,7 @@ plot.labeled<-plot.raster +
   theme(axis.title=element_text(size=24))
 
 plot.highlighted <- plot.labeled +
-  geom_vline(xintercept = time.highlight, size = 1.5, linetype = "dashed")
+  geom_vline(xintercept = time.highlight, size = 1, linetype = "dashed", color = "blue")
 
 title.graph <- paste0("Neuron: ",as.character(NeuronNumber))
 plot.titled<-plot.highlighted +
