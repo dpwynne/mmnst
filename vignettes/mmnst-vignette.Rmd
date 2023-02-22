@@ -1,0 +1,113 @@
+---
+title: "mmnst-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{mmnst-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  echo = TRUE , 
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ggplot2)
+library(Rcpp)
+
+library(mmnst)
+```
+
+
+## Introduction
+Write something about
+
+  - Export the cross-vlidation and optimization results and read them in the background (cheating) so that the vignette does not take long to run However, the included code must be as if the code is being run in real time. Just warn the user that these steps may take long.
+  - The theory behind the package
+  - The data to be used
+  - All `setwd` commands to be dropped because everything will be in the same directory. Maybe make a `temp_vignette_results` directory so that this vignette writes output to, but make sure to clear that directory at the end of the vignette.
+  - Fix NeuronNumber='05a' argument in ISIplot below, as well as the y-axis label.
+  - Include an Boolean argument in lambda.J.cross.validation function to print or not to print the J value as the funciton is running.
+
+
+$\;$
+
+#### Step 0B: Loading the data into R and initial data cleaning
+
+  - First, load one file with spike train data. This file should be a list of vectors, e.g. ` list(c(...), c(...),...)`, each vector being the spike trains of one trial/experiment.
+  - For each train in the file, first get only the positive-time spike times (in case spike times are not in reference to the beginning of the experiment).
+  - Then, any spike trains in the file that have 5 or fewer spikes will be dropped.
+
+
+```{r, echo=TRUE}
+setwd('/Users/Reza/Dropbox/1-Research/RPackages')
+SpikeTrainFileName = 'data.LGN.txt' # For batch mode, this line is commented out because spike train file name is created before running this script
+trials.to.drop = c()
+spikes = dget(paste(SpikeTrainFileName,sep=''))
+for(i in 1:length(spikes)){
+  temp = spikes[[i]]
+  temp = temp[temp>0]
+  spikes[[i]] = temp
+  if (length(spikes[[i]]) <= 5) trials.to.drop = c(trials.to.drop , i)
+}
+if(!is.null(trials.to.drop)) spikes=spikes[-trials.to.drop]
+
+length(spikes) #number of trains
+hist(unlist(lapply(spikes, length))) 
+```
+
+
+There are `r length(spikes)` spike trains in the dataset leoaded for this vignette.
+
+$\;$
+
+
+#### Step 0D: Raster plot
+
+```{r, echo=TRUE}
+NewFileName = strsplit(SpikeTrainFileName, ".txt")[[1]]
+RasterPlot(NewFileName,spikes , time.highlight = c(0.4,0.5) , trial.highlight = c(10:20))
+```
+
+
+$\;$
+
+
+#### Step 0E: ISI plots - to visualize data
+ This part generates the ISI plot for individual trials. Only run the block below if your spike trains are each very long, i.e. at least tens of spikes per train.
+ 
+```{r, echo=TRUE}
+ #par(mfrow=c(2,2))
+ # for(i in 1:length(spikes)){
+ #   ISIPlot(NeuronNumber='05a',TrialNumber=i,spikes)
+ #   data.ISI = diff(spikes[[i]])
+ #   plot(spikes[[i]][-1],log(data.ISI),pch=16,cex=.3,axes=F,xlab='Time (Sec.)',ylab=expression(log(T[i] - T[i-1])),font.lab=1,cex.lab=2)
+ #   axis(1,lwd=1,font=1,cex.axis=2)
+ #   axis(2,lwd=1,font=1,cex.axis=2)
+ #   }
+```
+
+ISI plot for data put together as one very long train. Run the block below regardless of the size of your spike trains. Vertical bands are to be expected in the plot due to concatenating the trains. A horizontal band map appear at log(t.end), which we believe is an artifact of the data. All other horizontal bands have to do with periodicity in the data, i.e rhythms etc.
+  
+```{r, echo=TRUE}
+par(mfrow=c(1,1))
+total.Spikes <- c()
+t.end = max(ceiling(unlist(spikes)))
+for(i in 1:length(spikes)){
+  total.Spikes <- c(total.Spikes,spikes[[i]]+(i-1)*t.end)
+}
+par(mar=c(4, 5, 1, 1) + 1)
+plot(total.Spikes[-1],log(diff(total.Spikes)),pch=16,cex=.3,axes=F,xlab='Time',ylab=expression(log(T[i] - T[i-1])),font.lab=1,cex.lab=2)
+axis(1,lwd=1,font=1,cex.axis=2)
+axis(2,lwd=1,font=1,cex.axis=2)
+title(NewFileName)
+```
+
+$\;$
+
+
+
