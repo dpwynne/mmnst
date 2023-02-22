@@ -39,6 +39,6 @@ FFIOX = "IntegerVector fast_first_index_vec_ordered_x (NumericVector x, NumericV
   return y;
 }"
 
-cppFunction(FFIOX)
+Rcpp::cppFunction(FFIOX)
 
 
