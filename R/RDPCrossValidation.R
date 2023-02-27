@@ -47,7 +47,9 @@ RDPCrossValidation = function (spikes, t.start = 0, t.end,
   # Moved out of loop; was recomputing redundantly length(poss.lambda) times
   count.points = lapply(1:length(N.values), function(J) lapply(1:n.trials, function(i)
     # Use already built-in C function to do this
-    return(.Call(graphics:::C_BinCount, spikes[[i]], terminal.points[[J]], FALSE, FALSE))
+    #return(.Call(graphics:::C_BinCount, spikes[[i]], terminal.points[[J]], FALSE, FALSE)) # if this line replaces the next one, the code is two orders of magnitude faster, but it will mess up the R Check for CRAN because of the .Call function.
+    #return(table(cut(spikes[[i]], terminal.points[[J]], right = FALSE, include.lowest = FALSE))) # this is slower version of the previous line
+    return(Cpp_BinCount_sorted(spikes[[i]], terminal.points[[J]])) # this line is much faster the the previous one, bu still x2 slower than line 50
   ))
 
   if (PSTH){

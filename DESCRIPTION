@@ -7,6 +7,7 @@ Maintainer: Dwight Wynne <dpwynne@gmail.com>
 Description: Performs multiscale analysis of neural spike trains.
     For details of the underlying model, see Ramezan, et al. (2014).
 Imports: ggplot2, numDeriv, NSM3, rlang, Rcpp, graphics
+LinkingTo: Rcpp
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -16,3 +17,6 @@ Suggests:
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+
+
+

@@ -1,3 +1,6 @@
+#include <Rcpp.h>
+using namespace Rcpp;
+// [[Rcpp::export]]
 IntegerVector fast_first_index_vec_ordered_x (NumericVector x, NumericVector v) {
   IntegerVector y(x.length());
   int last_index = 0;
