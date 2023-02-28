@@ -19,12 +19,18 @@
 PoissonRDP<-function (sig, gamma) {
     # This is a translation and modification (computationally faster version) of the MATLAB code from Nowak and Kolaczyk (2005)
     # adjusting for constant, not polynomial, intensity function; i.e., m = 0 in the original MATLAB code
+    # note that the length of the vector sig must be a power of 2
 
     if (sum(sig) < 1) {
       return(rep(0, length(sig)))
     }
 
     n <- length(sig)
+
+    if (log2(n)!=round(log2(n))){
+      stop("The length of sig must be a power of 2")
+    }
+
     J <- log2(n)
     zeropadding = rep(0, 2^ceiling(J) - n)
     sumx = c(sig, zeropadding)
