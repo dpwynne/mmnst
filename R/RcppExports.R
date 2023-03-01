@@ -9,3 +9,7 @@ fast_first_index_vec_ordered_x <- function(x, v) {
     .Call(`_mmnst_fast_first_index_vec_ordered_x`, x, v)
 }
 
+cpp_PoissonRDP <- function(sig, gamma) {
+    .Call(`_mmnst_cpp_PoissonRDP`, sig, gamma)
+}
+

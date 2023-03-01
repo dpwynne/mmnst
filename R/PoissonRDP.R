@@ -45,13 +45,13 @@ PoissonRDP<-function (sig, gamma) {
     for (j in (J - 1):0) {
       n            = 2 ^ (J - j)
       dim(ind_pad) = c(n, length(ind_pad) / n)
-      #sumx         = .Internal(colSums(sumx, 2L, length(sumx) / 2L, FALSE)) # if this line replaces the next one, the code is faster, but it will mess up R Check for CRAN because of the .Internal function.
-      sumx         = .colSums(sumx, 2L, length(sumx) / 2L, FALSE)
+      sumx         = .Internal(colSums(sumx, 2L, length(sumx) / 2L, FALSE)) # if this line replaces the next one, the code is faster, but it will mess up R Check for CRAN because of the .Internal function.
+      #sumx         = .colSums(sumx, 2L, length(sumx) / 2L, FALSE)
       bestFit2     = sumx / n
       bestFit2[bestFit2 < 1e-50] = 1e-50
       pl0          = sumx * log(bestFit2) - bestFit2 * n
-      #pl1          = .Internal(colSums(c(bestPL, zeropadding), n, n2 / n, FALSE)) # if this line replaces the next one, the code is faster, but it will mess up R Check for CRAN because of the .Internal function.
-      pl1          = .colSums(c(bestPL, zeropadding), n, n2 / n, FALSE)
+      pl1          = .Internal(colSums(c(bestPL, zeropadding), n, n2 / n, FALSE)) # if this line replaces the next one, the code is faster, but it will mess up R Check for CRAN because of the .Internal function.
+      #pl1          = .colSums(c(bestPL, zeropadding), n, n2 / n, FALSE)
       pl1          = pl1 * 2 / n - lam
 
       for (k in which(pl1[1:2^j] <= pl0[1:2^j])) bestFit[ind_pad[,k]] = bestFit2[k]
