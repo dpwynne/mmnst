@@ -12,13 +12,13 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // Cpp_BinCount_sorted
-IntegerVector Cpp_BinCount_sorted(NumericVector x, NumericVector s);
+arma::uvec Cpp_BinCount_sorted(arma::vec x, arma::vec s);
 RcppExport SEXP _mmnst_Cpp_BinCount_sorted(SEXP xSEXP, SEXP sSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type s(sSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type x(xSEXP);
+    Rcpp::traits::input_parameter< arma::vec >::type s(sSEXP);
     rcpp_result_gen = Rcpp::wrap(Cpp_BinCount_sorted(x, s));
     return rcpp_result_gen;
 END_RCPP
