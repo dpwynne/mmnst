@@ -60,27 +60,33 @@ FindTopFrequencies<-function(spikes, t.start = 0, t.end = 10,
 
   f <- sort(unique(f))
 
-  f.max<-vector("list",length=ntrials)
-  for (replication.counter in 1:ntrials){
-    x <- spikes[[replication.counter]]
-    x <- x[(x >= t.start & x < t.end)] ##spikes within the time window
+  if(ntrials > 0){
+    f.max<-vector("list",length=ntrials)
+    for (replication.counter in 1:ntrials){
+      x <- spikes[[replication.counter]]
+      x <- x[(x >= t.start & x < t.end)] ##spikes within the time window
 
-    if (length(x)>q){ ##we should have at least q+1 spikes if we are to estimate q frequencies
+      if (length(x)>q){ ##we should have at least q+1 spikes if we are to estimate q frequencies
 
-      smoothed.periodogram.f<-SmoothedPeriodogram(x,f,T.data, m = periodogram.window.size, coef.step = default.coef.step)
+        smoothed.periodogram.f<-SmoothedPeriodogram(x,f,T.data, m = periodogram.window.size, coef.step = default.coef.step)
 
-      estimate<-sapply(f,smoothed.periodogram.f)
+        estimate<-sapply(f,smoothed.periodogram.f)
 
-      ##pick the q best frequencies
-      q.max <- tail(sort(estimate),q)
+        ##pick the q best frequencies
+        q.max <- tail(sort(estimate),q)
 
-      max.indx <- which(estimate %in% q.max)
-      max.indx <- max.indx[max.indx>0]  # this line fixes a bug; we have forgotten what the bug is
-      f.max[[replication.counter]] <- f[max.indx]
-    }else{
-      f.max[[replication.counter]]<-rep(0,q)
+        max.indx <- which(estimate %in% q.max)
+        max.indx <- max.indx[max.indx>0]  # this line fixes a bug; we have forgotten what the bug is
+        f.max[[replication.counter]] <- f[max.indx]
+      }else{
+        f.max[[replication.counter]]<-rep(0,q)
+      }
+      #print(replication.counter) ##this just checks to make sure the for loop runs all the way through
     }
-    #print(replication.counter) ##this just checks to make sure the for loop runs all the way through
+
+  } else {
+    f.max <- list(min(unlist(freqrange)))
+    warning("No spike trains given; returning lowest frequency in desired frequency range.")
   }
 
   ##get the full list of frequencies
@@ -90,8 +96,14 @@ FindTopFrequencies<-function(spikes, t.start = 0, t.end = 10,
   f.sorted <- rev(sort(f.common)) ##ties broken by highest frequency
   ##f.sorted <- sort(f.common, decreasing=T) ##ties broken by lowest frequency
   #cat("Most Common Peak Frequencies Found\n")
-  f.sorted.printable<-f.sorted
-  names(f.sorted.printable)<-paste0(names(f.sorted.printable),"Hz")
-  print(f.sorted.printable)
+  if(length(f.sorted) > 0){
+    f.sorted.printable<-f.sorted
+    names(f.sorted.printable)<-paste0(names(f.sorted.printable),"Hz")
+    print(f.sorted.printable)
+
+  } else {
+    f.sorted <- table(0)
+    warning("Insufficient number of spikes to estimate frequencies. Please use nonperiodic (K=0) model only.")
+  }
   return(f.sorted)
 }
