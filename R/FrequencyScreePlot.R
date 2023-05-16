@@ -41,7 +41,7 @@ FrequencyScreePlot <- function(freq.table, spikes = NULL, n = length(spikes)){
                    axis.line.x=ggplot2::element_line(size=0.5),
                    axis.line.y=ggplot2::element_line(size=0.5))+
     ggplot2::scale_x_continuous(limits=c(1,min(10, length(f.table.sorted))) , breaks = 1:10)+ # plot at most the top 10 frequencies
-    ggplot2::scale_y_continuous(limits=c(0,1))
+    ggplot2::scale_y_continuous(limits=c(0,1.05))
 
   plot_labeled<-plot_basics +
     ggplot2::labs(x = "Number of Frequencies", y = "Proportion of Spike Trains") #+
@@ -49,7 +49,7 @@ FrequencyScreePlot <- function(freq.table, spikes = NULL, n = length(spikes)){
 
   plot_freq <- suppressWarnings( # suppress warnings because we are cutting off after 10 points
     plot_labeled + ggplot2::geom_point() + ggplot2::geom_line() +
-    ggplot2::geom_text(aes(label = paste(.data$f,"")), nudge_y = 0.05) +
+    ggplot2::geom_text(ggplot2::aes(label = paste(.data$f,"")), nudge_y = 0.05) +
     #ggplot2::geom_text(aes(label = paste(as.character(f),"")), nudge_y = 0.05) +
   ggplot2::geom_hline(yintercept = 0.5, linetype = "dotted")
   )
