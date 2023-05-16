@@ -23,6 +23,10 @@
 #' @export
 EstimateThetaT<-function(spikes, f.hat.list, w0.hat.list, K.list, models.to.fit, t.start = 0, t.end, terminal.points, ct, intensity.function.length=(1+(t.end - t.start)*10^(3-ceiling(log10(t.end - t.start))))){
 
+  if(length(spikes) == 0){
+    stop("No spike trains provided; cannot estimate intensity functions.")
+  }
+
 cat("Determining Intensity Function for Models\n")
 
 selected.models<-models.to.fit[[2]] #$model.numbers

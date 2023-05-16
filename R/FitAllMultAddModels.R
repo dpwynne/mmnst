@@ -22,6 +22,11 @@ FitAllMultAddModels <- function(K, spikes, f.common.table, setup.pars, terminal.
 ## This abstracts Step 6 and 7 of the original script to run for each neuron
 ## For some value K, it fits Multiplicative 1-K, Additive 1-K, and the no periodicity model (i.e. c(t))
 
+
+  if(length(spikes) == 0){
+    stop("No spike trains provided; cannot fit any models.")
+  }
+
  f.hat.list <- vector("list", length = 2*K+1)  # length 2K+1 list of NULLs
  w0.hat.list <- vector("list", length = 2*K+1)
  K.list <- vector("list", length = 2*K+1)
