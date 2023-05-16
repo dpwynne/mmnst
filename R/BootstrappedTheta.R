@@ -17,9 +17,13 @@ BootstrappedTheta<-function(theta.t,B=1000){
 ntrains<-dim(theta.t)[2]
 bootstrap.matrix<-matrix(0,dim(theta.t)[1],B)
 
+if(ntrains < 10){
+  warning("Fewer than 10 spike trains provided; bootstrap estimates are unreliable.")
+}
+
 for (i in 1:B){
 	sampled.intfns<-sample(1:ntrains,ntrains,replace=TRUE)
-	new.sample.matrix<-theta.t[,sampled.intfns]
+	new.sample.matrix<-theta.t[,sampled.intfns, drop = FALSE] # one-train matrix fix
 	new.mean<-apply(new.sample.matrix,1,mean)
 	bootstrap.matrix[,i]<-new.mean
 }##end for loop
