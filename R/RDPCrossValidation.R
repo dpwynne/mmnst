@@ -41,6 +41,15 @@ RDPCrossValidation = function (spikes, t.start = 0, t.end,
   T.data     <- t.end - t.start
   N.values   <- floor(2^(1:max.J))
   n.trials   <- length(spikes) #number of spike trains
+
+  # Cannot perform cross-validation with 0 or 1 spike trains
+  if(n.trials <= 1){
+    cv.output.list <- list(J.ISE = 0, lambda.ISE = 0,
+                           ISE = matrix(NA, nrow = length(poss.lambda), ncol = length(N.values)))
+    warning("Too few spike trains to perform cross-validation; returning 0 for all tuning parameters.")
+    return(cv.output.list)
+  }
+
   terminal.points <- lapply((t.end - t.start) / N.values, function(x) seq(t.start, t.end, x))
   ISE.matrix <- matrix(NA, nrow = length(poss.lambda), ncol = length(N.values))
 
