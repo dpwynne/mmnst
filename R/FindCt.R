@@ -46,6 +46,10 @@ if (PSTH){
 
   ct.best<-matrix(NA,nrow=length(spikes),ncol=val)
 
+  if(length(spikes) == 0){
+    stop("No spike trains provided; cannot estimate c(t).")
+  }
+
   for (i in 1:length(spikes)){
   	xi <- spikes[[i]]
   	count.points<-numeric(val)
@@ -70,5 +74,11 @@ ct.best<-ct.best/(by.terminal)
 ## To get a single "best" estimate of c(t), we average the c(t) estimates at each time point.
 ## Because the partitions may merge at different points for different spike trains, averaging the spike trains will "destroy" the apparent merge.
 ct.avg<-apply(ct.best,2,mean)
+
+
+if (length(spikes) == 1){
+  warning("c(t) was estimated using only one spike train.")
+}
+
 return(list(ct.avg = ct.avg, ct.best = ct.best))
 }
