@@ -18,7 +18,8 @@ ntrains<-dim(theta.t)[2]
 bootstrap.matrix<-matrix(0,dim(theta.t)[1],B)
 
 if(ntrains < 10){
-  warning("Fewer than 10 spike trains provided; bootstrap estimates are unreliable.")
+  warning("Fewer than 10 spike trains provided; bootstrap estimates are unreliable.",
+          call. = FALSE, immediate. = FALSE)
 }
 
 for (i in 1:B){

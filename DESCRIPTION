@@ -1,7 +1,7 @@
 Package: mmnst
 Type: Package
 Title: Multiscale Modeling of Neural Spike Trains
-Version: 0.1.3.9003
+Version: 0.1.3.9004
 Author: Dwight Wynne, Reza Ramezan
 Maintainer: Dwight Wynne <dpwynne@gmail.com>
 Description: Performs multiscale analysis of neural spike trains.

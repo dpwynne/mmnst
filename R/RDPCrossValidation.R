@@ -46,7 +46,7 @@ RDPCrossValidation = function (spikes, t.start = 0, t.end,
   if(n.trials <= 1){
     cv.output.list <- list(J.ISE = 0, lambda.ISE = 0,
                            ISE = matrix(NA, nrow = length(poss.lambda), ncol = length(N.values)))
-    warning("Too few spike trains to perform cross-validation; returning 0 for all tuning parameters.")
+    warning("Too few spike trains to perform cross-validation; returning 0 for all tuning parameters.", call. = FALSE)
     return(cv.output.list)
   }
 

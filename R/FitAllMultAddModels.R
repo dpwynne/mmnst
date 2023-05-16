@@ -24,7 +24,7 @@ FitAllMultAddModels <- function(K, spikes, f.common.table, setup.pars, terminal.
 
 
   if(length(spikes) == 0){
-    stop("No spike trains provided; cannot fit any models.")
+    stop("No spike trains provided; cannot fit any models.", call. = FALSE)
   }
 
  f.hat.list <- vector("list", length = 2*K+1)  # length 2K+1 list of NULLs

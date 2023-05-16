@@ -77,7 +77,7 @@ ct.avg<-apply(ct.best,2,mean)
 
 
 if (length(spikes) == 1){
-  warning("c(t) was estimated using only one spike train.")
+  warning("c(t) was estimated using only one spike train.", call. = FALSE)
 }
 
 return(list(ct.avg = ct.avg, ct.best = ct.best))

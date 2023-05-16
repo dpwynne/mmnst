@@ -36,8 +36,10 @@ GOFPlot <-function(spikes, theta, t.start = 0, t.end = 10,
 
   ##This error should never occur with the default resolution but might with user-defined resolution
   if (length(endpoints.bins)> nrow(theta)){
-    cat("The number of bins for GOF plot cannot exceed that of the intensity function, plotting stopped\n")
-    return()
+    stop("The number of bins for GOF plot cannot exceed that of the intensity function; plotting stopped.", call. = FALSE)
+  }
+  if(length(spikes) == 0){
+    stop("No spike trains provided; cannot create a GOF plot.", call. = FALSE)
   }
 
   spike.gof<-vector("list",length(spikes))
