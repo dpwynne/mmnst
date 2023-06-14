@@ -5,7 +5,7 @@
 #' @import ggplot2
 #' @importFrom rlang .data
 #'
-#' @param NeuronNumber the ID for the neuron to be plotted (only used in the title of the raster plot).
+#' @param Neuron the ID for the neuron to be plotted (only used in the title of the raster plot).
 #' @param spike.train a list of numeric vectors, each of which contains the spike times from a single trial of the experiment.
 #' @param time.highlight a numeric vector indicating times (if any) to highlight with dashed vertical lines; for example, the onset/offset times of a stimulus.
 #' @param trial.highlight a numeric vector indicating trials (if any) to highlight by showing them in a different color.
@@ -14,7 +14,7 @@
 #'
 #' @export
 
-RasterPlot <- function(NeuronNumber, spike.train, time.highlight = c(), trial.highlight = c()){
+RasterPlot <- function(Neuron, spike.train, time.highlight = c(), trial.highlight = c()){
 ##new Raster function for Raster plots in ggplot2
 
 spike.times<-unlist(spike.train)
@@ -52,7 +52,7 @@ plot.labeled<-plot.raster +
 plot.highlighted <- plot.labeled +
   geom_vline(xintercept = time.highlight, size = 1, linetype = "dashed", color = "blue")
 
-title.graph <- paste0("Neuron: ",as.character(NeuronNumber))
+title.graph <- paste0("Neuron: ",as.character(Neuron))
 plot.titled<-plot.highlighted +
   ggtitle(title.graph) +
   theme(plot.title=element_text(size=18,face="bold"))
