@@ -8,6 +8,7 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
+library(mmnst)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -24,7 +25,7 @@ knitr::opts_chunk$set(
 ## Introduction
 Write something about
 
-  - Export the cross-vlidation and optimization results and read them in the background (cheating) so that the vignette does not take long to run However, the included code must be as if the code is being run in real time. Just warn the user that these steps may take long.
+  - Export the Cross-Validation and optimization results and read them in the background (cheating) so that the vignette does not take long to run However, the included code must be as if the code is being run in real time. Just warn the user that these steps may take long.
   - The theory behind the package
   - The data to be used
   - All `setwd` commands to be dropped because everything will be in the same directory. Maybe make a `temp_vignette_results` directory so that this vignette writes output to, but make sure to clear that directory at the end of the vignette.
@@ -54,6 +55,317 @@ for(i in 1:length(spikes)){
 if(!is.null(trials.to.drop)) spikes=spikes[-trials.to.drop]
 
 length(spikes) #number of trains
-hist(unlist(lapply(spikes, length))) 
+hist(unlist(lapply(spikes, length)) , main="Number of Spikes Per Train") 
 ```
 
+#### Step 0D: Raster plot
+
+```{r, echo=TRUE}
+RasterPlot(spikes , time.highlight = c(0.4,0.5) , trial.highlight = c(10:20))
+```
+
+$\;$
+
+
+
+
+#### Step 0E: ISI plots - to visualize data
+ This part generates the ISI plot for individual trials. Only run the block below if your spike trains are each very long, i.e. at least tens of spikes per train.
+ 
+```{r, echo=TRUE}
+ #par(mfrow=c(2,2))
+ # for(i in 1:length(spikes)){
+ #   ISIPlot(NeuronNumber='05a',TrialNumber=i,spikes)
+ #   data.ISI = diff(spikes[[i]])
+ #   plot(spikes[[i]][-1],log(data.ISI),pch=16,cex=.3,axes=F,xlab='Time (Sec.)',ylab=expression(log(T[i] - T[i-1])),font.lab=1,cex.lab=2)
+ #   axis(1,lwd=1,font=1,cex.axis=2)
+ #   axis(2,lwd=1,font=1,cex.axis=2)
+ #   }
+```
+
+ISI plot for data put together as one very long train. Run the block below regardless of the size of your spike trains. Vertical bands are to be expected in the plot due to concatenating the trains. A horizontal band map appear at log(t.end), which we believe is an artifact of the data. All other horizontal bands have to do with periodicity in the data, i.e rhythms etc.
+  
+```{r, echo=TRUE}
+par(mfrow=c(1,1))
+total.Spikes <- c()
+t.end = max(ceiling(unlist(spikes)))
+for(i in 1:length(spikes)){
+  total.Spikes <- c(total.Spikes,spikes[[i]]+(i-1)*t.end)
+}
+par(mar=c(4, 5, 1, 1) + 1)
+plot(total.Spikes[-1],log(diff(total.Spikes)),pch=16,cex=.3,axes=F,xlab='Time',ylab=expression(log(T[i] - T[i-1])),font.lab=1,cex.lab=2)
+axis(1,lwd=1,font=1,cex.axis=2)
+axis(2,lwd=1,font=1,cex.axis=2)
+```
+
+$\;$
+
+
+
+#### Step 1A: setting the start and the end time of the observation window
+
+
+```{r, echo=TRUE}
+t.start = min(floor(unlist(spikes)))
+t.end = max(ceiling(unlist(spikes)))
+```
+
+$\;$
+
+#### Step 5: Find the peak frequencies in each spike train
+
+Set the frequency ranges to search over. This should ultimately be a list of vectors of size 2, each vector represents the lowest and highest frequencies in a band to search. Note that this step has to be done prior to cross-validation because if no significant frequencies in each trial is found, then an aperiodic function must be fitted which will affect the choice of max.J.
+
+```{r, echo=TRUE}
+range1 <- c(2,4) ; range2 <- c(4,8) ; range3 <- c(8,13) ; range4 <- c(13,30) ; range5 <- c(30,80)
+freqrange <- list(range1,range2,range3,range4,range5)
+n.highest <- 5 # number of highest peaks of the periodograms of individual trains. This has nothing to do with the number of periodic components in the models to be fitted. That number is K.
+
+# This function returns a table of frequencies and the number of times each frequency apprears in the q highest peaks of the periodogram for a spike train
+
+f.common.table <- FindTopFrequencies(spikes, t.start , t.end, freqrange, q=n.highest,
+                                     #default.grid.spacing = c(1,1,1,2,5) ,
+                                     default.grid.spacing = c(0.1) ,
+                                     #periodogram.window.size = 25 ,
+                                     default.coef.step = 0.01)
+
+#print(f.common.table[1:5]) # For batch mode, this line is commented out because we use it to manually check the most occurring frequncies
+
+FrequencyScreePlot(f.common.table , spikes = spikes)
+
+```
+
+$\;$
+
+#### Step 1B: perform the actual cross-validation
+
+
+```{r, echo=TRUE}
+#Initializing the (lambda,J) grid.
+poss.lambda <- seq(0,10,by=0.1)
+max.J <- ceiling(log(t.end*1000/20,2)) #Assuming the spike times are recorded in seconds, this corresponds to a finest resolution of about 20ms
+
+cv.output <- RDPCrossValidation(spikes, t.start , t.end , poss.lambda, max.J, PSTH=FALSE, max.diff = 0.005 , pct.diff.plot = TRUE, print.J.value = TRUE)
+
+cv.output$lambda.ISE
+cv.output$J.ISE
+```
+
+
+  - explain the meaning of the graph, the vertical axis, the dotted line, and which J is selected.
+
+
+Next, we plot the ISE against $\lambda$ for each $J$. The red dot is the global minimum for each J, not necessarily the overal global minimum.
+```{r, echo=TRUE , fig.align='center' , fig.width=8 , fig.height=8}
+par(mfrow=c(3,3))
+for (i in 1:max.J){
+  plot(cv.output$ISE[,i]~poss.lambda,type='l')
+  indx <- which.min(cv.output$ISE[,i])
+  points(poss.lambda[indx],cv.output$ISE[indx,i],col='red',cex=1.1,pch=16)
+  title(main=paste('J =',as.character(i)))
+}
+```
+
+
+
+
+
+$\;$
+
+#### Step 2: Get the stepwise intensity function c(t)
+```{r, echo=TRUE}
+ct<-FindCt(spikes, t.start , t.end, cv.output$lambda.ISE,cv.output$J.ISE , PSTH=FALSE)
+```
+
+
+Then we plot the average $c(t)$ across trials
+
+```{r, echo=TRUE , fig.align='center' , fig.width=6}
+par(mfrow=c(1,1))
+par(mar=c(4, 5, 1, 1) + 1)
+ct.plot = c(ct$ct.avg,ct$ct.avg[length(ct$ct.avg)])
+plot(ct.plot~seq(t.start , t.end ,length=length(ct.plot)),type='s', main='Average c(t) Across Trials',axes=F,
+     xlab='Time (Sec.)',ylab='Average of c(t)',font.lab=1,cex.lab=2,cex.main=1.5)
+axis(1,lwd=1,font=1,cex.axis=2)
+axis(2,lwd=1,font=1,cex.axis=2)
+```
+
+$\;$
+
+
+#### Step 3: Identify the terminal points (boundaries at which c(t) changes)
+```{r, echo=TRUE}
+terminal.points <- IdentifyTerminalPoints(t.start , t.end, log(length(ct$ct.avg),2))
+```
+
+$\;$
+
+
+#### Step 4: Get the setup variables needed for the likelihoods
+```{r, echo=TRUE}
+setup.pars <- SetupLikelihoods(terminal.points)
+```
+
+
+#### Step 6: Run the model fitting algorithms
+
+Choose the frequencies which appear in at least in $x\%$ of the trials, where $x$ depends on the brain area as well as the amount of noise in the data. Setting `max.K` to a high value will include frequencies that appear in fewer trials
+
+```{r, echo=TRUE}
+max.K = 1 #The maximum number of periodic terms in the intensity function.
+
+#Note that the name of this function has changed.This function's arguments have also bee updated. (user.select argument)
+model.fit.output.list = FitAllMultAddModels(K=max.K,
+                                            spikes = spikes,
+                                            f.common.table = f.common.table,
+                                            setup.pars = setup.pars,
+                                            terminal.points = terminal.points,
+                                            ct = ct$ct.best,
+                                            user.defined.frequencies = c())
+```
+
+$\;$
+
+
+
+
+#### Step 7: Estimate intensity functions of all possible 2K+1 models
+
+```{r, echo=TRUE}
+all.models = list(model.names=GenerateModelNames(K.length = 2*max.K+1),
+                  model.numbers = 1:(2*max.K+1))
+# all.models$model.names are the models to be fitted, and all.models$model.numbers
+# is the associated index in the output list to be used later in the codes
+
+# This function does the actual intensity function calculation, based on the MLE outputs of step 6
+
+model.estimates<-EstimateThetaT(spikes = spikes, 
+                                f.hat.list = model.fit.output.list$f.hat.list,
+                                w0.hat.list = model.fit.output.list$w0.hat.list,
+                                K.list = model.fit.output.list$K.list,
+                                models.to.fit=all.models, 
+                                t.start , 
+                                t.end, 
+                                terminal.points, 
+                                ct=ct$ct.best, 
+                                intensity.function.length=1001)
+```
+
+
+$\;$
+
+
+
+#### Step 8: Plot the intensity functions of Step 7.
+```{r, echo=TRUE}
+#pdf("Outsinc.pdf")
+N.models = length(model.fit.output.list$K.list) #N.models is the number of models fitted in step 6
+for(k.sequnce in 1:N.models){
+  plotted.estimates<-IntensityFunctionPlot(model.estimates,
+                                           model.number = k.sequnce,
+                                           best.models=all.models,
+                                           add.title=TRUE,
+                                           filename=NULL,
+                                           neuron.name = SpikeTrainFileName,
+                                           time.resolution = 1,
+                                           axis.label.size = 16,
+                                           IC.type = NULL,
+                                           title.size = 16,
+                                           RStudio = TRUE)
+}
+#dev.off()
+
+```
+
+
+$\;$
+
+
+#### Step 9: Goodness-of-fit test (pp-plot) for all 2K+1 models
+
+```{r, echo=TRUE}
+# We need to figure out how to adjust this average theta to have different phases for each trial. 
+# We also need to figure out if we are integrating the right thing, i.e. we need to sort out whether the HaslngerY is doing its job correctly (the issue is whether or not index 1 and indx 2 are done right)
+
+for (k.sequnce in 1:N.models){
+  GOFPlot(spikes,
+          model.estimates$individual.thetas[[k.sequnce]],
+          t.start , t.end,
+          neuron.name = all.models$model.names[k.sequnce],
+          axis.label.size = 16,
+          title.size = 16)
+}
+```
+
+
+$\;$
+
+
+
+#### Step 10: Estimate intensity functions of best of 2K+1 models by AICc and BIC
+
+Find the best models
+
+```{r, echo=TRUE}
+best.models <- MultiscaleModelSelection(model.fit.output.list$K.list)
+
+# For batch mode, these lines are commented out because they just manually check the
+# percentages of best models across the dataset (all spike trains from a given session)
+#round(prop.table(table(best.models$individual.fits$AIC))*100,1)
+#round(prop.table(table(best.models$individual.fits$BIC))*100,1)
+#round(prop.table(table(best.models$individual.fits$AICc))*100,1)
+
+# Plot intensity functions for those best models (these already exist in previous plots, but with no possible way to be identified)
+IC.names = c("AIC" , "AICc" , "BIC")
+for(IC.counter in 2:3){
+IntensityFunctionPlot(model.estimates,
+                        model.number = best.models$model.numbers[IC.counter],
+                        best.models=all.models,
+                        add.title=TRUE,
+                        filename=NULL,
+                        neuron.name = SpikeTrainFileName,
+                        time.resolution = 1,
+                        axis.label.size = 16,
+                        IC.type = IC.names[IC.counter],
+                        title.size = 16,
+                        RStudio = TRUE)#, y.limits = c(0,9))
+}
+```
+
+#### Step 10B: Some statistics from the models which might be useful. We used these in our simulations.
+```{r, echo=TRUE}
+mean(model.fit.output.list$K.list$`Multiplicative 1`$eta)
+sd(model.fit.output.list$K.list$`Multiplicative 1`$eta)
+
+mean(model.fit.output.list$K.list$`Multiplicative 1`$gama)
+sd(model.fit.output.list$K.list$`Multiplicative 1`$gama)
+
+apply(model.fit.output.list$K.list$`Multiplicative 1`$fit,2,mean)
+
+
+
+
+mean(model.fit.output.list$K.list$`Additive 1`$eta)
+sd(model.fit.output.list$K.list$`Additive 1`$eta)
+
+mean(model.fit.output.list$K.list$`Additive 1`$gama)
+sd(model.fit.output.list$K.list$`Additive 1`$gama)
+
+apply(model.fit.output.list$K.list$`Additive 1`$fit,2,mean)
+
+
+
+
+mean(model.fit.output.list$K.list$`Non-Periodic`$eta)
+sd(model.fit.output.list$K.list$`Non-Periodic`$eta)
+
+mean(model.fit.output.list$K.list$`Non-Periodic`$gama)
+sd(model.fit.output.list$K.list$`Non-Periodic`$gama)
+
+apply(model.fit.output.list$K.list$`Non-Periodic`$fit,2,mean)
+```
+
+$\;$
+$\;$
+$\;$
+$\;$
