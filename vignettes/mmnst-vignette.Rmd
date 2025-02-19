@@ -15,11 +15,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-#```{r setup}
-#library(ggplot2)
-#library(Rcpp)
-#library(mmnst)
-#```
+```{r setup}
+library(ggplot2)
+library(Rcpp)
+library(mmnst)
+```
 
 
 ## Introduction
@@ -58,13 +58,20 @@ length(spikes) #number of trains
 hist(unlist(lapply(spikes, length)) , main="Number of Spikes Per Train") 
 ```
 
+  
+  
 #### Step 0D: Raster plot
 
 ```{r, echo=TRUE}
-RasterPlot(spikes , time.highlight = c(0.4,0.5) , trial.highlight = c(10:20))
+RasterPlot(spikes , time.highlight = c(0.4,0.6) , trial.highlight = c(10:20))
 ```
 
+
+  - You can  highlight  trials and/or time  points. In this example, trails 10-20 and time points 0.4 and 0.6 are highlighted.
+
+
 $\;$
+
 
 
 
@@ -72,18 +79,21 @@ $\;$
 #### Step 0E: ISI plots - to visualize data
  This part generates the ISI plot for individual trials. Only run the block below if your spike trains are each very long, i.e. at least tens of spikes per train.
  
+  - The command `ISIPlot(NeuronNumber='05a',TrialNumber=i,spikes)` does the same thing for each trial, but since it uses the ggplot, the par function does not work in conjunction with the `ISIPlot` function.
+ 
 ```{r, echo=TRUE}
- #par(mfrow=c(2,2))
- # for(i in 1:length(spikes)){
- #   ISIPlot(NeuronNumber='05a',TrialNumber=i,spikes)
- #   data.ISI = diff(spikes[[i]])
- #   plot(spikes[[i]][-1],log(data.ISI),pch=16,cex=.3,axes=F,xlab='Time (Sec.)',ylab=expression(log(T[i] - T[i-1])),font.lab=1,cex.lab=2)
- #   axis(1,lwd=1,font=1,cex.axis=2)
- #   axis(2,lwd=1,font=1,cex.axis=2)
- #   }
+ par(mfrow=c(2,2))
+ for(i in 1:length(spikes)){
+   #ISIPlot(NeuronNumber='05a',TrialNumber=i,spikes)
+   par(mar=c(4,5,2,2))
+   data.ISI = diff(spikes[[i]])
+   plot(spikes[[i]][-1],log(data.ISI),pch=16,cex=.3,axes=F,xlab='Time (Sec.)',ylab=expression(log(T[i] - T[i-1])),font.lab=1,cex.lab=2)
+   axis(1,lwd=1,font=1,cex.axis=2)
+   axis(2,lwd=1,font=1,cex.axis=2)
+ }
 ```
 
-ISI plot for data put together as one very long train. Run the block below regardless of the size of your spike trains. Vertical bands are to be expected in the plot due to concatenating the trains. A horizontal band map appear at log(t.end), which we believe is an artifact of the data. All other horizontal bands have to do with periodicity in the data, i.e rhythms etc.
+ISI plot for the whole dataset, puts the spike trains together as one very long train. Run the block below regardless of the size of your spike trains. Vertical bands are to be expected in the plot due to concatenating the trains. A horizontal band map appear at log(t.end), which we believe is an artifact of the data. All other horizontal bands have to do with periodicity in the data, i.e rhythms etc.
   
 ```{r, echo=TRUE}
 par(mfrow=c(1,1))
@@ -92,7 +102,7 @@ t.end = max(ceiling(unlist(spikes)))
 for(i in 1:length(spikes)){
   total.Spikes <- c(total.Spikes,spikes[[i]]+(i-1)*t.end)
 }
-par(mar=c(4, 5, 1, 1) + 1)
+par(mar=c(4, 5, 1, 1)+0.5)
 plot(total.Spikes[-1],log(diff(total.Spikes)),pch=16,cex=.3,axes=F,xlab='Time',ylab=expression(log(T[i] - T[i-1])),font.lab=1,cex.lab=2)
 axis(1,lwd=1,font=1,cex.axis=2)
 axis(2,lwd=1,font=1,cex.axis=2)
@@ -114,7 +124,8 @@ $\;$
 
 #### Step 5: Find the peak frequencies in each spike train
 
-Set the frequency ranges to search over. This should ultimately be a list of vectors of size 2, each vector represents the lowest and highest frequencies in a band to search. Note that this step has to be done prior to cross-validation because if no significant frequencies in each trial is found, then an aperiodic function must be fitted which will affect the choice of max.J.
+Set the frequency ranges to search over. This (e.g. object `freqrange` below) should ultimately be a list of vectors each of size 2, where each vector represents the lowest and highest frequencies in a band to search. Note that this step has to be done prior to cross-validation because if no significant frequencies in each trial is found, then an aperiodic function must be fitted which will affect the choice of `max.J` in cross-validation.
+
 
 ```{r, echo=TRUE}
 range1 <- c(2,4) ; range2 <- c(4,8) ; range3 <- c(8,13) ; range4 <- c(13,30) ; range5 <- c(30,80)
@@ -132,13 +143,12 @@ f.common.table <- FindTopFrequencies(spikes, t.start , t.end, freqrange, q=n.hig
 #print(f.common.table[1:5]) # For batch mode, this line is commented out because we use it to manually check the most occurring frequncies
 
 FrequencyScreePlot(f.common.table , spikes = spikes)
-
 ```
 
 $\;$
 
-#### Step 1B: perform the actual cross-validation
 
+#### Step 1B: perform the actual cross-validation
 
 ```{r, echo=TRUE}
 #Initializing the (lambda,J) grid.
@@ -151,22 +161,20 @@ cv.output$lambda.ISE
 cv.output$J.ISE
 ```
 
-
-  - explain the meaning of the graph, the vertical axis, the dotted line, and which J is selected.
+  - The horizontal axis represent the resolution where $N=2^J$.
+  - The horizontal dashed line is represented by the argument `max.diff` in the function. This argument represents the maximum allowance for the integrated squared error (ISE) of a smaller model to deviate from the overall minimum ISE. We chose the smallest $J$ for which the minimum cross-validated ISE was no more than $100(max.diff)\%$ above the overall minimum of the ISE.  This means that the chosen $J$ is the smallest value which is still below the dashed line in the plot above. The user can choose a different $J$, e.g. the overall minimum ISE, though it may cause issues with frequency picking. 
 
 
 Next, we plot the ISE against $\lambda$ for each $J$. The red dot is the global minimum for each J, not necessarily the overal global minimum.
 ```{r, echo=TRUE , fig.align='center' , fig.width=8 , fig.height=8}
 par(mfrow=c(3,3))
 for (i in 1:max.J){
-  plot(cv.output$ISE[,i]~poss.lambda,type='l')
+  plot(cv.output$ISE[,i]~poss.lambda,type='l' , ylab = "ISE" , xlab = expression(lambda))
   indx <- which.min(cv.output$ISE[,i])
   points(poss.lambda[indx],cv.output$ISE[indx,i],col='red',cex=1.1,pch=16)
   title(main=paste('J =',as.character(i)))
 }
 ```
-
-
 
 
 
@@ -183,7 +191,7 @@ Then we plot the average $c(t)$ across trials
 ```{r, echo=TRUE , fig.align='center' , fig.width=6}
 par(mfrow=c(1,1))
 par(mar=c(4, 5, 1, 1) + 1)
-ct.plot = c(ct$ct.avg,ct$ct.avg[length(ct$ct.avg)])
+ct.plot = c(ct$ct.avg , ct$ct.avg[length(ct$ct.avg)])
 plot(ct.plot~seq(t.start , t.end ,length=length(ct.plot)),type='s', main='Average c(t) Across Trials',axes=F,
      xlab='Time (Sec.)',ylab='Average of c(t)',font.lab=1,cex.lab=2,cex.main=1.5)
 axis(1,lwd=1,font=1,cex.axis=2)
@@ -209,7 +217,7 @@ setup.pars <- SetupLikelihoods(terminal.points)
 
 #### Step 6: Run the model fitting algorithms
 
-Choose the frequencies which appear in at least in $x\%$ of the trials, where $x$ depends on the brain area as well as the amount of noise in the data. Setting `max.K` to a high value will include frequencies that appear in fewer trials
+Choose the frequencies which appear in at least in $x\%$ of the trials, where $x$ depends on the brain area as well as the amount of noise in the data. Setting `max.K` to a high value will include frequencies that appear in fewer trials. Note that if the frequency screeplot from before did not reveal any frequencies, then the multisclae background estimate, i.e. $c(t)$ is the estimate of the intensity function.
 
 ```{r, echo=TRUE}
 max.K = 1 #The maximum number of periodic terms in the intensity function.
