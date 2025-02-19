@@ -13,9 +13,12 @@
 CtIndividualPoint<-function(t1, terminal.points, ct){
 	##if t1 is outside the time frame specified by t.start and t.end, c(t1) is 0
 	if( t1 <= min(terminal.points) | t1 > max(terminal.points) ) return(0)
+  if (t1 == max(terminal.points)) return(ct[length(ct)])
+
 	##otherwise find the terminal point immediately before t1
 	ct.indx <- which(terminal.points[-length(terminal.points)] <= t1  & terminal.points[-1] > t1)
 	return(ct[ct.indx])
+
 }
 
 
