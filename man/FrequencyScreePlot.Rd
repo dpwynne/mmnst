@@ -4,7 +4,7 @@
 \alias{FrequencyScreePlot}
 \title{Scree plot-like graph of most common frequencies}
 \usage{
-FrequencyScreePlot(freq.table, spikes = NULL, n = length(spikes))
+FrequencyScreePlot(freq.table, spikes = NULL, n = length(spikes), frac = 0.5)
 }
 \arguments{
 \item{freq.table}{a named numeric vector in which the names are the frequencies and the values are the counts of spike trains
@@ -14,6 +14,8 @@ output by \code{\link[=FindTopFrequencies]{FindTopFrequencies()}}.}
 \item{spikes}{(= NULL) a list of spike trains. Can be omitted if n is given.}
 
 \item{n}{(= length(spikes)) the number of spike trains analyzed by \code{\link[=FindTopFrequencies]{FindTopFrequencies()}}}
+
+\item{frac}{the proportion of spike trains that must exhibit the frequency in order for it to be considered a significant frequency value. This will be represented in the plot by a dashed horizontal line.}
 }
 \value{
 the \code{freq.table} argument (invisibly)
