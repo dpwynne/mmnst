@@ -9,7 +9,7 @@
 #' output by [FindTopFrequencies()].
 #' @param spikes (= NULL) a list of spike trains. Can be omitted if n is given.
 #' @param n (= length(spikes)) the number of spike trains analyzed by [FindTopFrequencies()]
-#'
+#' @param frac (= 0.5) The proportion of spike trains that must exhibit the frequency in order for it to be considered a significant frequency value. This will be represented in the plot by a dashed horizontal line.
 #' @return the `freq.table` argument (invisibly)
 #'
 #' @export
@@ -51,7 +51,7 @@ FrequencyScreePlot <- function(freq.table, spikes = NULL, n = length(spikes)){
     plot_labeled + ggplot2::geom_point() + ggplot2::geom_line() +
     ggplot2::geom_text(ggplot2::aes(label = paste(.data$f,"")), nudge_y = 0.05) +
     #ggplot2::geom_text(aes(label = paste(as.character(f),"")), nudge_y = 0.05) +
-  ggplot2::geom_hline(yintercept = 0.5, linetype = "dotted")
+  ggplot2::geom_hline(yintercept = frac, linetype = "dotted")
   )
 
   suppressWarnings(print(plot_freq))
