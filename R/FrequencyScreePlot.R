@@ -9,7 +9,7 @@
 #' output by [FindTopFrequencies()].
 #' @param spikes (= NULL) a list of spike trains. Can be omitted if n is given.
 #' @param n (= length(spikes)) the number of spike trains analyzed by [FindTopFrequencies()]
-#' @param frac the proportion of spike trains that must exhibit the frequency in order for it to be considered a significant frequency value. This will be represented in the plot by a dashed horizontal line.
+#' @param frac a vector of values where dashed horizontal lines will be added to the plot. As a single value, this can represent the proportion of spike trains that must exhibit a frequency to be considered significant.
 #' @return the `freq.table` argument (invisibly)
 #'
 #' @export
